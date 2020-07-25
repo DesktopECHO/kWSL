@@ -16,7 +16,7 @@ kWSL is accessible from anywhere on your network, you connect via Microsoft's Re
 PowerShell -executionpolicy bypass -command "wget https://github.com/DesktopECHO/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"
 ```
 
-You will be asked a few questions.  The install script will determine your current DPI scaling but you can override if needed:
+You will be asked a few questions.  The install script finds the current DPI scaling, you can set your own value if needed:
 
 ```
 kWSL for Devuan Linux
@@ -60,7 +60,9 @@ Enter password: ********
  kWSL Installation Complete!  GUI will start in a few seconds...
 ```
 
-Upon completion you'll be logged into an attractive and fully functional XFCE4 desktop.  A scheduled task is created for starting kWSL. 
+Currently you should see approximately 962 packages installed.  If the number reported is much lower it means you had a download failure and need to re-start the install.
+
+Upon completion you'll be logged into an attractive and fully functional KDE Plasma.  A scheduled task is created for starting/managing kWSL. 
 
    **If you want to start kWSL at boot (like a service with no console window) do the following:**
 
