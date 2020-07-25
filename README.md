@@ -1,6 +1,6 @@
 # kWSL.cmd
 
-- Simplicity - A 'one-liner' sets up KDE in WSL with the quirks already resolved
+- Simplicity - A 'one-liner' sets up KDE in WSL and quirks are resolved for you (see Wiki for details)
 - Runs on Windows Server 2019 or Windows 10 Version 1803 (or newer, including Server Core)
 - KDE 5.17 on Devuan Linux (Tracking with what will become Debian Bullseye, without systemd) 
 - xRDP Display Server, no additional X Server downloads required
@@ -75,6 +75,6 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 - WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to allow running GUI apps with elevated rights.  
 - Rolled back and held xRDP until the current update is better-behaved (xrdp-chansrv high CPU %)
 - Current versions of Chrome or Firefox do not work in WSL1; Mozilla Seamonkey is included as the 'officical' stable/maintained browser
-- Installed image consumes less than 2GB of disk
+- Installed image consumes approximately 2.6 GB of disk space
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas) for an attractive UI
 - Passwords saved for RDP connection use Windows credential store
