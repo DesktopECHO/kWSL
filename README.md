@@ -53,7 +53,7 @@ Enter password: ********
   - Links for GUI and Console sessions have been placed on your desktop.
 
   - (Re)launch init from the Task Scheduler or by running the following command:
-    **schtasks /run /tn kWSL**
+    schtasks /run /tn kWSL
 
  kWSL Installation Complete!  GUI will start in a few seconds...
 ```
