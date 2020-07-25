@@ -25,7 +25,7 @@ Enter DPI Scaling or hit Enter to use default [96]:
 kWSL to be installed in C:\kWSL
 ```
 
-Exclusions will be automatically aded to Windows Defender:
+Exclusions will be automatically added to Windows Defender:
 
 ```
 Added exclusion for C:\kWSL
@@ -37,7 +37,7 @@ Added exclusion for C:\kWSL\rootfs\usr\local\bin\*
 Added exclusion for C:\kWSL\rootfs\usr\local\go\bin\*
 ```
 
-The installer will download all necessary packages to convert the old Debian Buster image into Devuan Linux with KDE.
+The installer will download all the necessary packages to convert the Windows Store Debian image into Devuan Linux with KDE.
 Near the end of the script you will be prompted to create a non-root user.  This user will be automatically added to sudo'ers.
 
 ```
