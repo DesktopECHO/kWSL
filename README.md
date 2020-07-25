@@ -6,7 +6,7 @@
 - xRDP Display Server, no additional X Server downloads required
 - RDP Audio playback enabled (YouTube playback in browser works)
 
-
+![Screenshot](kWSL.png)
 
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
