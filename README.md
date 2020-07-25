@@ -77,4 +77,4 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 - Current versions of Chrome or Firefox do not work in WSL1; Mozilla Seamonkey is included as the 'officical' stable/maintaned browser
 - Installed image consumes less than 2GB of disk
 - Symlinked Windows fonts in Linux which make for a very nice looking XFCE4 session using Segoe UI and Consolas
-- Password-saving magic for RDP connections performed safely using Windows credential store and Powershell ConvertTo-SecureString 
+- Password-saving for RDP connection uses Windows credential store
