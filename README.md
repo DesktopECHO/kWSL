@@ -8,8 +8,6 @@
 
 ![Screenshot](kWSL.png)
 
-kWSL is accessible from anywhere on your network, you connect via Microsoft's Remote Desktop Client (mstsc.exe) 
-
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
 ```
