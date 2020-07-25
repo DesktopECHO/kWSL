@@ -1,0 +1,32 @@
+#!/bin/bash
+# Remove services that make no sense in WSL1
+update-rc.d -f hwclock.sh remove >/dev/null 2>&1
+update-rc.d -f dbus remove >/dev/null 2>&1
+update-rc.d -f ntp  remove >/dev/null 2>&1
+update-rc.d -f pulseaudio-enable-autospawn remove >/dev/null 2>&1
+touch /run/initctl
+clear
+
+echo "Runlevel" $1
+echo " "
+[[ -z $1 ]] && { echo "Need to specify a run level"; exit 127; }
+run_level=$1
+[[ -d /etc/rc${run_level}.d/ ]] ||  { echo "Need to specify a run level"; exit 127; }
+for rc_service in /etc/rc${run_level}.d/K*; do
+        [[ -e "$rc_service" ]] && $rc_service stop
+done
+for rc_service in /etc/rc${run_level}.d/S*; do
+        [[ -e "$rc_service" ]] && $rc_service start
+done
+
+chmod 644 /var/run/syslog.pid
+
+echo ""
+echo ""
+echo "2 = Multi-User System"
+echo "1 = Single-User System"
+echo "0 = Stop services and terminate instance."
+echo ""
+echo "Select Runlevel and hit [Enter]"
+read runlevel
+initWSL $runlevel
