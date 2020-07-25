@@ -76,5 +76,5 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 - Rolled back and held xRDP until the current update is better-behaved (xrdp-chansrv high CPU %)
 - Current versions of Chrome or Firefox do not work in WSL1; Mozilla Seamonkey is included as the 'officical' stable/maintained browser
 - Installed image consumes approximately 2.6 GB of disk space
-- KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas) for an attractive UI
+- KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas) for a pleasant looking UI
 - Passwords saved for RDP connection use Windows credential store
