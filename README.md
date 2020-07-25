@@ -1,14 +1,12 @@
 # kWSL.cmd
 
-- Simplicity - One command to set up KDE in WSL with all the quirks resolved for you
-- Runs on Windows Server 2019 or Windows 10 Version 1803 (or newer)
+- Simplicity - A 'one-liner' sets up KDE in WSL with the quirks already resolved
+- Runs on Windows Server 2019 or Windows 10 Version 1803 (or newer, including Server Core)
 - KDE 5.17 on Devuan Linux (Tracking with what will become Debian Bullseye, without systemd) 
 - xRDP Display Server, no additional X Server downloads required
 - RDP Audio playback enabled (YouTube playback in browser works)
 
-<img width="641" alt="kWSL1" src="https://user-images.githubusercontent.com/33142753/82766604-ea801680-9df6-11ea-9045-6ab9540a5424.png">
-
-kWSL is accessible from anywhere on your network, you connect via Microsoft's Remote Desktop Client (mstsc.exe) 
+![Screenshot](kWSL.png)
 
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
@@ -27,7 +25,7 @@ Enter DPI Scaling or hit Enter to use default [96]:
 kWSL to be installed in C:\kWSL
 ```
 
-Exclusions will be automatically aded to Windows Defender:
+Exclusions will be automatically added to Windows Defender:
 
 ```
 Added exclusion for C:\kWSL
@@ -39,7 +37,7 @@ Added exclusion for C:\kWSL\rootfs\usr\local\bin\*
 Added exclusion for C:\kWSL\rootfs\usr\local\go\bin\*
 ```
 
-The installer will download all necessary packages to convert the old Debian Buster image into Devuan Linux with KDE.
+The installer will download all the necessary packages to convert the Windows Store Debian image into Devuan Linux with KDE.
 Near the end of the script you will be prompted to create a non-root user.  This user will be automatically added to sudo'ers.
 
 ```
