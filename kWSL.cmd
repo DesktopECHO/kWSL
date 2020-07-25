@@ -97,7 +97,9 @@ REM ## Install Mozilla
 SET RUNEND=%date% @ %time%
 
 REM ## Setup user access 
-CD %DISTROFULL%
+CD %DISTROFULL% 
+ECHO. 
+ECHO.
 SET /p XU=Enter name of %DISTRO% user: 
 BASH -c "useradd -m -p nulltemp -s /bin/bash %XU%"
 POWERSHELL -Command $prd = read-host "Enter password" -AsSecureString ; $BSTR=[System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($prd) ; [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) > .tmp.txt & set /p PWO=<.tmp.txt
@@ -127,7 +129,7 @@ COPY /Y "%DISTROFULL%\%DISTRO% (%XU%) Console.cmd" "%USERPROFILE%\Desktop\%DISTR
 COPY /Y "%DISTROFULL%\%DISTRO% (%XU%) Desktop.rdp" "%USERPROFILE%\Desktop\%DISTRO% (%XU%) Desktop.rdp" > NUL
 START /MIN "%DISTRO% Init" WSL ~ -u root -d %DISTRO% -e initWSL 2
 FOR /f "delims=" %%n in ('whoami') do set WAI=%%n
-SCHTASKS /CREATE /RU "%WAI%" /RL HIGHEST /SC ONSTART /TN %DISTRO% /TR "%DISTROFULL%\%DISTRO%-Init.cmd" /F
+SCHTASKS /CREATE /RU "%WAI%" /RL HIGHEST /SC ONSTART /TN %DISTRO% /TR "%DISTROFULL%\%DISTRO%-Init.cmd" /F > NUL
 ECHO $task = Get-ScheduledTask %DISTRO% ; $task.Settings.ExecutionTimeLimit = "PT0S" ; Set-ScheduledTask $task > %TEMP%\ExecTimeLimit.ps1
 POWERSHELL -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -COMMAND %TEMP%\ExecTimeLimit.ps1 > NUL
 ECHO.
@@ -142,7 +144,7 @@ ECHO.
 ECHO.  - (Re)launch init from the Task Scheduler or by running the following command: 
 ECHO.    schtasks /run /tn %DISTRO%
 ECHO. 
-ECHO. %DISTRO% Installation Complete, GUI will start in a few seconds...  
+ECHO. %DISTRO% Installation Complete!  GUI will start in a few seconds...  
 PING -n 6 LOCALHOST > NUL 
 START "Remote Desktop Connection" "MSTSC.EXE" "/V" "%DISTROFULL%\%DISTRO% (%XU%) Desktop.rdp"
 :ENDSCRIPT
