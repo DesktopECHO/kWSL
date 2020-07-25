@@ -6,7 +6,7 @@
 - xRDP Display Server, no additional X Server downloads required
 - RDP Audio playback enabled (YouTube playback in browser works)
 
-<img width="641" alt="kWSL1" src="https://user-images.githubusercontent.com/33142753/82766604-ea801680-9df6-11ea-9045-6ab9540a5424.png">
+![Screenshot](kWSL.png)
 
 kWSL is accessible from anywhere on your network, you connect via Microsoft's Remote Desktop Client (mstsc.exe) 
 
