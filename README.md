@@ -73,6 +73,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 **Quirks Addressed and other interesting tidbits:**
 - WSL1 Has issues with the latest libc6 library.  The package is being held until fixes from MS are released over Windows Update.  Unmark and update libc6 after MS releases the update.
 - WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to allow running GUI apps with elevated rights.  
+- Patched KDE Lockscreen and KDE Activity Manager to resolve shared memory and PolicyKit issues
 - Rolled back and held xRDP until the current update is better-behaved (xrdp-chansrv high CPU %)
 - Current versions of Chrome or Firefox do not work in WSL1; Mozilla Seamonkey is included as the 'officical' stable/maintained browser
 - Installed image consumes approximately 2.6 GB of disk space
