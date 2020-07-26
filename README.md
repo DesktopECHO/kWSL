@@ -74,7 +74,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 -  kWSL can be converted easily to WSL2.  Only one adjustment is necessary:  Change the hostname in the .RDP connection file to point at the WSL2 instance.  This is taken care of by ZeroConf (Avahi/Bonjour)
     ```wsl --set-version <Distro> 2```
  - Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus ```-kwsl.local```
-For example, if the current value is ```LAPTOP.DOMAIN.COM```, change it to ```LAPTIOP-kwsl.local``` and save the connection file.  This allows the WSL VM's IP to change and we can still find it without issue.
+For example, if the current value is ```LAPTOP.DOMAIN.COM:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the connection file.  This allows the WSL VM's IP to change and we can still find it without issue.
 
 **Quirks Addressed and other interesting tidbits:**
 - WSL1 Has issues with the latest libc6 library.  The package is being held until fixes from MS are released over Windows Update.  Unmark and update libc6 after MS releases the update.
