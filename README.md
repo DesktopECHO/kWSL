@@ -81,8 +81,12 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 If you haven't forked a project on GitHib before now is a great opportunity to try.
 
 - Sign into GitHub and fork this project
-- Edit ```kWSL.cmd```  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to whatever your repository name is
+- Edit ```kWSL.cmd``` and on line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to whatever you named your repository.
 - Customise this script in any way you like, it's now your copy to play with!
+- Launch the script using your repository name:
+ ```PowerShell -executionpolicy bypass -command "wget https://github.com/YOUR-REPO-NAME/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"```
+
+
 
 **Quirks Addressed / Additional Info:**
 - If you want to use an X Server instead of xRDP you certainly can do so.  Custom ```export``` settings are stored in ```/etc/profile.d/WinNT.sh```   
