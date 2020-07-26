@@ -82,7 +82,7 @@ If you haven't forked a project on GitHib before now is a great opportunity to t
 
 - Sign into GitHub and fork this project
 - Edit ```kWSL.cmd```  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to whatever your repository name is
-- Customise this script in any way you like, it's your copy to play with!
+- Customise this script in any way you like, it's now your copy to play with!
 
 **Quirks Addressed / Additional Info:**
 - If you want to use an X Server instead of xRDP you certainly can do so.  Custom ```export``` settings are stored in ```/etc/profile.d/WinNT.sh```   
