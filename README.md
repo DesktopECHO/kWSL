@@ -78,6 +78,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 
 **Make it your own**
 If you haven't forked a project on GitHib before now is a great opportunity.
+
 - Sign into GitHub and fork this project
 - Edit ```kWSL.cmd```  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to whatever your repository name is
 - Customise this script in any way you like, it's your copy to mess with!
