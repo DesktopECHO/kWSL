@@ -1,6 +1,6 @@
 # kWSL.cmd
 
-- Simplicity - A 'one-liner' sets up KDE in WSL and quirks are resolved for you (see Wiki for details)
+- Simplicity - A 'one-liner' sets up KDE in WSL and the quirks get resolved for you (see Wiki for details)
 - Runs on Windows Server 2019 or Windows 10 Version 1803 (or newer, including Server Core)
 - KDE 5.17 on Devuan Linux (Tracking with what will become Debian Bullseye, without systemd) 
 - xRDP Display Server, no additional X Server downloads required
