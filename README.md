@@ -85,4 +85,4 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 - Installed image consumes approximately 2.6 GB of disk space
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas) for a pleasant looking UI
 - Passwords saved for RDP connection use Windows credential store
-- This is a minimal installation of KDE to save time downloading, if you want the full environmnet run ```sudo apt-get install kde-full```
+- This is a minimal installation of KDE to minimize download time.  If you want the **full** KDE Desktop environmnet run ```sudo apt-get install kde-full```
