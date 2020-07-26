@@ -77,11 +77,12 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 - For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the connection file.  This allows the WSL VM's IP to change and it still can be found without issue.
 
 **Make it your own**
-If you haven't forked a project on GitHib before now is a great opportunity.
+
+If you haven't forked a project on GitHib before now is a great opportunity to try.
 
 - Sign into GitHub and fork this project
 - Edit ```kWSL.cmd```  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to whatever your repository name is
-- Customise this script in any way you like, it's your copy to mess with!
+- Customise this script in any way you like, it's your copy to play with!
 
 **Quirks Addressed / Additional Info:**
 - If you want to use an X Server instead of xRDP you certainly can do so.  Custom ```export``` settings are stored in ```/etc/profile.d/WinNT.sh```   
