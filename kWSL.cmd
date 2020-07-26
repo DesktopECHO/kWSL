@@ -76,7 +76,7 @@ REM ## Customize
 %GO% "sed -i 's/thinclient_drives/.kWSL/g' /etc/xrdp/sesman.ini"
 %GO% "sed -i 's/forceFontDPI=0/forceFontDPI=%LINDPI%/g' /tmp/kWSL/dist/etc/skel/.config/kcmfonts"
 %GO% "sed -i 's/#enable-dbus=yes/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf ; sed -i 's/#host-name=foo/host-name=%COMPUTERNAME%-%DISTRO%/g' /etc/avahi/avahi-daemon.conf"
-%GO% "ln -s /mnt/c/Windows/Fonts /usr/share/fonts/truetype/microsoft ; rm -rf /etc/pam.d/systemd-user ; rm -rf /etc/systemd ; rm -rf /usr/share/icons/breeze_cursors ; rm -rf /usr/share/icons/Breeze_Snow/cursors ; ssh-keygen -A ; adduser xrdp ssl-cert"
+%GO% "cp /mnt/c/Windows/Fonts/*.ttf /usr/share/fonts/truetype ; rm -rf /etc/pam.d/systemd-user ; rm -rf /etc/systemd ; rm -rf /usr/share/icons/breeze_cursors ; rm -rf /usr/share/icons/Breeze_Snow/cursors ; ssh-keygen -A ; adduser xrdp ssl-cert"
 %GO% "rm /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet ; strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 ; apt-get -qq remove udev"
 %GO% "mv /usr/bin/pkexec /usr/bin/pkexec.orig ; echo gksudo -k -S -g \$1 > /usr/bin/pkexec ; chmod 755 /usr/bin/pkexec"
 %GO% "chmod 644 /tmp/kWSL/dist/etc/wsl.conf"
