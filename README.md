@@ -73,7 +73,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 **Convert to WSL2 Virtual Machine**
 -  kWSL will convert easily to WSL2.  Only one additional adjustment is necessary; change the hostname in the .RDP connection file to point at the WSL2 instance.  This is taken care of by ZeroConf (Avahi/Bonjour)  First convert the instance:
     ```wsl --set-version <Distro> 2```
-- Assuming we're using the default distro name of ```kWSL``` (or use whatever name you gave to the distro.)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kwsl.local```**
+- Assuming we're using the default distro name of ```kWSL``` (or use whatever name you gave to the distro.)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kWSL.local```**
 - For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the connection file.  This allows the WSL VM's IP to change and it still can be found without issue.
 
 **Quirks Addressed and other interesting tidbits:**
