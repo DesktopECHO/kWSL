@@ -94,4 +94,4 @@ If you haven't forked a project on GitHib before now is a great opportunity to t
 - Installed image consumes approximately 2.6 GB of disk space
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas) for a pleasant looking UI
 - Passwords saved for RDP connection use Windows credential store
-- This is a minimal installation of KDE to minimize download time.  If you want the **full** KDE Desktop environmnet run ```sudo apt-get install kde-full```
+- This is a minimal installation of KDE to minimize download time.  If you want the **full** KDE Desktop environment run ```sudo apt-get install kde-full```
