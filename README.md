@@ -2,7 +2,7 @@
 
 - Simplicity - A 'one-liner' sets up KDE in WSL, the quirks get resolved for you (see Wiki for details)
 - Runs on Windows Server 2019 or Windows 10 Version 1803 (or newer, including Server Core)
-- KDE 5.17 on Devuan Linux (Tracking with what will become Debian Bullseye, without systemd) 
+- KDE 5.17 on Devuan Linux (Tracking with what becomes Debian Bullseye, minus systemd) 
 - xRDP Display Server, no additional X Server downloads required
 - RDP Audio playback enabled (YouTube playback in browser works)
 
@@ -77,6 +77,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 - For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the connection file.  This allows the WSL VM's IP to change and it still can be found without issue.
 
 **Quirks Addressed / Additional Info:**
+- If you want to use an X Server instead of xRDP you certainly can do so.  Custom ```export``` settings are stored in ```/etc/profile.d/WinNT.sh```   
 - WSL1 Has issues with the latest libc6 library.  The package is being held until fixes from MS are released over Windows Update.  Unmark and update libc6 after MS releases the update.
 - WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to allow running GUI apps with elevated rights.  
 - Patched KDE Lockscreen and KDE Activity Manager to resolve shared memory and PolicyKit issues
