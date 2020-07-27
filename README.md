@@ -1,6 +1,6 @@
 # kWSL.cmd
 
-- Simplicity - A 'one-liner' sets up KDE in WSL, the quirks get resolved for you (see Wiki for details)
+- Simplicity - A 'one-liner' completely sets up KDE in WSL (see Wiki for a list of custom packages)
 - Runs on Windows Server 2019 or Windows 10 Version 1803 (or newer, including Server Core)
 - KDE 5.17 on Devuan Linux (Tracking with what is to become Debian Bullseye, only without systemd) 
 - xRDP Display Server, no additional X Server downloads required
@@ -74,7 +74,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 -  kWSL will convert easily to WSL2.  Only one additional adjustment is necessary; change the hostname in the .RDP connection file to point at the WSL2 instance.  First convert the instance:
     ```wsl --set-version [DistroName] 2```
 - Assuming we're using the default distro name of ```kWSL``` (use whatever name you assigned to the distro)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kWSL.local```**  Your WSL2 instance resolves magically using multicast DNS (Thanks Apple!) 
-- For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the connection file.  
+- For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the RDP connection file.  
 
 **Make it your own:**
 
