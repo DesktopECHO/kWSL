@@ -92,7 +92,7 @@ From a security standpoint, it would be best to fork this project so you (and on
 - WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to accommodate GUI apps that need elevated rights.  
 - Patched KDE Lockscreen and KDE Activity Manager to resolve shared memory and PolicyKit issues
 - Rolled back and held xRDP until the current update is better-behaved (xrdp-chansrv high CPU %)
-- Current versions of Chrome or Firefox do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
+- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
 - Installed image consumes approximately 2.6 GB of disk space
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
 - Copy/Paste of text and images work reliably between Windows and Linux
