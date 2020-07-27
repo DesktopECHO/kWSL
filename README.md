@@ -73,7 +73,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 **Convert to WSL2 Virtual Machine:**
 -  kWSL will convert easily to WSL2.  Only one additional adjustment is necessary; change the hostname in the .RDP connection file to point at the WSL2 instance.  First convert the instance:
     ```wsl --set-version [DistroName] 2```
-- Assuming we're using the default distro name of ```kWSL``` (use whatever name you assigned to the distro)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kWSL.local```**  Your WSL2 instance resolves magically using multicast DNS (Thanks Apple!) 
+- Assuming we're using the default distro name of ```kWSL``` (use whatever name you assigned to the distro)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kWSL.local```**  Your WSL2 instance resolves seamlessly using multicast DNS  
 - For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the RDP connection file.  
 
 **Make it your own:**
@@ -87,7 +87,7 @@ From a security standpoint, it would be best to fork this project so you (and on
  ```PowerShell -executionpolicy bypass -command "wget https://github.com/YOUR-REPO-NAME/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"```
 
 **Quirks Addressed / Additional Info:**
-- kWSL should work fine with an X Server but this has not been tested thoroughly.  The file ```/etc/profile.d/WinNT.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
+- kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/WinNT.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
 - WSL1 Has issues with the latest libc6 library.  The package is being held until fixes from MS are released over Windows Update.  Unmark and update libc6 after MS releases the update.
 - WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to accomodate GUI apps that need elevated rights.  
 - Patched KDE Lockscreen and KDE Activity Manager to resolve shared memory and PolicyKit issues
