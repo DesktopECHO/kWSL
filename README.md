@@ -71,31 +71,29 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
    Reboot your PC.  kWSL will automatically start at boot, no need to login to Windows.
 
 **Convert to WSL2 Virtual Machine:**
--  kWSL will convert easily to WSL2.  Only one additional adjustment is necessary; change the hostname in the .RDP connection file to point at the WSL2 instance.  This is taken care of by ZeroConf (Avahi/Bonjour)  First convert the instance:
+-  kWSL will convert easily to WSL2.  Only one additional adjustment is necessary; change the hostname in the .RDP connection file to point at the WSL2 instance.  First convert the instance:
     ```wsl --set-version [DistroName] 2```
-- Assuming we're using the default distro name of ```kWSL``` (or use whatever name you gave to the distro.)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kWSL.local```**
-- For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the connection file.  This allows the WSL VM's IP to change and it still can be found without issue.
+- Assuming we're using the default distro name of ```kWSL``` (or use whatever name you gave to the distro.)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kWSL.local```**  Your WSL2 instance resolves magically using multicast DNS (Thanks Apple!) 
+- For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the connection file.  
 
 **Make it your own:**
 
-If you haven't forked a project on GitHib before now is a great opportunity to try.
+From a security standpoint, it would be best to fork this project so you (and only you) control the packages and files in the repository.
 
 - Sign into GitHub and fork this project
-- Edit ```kWSL.cmd``` and on line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to whatever you named your repository.
-- Customise this script in any way you like, it's now your copy to play with!
+- Edit ```kWSL.cmd```.  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to the name of your own epository.
+- Customize the script any way you like.
 - Launch the script using your repository name:
  ```PowerShell -executionpolicy bypass -command "wget https://github.com/YOUR-REPO-NAME/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"```
 
-
-
 **Quirks Addressed / Additional Info:**
-- If you want to use an X Server instead of xRDP you certainly can do so.  Custom ```export``` settings are stored in ```/etc/profile.d/WinNT.sh```   
+- kWSL should work fine with an X Server but this has not been tested thoroughly.  The file ```/etc/profile.d/WinNT.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
 - WSL1 Has issues with the latest libc6 library.  The package is being held until fixes from MS are released over Windows Update.  Unmark and update libc6 after MS releases the update.
-- WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to allow running GUI apps with elevated rights.  
+- WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to accomodate GUI apps that need elevated rights.  
 - Patched KDE Lockscreen and KDE Activity Manager to resolve shared memory and PolicyKit issues
 - Rolled back and held xRDP until the current update is better-behaved (xrdp-chansrv high CPU %)
 - Current versions of Chrome or Firefox do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
 - Installed image consumes approximately 2.6 GB of disk space
-- KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas) for a pleasant looking UI
-- Passwords saved for RDP connection use Windows credential store
-- This is a minimal installation of KDE to minimize download time.  If you want the **full** KDE Desktop environment run ```sudo apt-get install kde-full```
+- KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
+- Copy/Paste of text and images work reliably between Windows and Linux
+- This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment run ```sudo apt-get install kde-full``` 
