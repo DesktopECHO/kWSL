@@ -81,7 +81,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 From a security standpoint, it would be best to fork this project so you (and only you) control the packages and files in the repository.
 
 - Sign into GitHub and fork this project
-- Edit ```kWSL.cmd```.  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to the name of your own epository.
+- Edit ```kWSL.cmd```.  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to the name of your own repository.
 - Customize the script any way you like.
 - Launch the script using your repository name:
  ```PowerShell -executionpolicy bypass -command "wget https://github.com/YOUR-REPO-NAME/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"```
