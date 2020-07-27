@@ -89,7 +89,7 @@ From a security standpoint, it would be best to fork this project so you (and on
 **Quirks Addressed / Additional Info:**
 - kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/WinNT.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
 - WSL1 Has issues with the latest libc6 library.  The package is being held until fixes from MS are released over Windows Update.  Unmark and update libc6 after MS releases the update.
-- WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to accomodate GUI apps that need elevated rights.  
+- WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to accommodate GUI apps that need elevated rights.  
 - Patched KDE Lockscreen and KDE Activity Manager to resolve shared memory and PolicyKit issues
 - Rolled back and held xRDP until the current update is better-behaved (xrdp-chansrv high CPU %)
 - Current versions of Chrome or Firefox do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
