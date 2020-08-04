@@ -110,7 +110,7 @@ BASH -c "echo %XU%:%PWO% | chpasswd"
 %GO% "cp /tmp/kWSL/kWSL.rdp ./kWSL._"
 ECHO $prd = Get-Content .tmp.txt > .tmp.ps1
 ECHO ($prd ^| ConvertTo-SecureString -AsPlainText -Force) ^| ConvertFrom-SecureString ^| Out-File .tmp.txt  >> .tmp.ps1
-POWERSHELL -Command .tmp.ps1 
+POWERSHELL -executionpolicy bypass -Command .tmp.ps1 
 TYPE .tmp.txt>.tmpsec.txt
 COPY /y /b %DISTROFULL%\kWSL._+.tmpsec.txt "%DISTROFULL%\%DISTRO% (%XU%) Desktop.rdp" > NUL
 DEL /Q  kWSL._ .tmp*.* > NUL
