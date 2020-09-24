@@ -7,7 +7,7 @@
 ############
 
 # Find registered WSL environments
-$wslPaths = (Get-ChildItem HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss | ForEach-Object { Get-ItemProperty $_.PSPath}).BasePath
+param ($wslPaths)
 
 # Get the current Windows Defender exclusion paths
 $currentExclusions = $(Get-MpPreference).ExclusionPath
