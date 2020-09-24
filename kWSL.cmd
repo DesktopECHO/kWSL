@@ -39,7 +39,7 @@ IF /I %CD%==C:\Windows\System32 CD %HOMEPATH%
 SET DISTROFULL=%CD%\%DISTRO%
 SET _rlt=%DISTROFULL:~2,2%
 IF "%_rlt%"=="\\" SET DISTROFULL=%CD%%DISTRO%
-SET GO=%DISTROFULL%\LxRunOffline.exe r -n %DISTRO% -c 
+SET GO=PAUSE && %DISTROFULL%\LxRunOffline.exe r -n %DISTRO% -c 
 ECHO %DISTRO% to be installed in %DISTROFULL% && ECHO Downloading... (or using local copy if available)
 IF NOT EXIST %TEMP%\Debian.zip POWERSHELL.EXE -Command "wget https://aka.ms/wsl-debian-gnulinux -UseBasicParsing -OutFile %TEMP%\Debian.zip"
 POWERSHELL.EXE -command "Expand-Archive -Path %TEMP%\Debian.zip -DestinationPath %TEMP% -force
