@@ -117,7 +117,7 @@ IF %LINDPI% LSS 120 ( %GO% "sed -i 's/Default-hdpi/Default/g' /tmp/kWSL/dist/etc
 %GO% "sed -i 's/#enable-dbus=yes/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf ; sed -i 's/#host-name=foo/host-name=%COMPUTERNAME%-%DISTRO%/g' /etc/avahi/avahi-daemon.conf"
 %GO% "cp /mnt/c/Windows/Fonts/*.ttf /usr/share/fonts/truetype ; rm -rf /usr/share/icons/breeze_cursors ; rm -rf /usr/share/icons/Breeze_Snow/cursors"
 %GO% "mv /usr/bin/pkexec /usr/bin/pkexec.orig ; echo gksudo -k -S -g \$1 > /usr/bin/pkexec ; chmod 755 /usr/bin/pkexec"
-%GO% "chmod 644 /tmp/kWSL/dist/var/lib/xrdp-pulseaudio-installer/*.so ; chmod 644 /tmp/kWSL/dist/etc/wsl.conf ; chmod 700 /tmp/kWSL/dist/usr/local/bin/initWSL ; chmod 7700 /tmp/kWSL/dist/etc/skel/.config ; chmod 7700 /tmp/kWSL/dist/etc/skel/.local ; chmod 700 /tmp/kWSL/dist/etc/skel/.gconf ; chmod 700 /tmp/kWSL/dist/etc/skel/.mozilla ; /tmp/kWSL/dist/etc/profile.d/WinNT.sh ; chmod 644 /tmp/kWSL/dist/etc/xrdp/xrdp.ini ; chmod 755 /tmp/kWSL/dist/etc/xrdp/startwm.sh"
+%GO% "chmod 644 /tmp/kWSL/dist/var/lib/xrdp-pulseaudio-installer/*.so ; chmod 644 /tmp/kWSL/dist/etc/wsl.conf ; chmod 700 /tmp/kWSL/dist/usr/local/bin/initWSL ; chmod 7700 /tmp/kWSL/dist/etc/skel/.config ; chmod 7700 /tmp/kWSL/dist/etc/skel/.local ; chmod 700 /tmp/kWSL/dist/etc/skel/.gconf ; chmod 700 /tmp/kWSL/dist/etc/skel/.mozilla ; chmod 644 /tmp/kWSL/dist/etc/profile.d/WinNT.sh ; chmod 644 /tmp/kWSL/dist/etc/xrdp/xrdp.ini ; chmod 755 /tmp/kWSL/dist/etc/xrdp/startwm.sh"
 %GO% "cp -rp /tmp/kWSL/dist/* /"
 %GO% "ssh-keygen -A ; strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5"
 
