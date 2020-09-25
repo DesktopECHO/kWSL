@@ -41,7 +41,7 @@ SET _rlt=%DISTROFULL:~2,2%
 IF "%_rlt%"=="\\" SET DISTROFULL=%CD%%DISTRO%
 SET GO=%DISTROFULL%\LxRunOffline.exe r -n %DISTRO% -c 
 ECHO %DISTRO% to be installed in %DISTROFULL% && ECHO Downloading... (or using local copy if available)
-IF NOT EXIST %TEMP%\Debian.zip POWERSHELL.EXE -Command "wget https://aka.ms/wsl-debian-gnulinux -UseBasicParsing -OutFile %TEMP%\Debian.zip"
+IF NOT EXIST %TEMP%\Debian.zip POWERSHELL.EXE -Command "Start-BitsTransfer -source https://aka.ms/wsl-debian-gnulinux -destination %TEMP%\Debian.zip"
 POWERSHELL.EXE -command "Expand-Archive -Path %TEMP%\Debian.zip -DestinationPath %TEMP% -force
 
 REM ## Install Distro with LxRunOffline / https://github.com/DDoSolitary/LxRunOffline
@@ -91,7 +91,7 @@ REM ## Install Seamonkey Browser
 %GO% "update-alternatives --install /usr/bin/www-browser www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/gnome-www-browser gnome-www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/seamonkey 100"
 PAUSE
 
-REM ## Install Media Player and Image Editor
+REM ## Install Media Player
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install parole"
 PAUSE
 
