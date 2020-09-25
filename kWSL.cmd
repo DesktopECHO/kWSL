@@ -1,7 +1,7 @@
 @ECHO OFF
 SET GITORG=DesktopECHO
 SET GITPRJ=kWSL
-SET BRANCH=testing
+SET BRANCH=master
 SET BASE=https://github.com/%GITORG%/%GITPRJ%/raw/%BRANCH%
 
 REM ## UAC Check 
