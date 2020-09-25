@@ -70,7 +70,7 @@ REM ## Download kWSL overlay
 %GO% "mkdir -p /root/.local/share ; apt-get -y remove rsyslog ; apt-get update"
 
 REM ## Install local packages
-%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/gksu_2.1.0_amd64.deb /tmp/kWSL/deb/libgksu2-0_2.1.0_amd64.deb /tmp/kWSL/deb/libgnome-keyring0_3.12.0-1+b2_amd64.deb /tmp/kWSL/deb/libgnome-keyring-common_3.12.0-1_all.deb /tmp/kWSL/deb/multiarch-support_2.27-3ubuntu1_amd64.deb /tmp/kWSL/deb/xrdp_0.9.13.1-2_amd64.deb /tmp/kWSL/deb/xorgxrdp_0.2.12-1_amd64.deb /tmp/kWSL/deb/plata-theme_0.9.8-0ubuntu1~focal1_all.deb /tmp/kWSL/deb/libjpeg8_8d-1.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb --no-install-recommends ; adduser xrdp ssl-cert"
+%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/fonts-cascadia-code_2005.15-1_all.deb /tmp/kWSL/deb/gksu_2.1.0_amd64.deb /tmp/kWSL/deb/libgksu2-0_2.1.0_amd64.deb /tmp/kWSL/deb/libgnome-keyring0_3.12.0-1+b2_amd64.deb /tmp/kWSL/deb/libgnome-keyring-common_3.12.0-1_all.deb /tmp/kWSL/deb/multiarch-support_2.27-3ubuntu1_amd64.deb /tmp/kWSL/deb/xrdp_0.9.13.1-2_amd64.deb /tmp/kWSL/deb/xorgxrdp_0.2.12-1_amd64.deb /tmp/kWSL/deb/plata-theme_0.9.8-0ubuntu1~focal1_all.deb /tmp/kWSL/deb/libjpeg8_8d-1.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb --no-install-recommends ; adduser xrdp ssl-cert"
 
 REM ## Install dependencies for desktop environments
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install x11-apps x11-session-utils x11-xserver-utils pulseaudio pulseaudio-utils dialog distro-info-data lsb-release dumb-init inetutils-syslogd xdg-utils avahi-daemon libnss-mdns binutils putty synaptic pulseaudio-utils mesa-utils bzip2 p7zip-full unar unzip zip libatkmm-1.6-1v5 libcairomm-1.0-1v5 libcanberra-gtk3-0 libcanberra-gtk3-module libglibmm-2.4-1v5 libgtkmm-3.0-1v5 libpangomm-1.4-1v5 libsigc++-2.0-0v5 dbus-x11 libdbus-glib-1-2 libqt5core5a hardinfo distro-info-data --no-install-recommends"
@@ -98,6 +98,7 @@ REM ## Remove un-needed packages
 %GO% "apt-get -qq purge cryptsetup cryptsetup-bin cryptsetup-initramfs cryptsetup-run irqbalance multipath-tools apparmor snapd squashfs-tools plymouth  open-vm-tools cloud-init isc-dhcp-* gnustep* lvm2* mdadm apport open-iscsi powermgmt-base popularity-contest fwupd libfwupd2 ; apt-get -qq autoremove ; apt-get -qq clean" > NUL
 
 REM ## Customize
+SET /A SESMAN = %RDPPRT% - 50
 IF %LINDPI% GEQ 288 ( %GO% "sed -i 's/HISCALE/3/g' /tmp/kWSL/dist/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml" )
 IF %LINDPI% GEQ 192 ( %GO% "sed -i 's/HISCALE/2/g' /tmp/kWSL/dist/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml" )
 IF %LINDPI% GEQ 192 ( %GO% "sed -i 's/Default-hdpi/Default-xhdpi/g' /tmp/kWSL/dist/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml" )
@@ -106,7 +107,7 @@ IF %LINDPI% GEQ 192 ( %GO% "sed -i 's/QQQ/96/g' /tmp/kWSL/dist/etc/skel/.config/
 IF %LINDPI% LSS 192 ( %GO% "sed -i 's/QQQ/%LINDPI%/g' /tmp/kWSL/dist/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml" )
 IF %LINDPI% LSS 192 ( %GO% "sed -i 's/HISCALE/1/g' /tmp/kWSL/dist/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml" )
 IF %LINDPI% LSS 120 ( %GO% "sed -i 's/Default-hdpi/Default/g' /tmp/kWSL/dist/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml" )
-SET /A SESMAN = %RDPPRT% - 50
+%GO% "sed -i 's/forceFontDPI=0/forceFontDPI=%LINDPI%/g' /tmp/kWSL/dist/etc/skel/.config/kcmfonts"
 %GO% "sed -i 's/ListenPort=3350/ListenPort=%SESMAN%/g' /etc/xrdp/sesman.ini"
 %GO% "sed -i 's/thinclient_drives/.kWSL/g' /etc/xrdp/sesman.ini"
 %GO% "sed -i 's/port=3389/port=%RDPPRT%/g' /tmp/kWSL/dist/etc/xrdp/xrdp.ini ; cp /tmp/kWSL/dist/etc/xrdp/xrdp.ini /etc/xrdp/xrdp.ini"
@@ -116,10 +117,7 @@ SET /A SESMAN = %RDPPRT% - 50
 %GO% "sed -i 's/#enable-dbus=yes/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf ; sed -i 's/#host-name=foo/host-name=%COMPUTERNAME%-%DISTRO%/g' /etc/avahi/avahi-daemon.conf"
 %GO% "cp /mnt/c/Windows/Fonts/*.ttf /usr/share/fonts/truetype ; rm -rf /usr/share/icons/breeze_cursors ; rm -rf /usr/share/icons/Breeze_Snow/cursors"
 %GO% "mv /usr/bin/pkexec /usr/bin/pkexec.orig ; echo gksudo -k -S -g \$1 > /usr/bin/pkexec ; chmod 755 /usr/bin/pkexec"
-%GO% "chmod 644 /tmp/kWSL/dist/etc/wsl.conf"
-%GO% "chmod 644 /tmp/kWSL/dist/var/lib/xrdp-pulseaudio-installer/*.so"
-%GO% "chmod 700 /tmp/kWSL/dist/usr/local/bin/initWSL ; chmod 7700 /tmp/kWSL/dist/etc/skel/.config ; chmod 7700 /tmp/kWSL/dist/etc/skel/.local ; chmod 700 /tmp/kWSL/dist/etc/skel/.gconf ; chmod 700 /tmp/kWSL/dist/etc/skel/.mozilla"
-%GO% "chmod 644 /tmp/kWSL/dist/etc/profile.d/WinNT.sh ; chmod 644 /tmp/kWSL/dist/etc/xrdp/xrdp.ini ; chmod 755 /tmp/kWSL/dist/etc/xrdp/startwm.sh"
+%GO% "chmod 644 /tmp/kWSL/dist/var/lib/xrdp-pulseaudio-installer/*.so ; chmod 644 /tmp/kWSL/dist/etc/wsl.conf ; chmod 700 /tmp/kWSL/dist/usr/local/bin/initWSL ; chmod 7700 /tmp/kWSL/dist/etc/skel/.config ; chmod 7700 /tmp/kWSL/dist/etc/skel/.local ; chmod 700 /tmp/kWSL/dist/etc/skel/.gconf ; chmod 700 /tmp/kWSL/dist/etc/skel/.mozilla ; /tmp/kWSL/dist/etc/profile.d/WinNT.sh ; chmod 644 /tmp/kWSL/dist/etc/xrdp/xrdp.ini ; chmod 755 /tmp/kWSL/dist/etc/xrdp/startwm.sh"
 %GO% "cp -rp /tmp/kWSL/dist/* /"
 %GO% "ssh-keygen -A ; strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5"
 
