@@ -54,63 +54,53 @@ REM ## Add exclusions in Windows Defender if requested
 IF NOT EXIST %TEMP%\excludeWSL.ps1 POWERSHELL.EXE -Command "wget %BASE%/excludeWSL.ps1 -UseBasicParsing -OutFile %TEMP%\excludeWSL.ps1"
 IF %DEFEXL%==X POWERSHELL.EXE -ExecutionPolicy bypass -command "%TEMP%\excludeWSL.ps1 '%DISTROFULL%'"
 
-PAUSE
 REM ## Configure
+CD %DISTROFULL%
 %GO% "cd /tmp ; wget -q http://deb.devuan.org/devuan/pool/main/d/devuan-keyring/devuan-keyring_2017.10.03_all.deb ; wget -q http://ftp.br.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20200601~deb9u1_all.deb ; wget -q http://ftp.br.debian.org/debian/pool/main/o/openssl/openssl_1.1.0l-1~deb9u1_amd64.deb ; wget -q http://ftp.br.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.0l-1~deb9u1_amd64.deb"
-PAUSE
 %GO% "cd /tmp ; dpkg -i --force-all ./devuan-keyring_2017.10.03_all.deb ./ca-certificates_20200601~deb9u1_all.deb ./openssl_1.1.0l-1~deb9u1_amd64.deb ./libssl1.1_1.1.0l-1~deb9u1_amd64.deb" > NUL
-PAUSE
 %GO% "echo deb     http://deb.devuan.org/merged chimaera main >  /etc/apt/sources.list" 
-PAUSE
 %GO% "echo deb-src http://deb.devuan.org/merged chimaera main >> /etc/apt/sources.list"
-PAUSE
 %GO% "cd /tmp ; apt-get update ; touch /etc/mtab ; wget -q %BASE%/deb/libc6_2.30-8_amd64.deb ; wget -q %BASE%/deb/libc-bin_2.30-8_amd64.deb ; apt-get -qq install ./libc6_2.30-8_amd64.deb ./libc-bin_2.30-8_amd64.deb ; apt-mark hold libc6"
-PAUSE
 %GO% "cd /tmp ; apt-get -y install base-files dirmngr git --no-install-recommends ; wget -q %BASE%/deb/locales_2.30-8_all.deb ; apt-get -y install ./locales_2.30-8_all.deb"
-PAUSE
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade --no-install-recommends"
-PAUSE
 %GO% "update-locale LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 ; dpkg-reconfigure --frontend noninteractive locales"
-PAUSE
-%GO% "cd /tmp ; git clone --depth=1 https://github.com/%GITORG%/%GITPRJ%.git"
-PAUSE
-%GO% "cd /tmp ; wget -q %BASE%/deb/libc-dev-bin_2.30-8_amd64.deb ; wget -q %BASE%/deb/libc6-dev_2.30-8_amd64.deb ; apt-get -qq install ./libc-dev-bin_2.30-8_amd64.deb ./libc6-dev_2.30-8_amd64.deb"
-PAUSE
-%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/gksu_2.1.0_amd64.deb /tmp/kWSL/deb/libgksu2-0_2.1.0_amd64.deb /tmp/kWSL/deb/libgnome-keyring0_3.12.0-1+b2_amd64.deb /tmp/kWSL/deb/libgnome-keyring-common_3.12.0-1_all.deb /tmp/kWSL/deb/xrdp_0.9.13.1-2_amd64.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb /tmp/kWSL/deb/libjpeg8_8d-1.deb /tmp/kWSL/deb/wslu_3.1.1-1_all.deb xorgxrdp dialog elogind libelogind0 libpam-elogind --no-install-recommends ; apt-get -y remove rsyslog"
-PAUSE
-%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install xdg-utils kde-plasma-desktop kinfocenter kwin-x11 ssh avahi-daemon libnss-mdns binutils systemsettings gnome-terminal putty mousepad synaptic kde-config-gtk-style-preview breeze-gtk-theme inetutils-syslogd kmix pulseaudio-utils pulseaudio mesa-utils ntp ksysguard ksysguard-data kmenuedit kde-config-gtk-style ark bzip2 p7zip-full unar unzip zip flameshot kolourpaint extremetuxracer distro-info-data lsb-release dumb-init --no-install-recommends"
 
 REM ## Download kWSL overlay
-CD %DISTROFULL%
 %GO% "cd /tmp ; git clone -b %BRANCH% --depth=1 https://github.com/%GITORG%/%GITPRJ%.git"
 %GO% "ssh-keygen -A ; mkdir -p /root/.local/share ; apt-get update"
 
 REM ## Install local packages
-%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/gksu_2.1.0_amd64.deb /tmp/kWSL/deb/libgksu2-0_2.1.0_amd64.deb /tmp/kWSL/deb/libgnome-keyring0_3.12.0-1+b2_amd64.deb /tmp/kWSL/deb/libgnome-keyring-common_3.12.0-1_all.deb /tmp/kWSL/deb/multiarch-support_2.27-3ubuntu1_amd64.deb /tmp/kWSL/deb/xrdp_0.9.13.1-2_amd64.deb /tmp/kWSL/deb/xorgxrdp_0.2.12-1_amd64.deb /tmp/kWSL/deb/plata-theme_0.9.8-0ubuntu1~focal1_all.deb /tmp/kWSL/deb/papirus-icon-theme_20200901-4672+pkg21~ubuntu20.04.1_all.deb /tmp/kWSL/deb/fonts-cascadia-code_2005.15-1_all.deb --no-install-recommends"
+%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/gksu_2.1.0_amd64.deb /tmp/kWSL/deb/libgksu2-0_2.1.0_amd64.deb /tmp/kWSL/deb/libgnome-keyring0_3.12.0-1+b2_amd64.deb /tmp/kWSL/deb/libgnome-keyring-common_3.12.0-1_all.deb /tmp/kWSL/deb/multiarch-support_2.27-3ubuntu1_amd64.deb /tmp/kWSL/deb/xrdp_0.9.13.1-2_amd64.deb /tmp/kWSL/deb/xorgxrdp_0.2.12-1_amd64.deb /tmp/kWSL/deb/plata-theme_0.9.8-0ubuntu1~focal1_all.deb /tmp/kWSL/deb/papirus-icon-theme_20200901-4672+pkg21~ubuntu20.04.1_all.deb /tmp/kWSL/deb/libjpeg8_8d-1.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb --no-install-recommends ; adduser xrdp ssl-cert"
+PAUSE
 
-REM ## Patch dependancies on shared memory 
+REM ## Install dependencies for desktop environments
+%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install x11-apps x11-session-utils x11-xserver-utils pulseaudio pulseaudio-utils dialog distro-info-data lsb-release dumb-init inetutils-syslogd xdg-utils avahi-daemon libnss-mdns binutils putty synaptic pulseaudio-utils mesa-utils bzip2 p7zip-full unar unzip zip libatkmm-1.6-1v5 libcairomm-1.0-1v5 libcanberra-gtk3-0 libcanberra-gtk3-module libglibmm-2.4-1v5 libgtkmm-3.0-1v5 libpangomm-1.4-1v5 libsigc++-2.0-0v5 dbus-x11 libdbus-glib-1-2 libqt5core5a hardinfo distro-info-data --no-install-recommends"
+PAUSE
+
+REM ## Install XFCE4
+REM ## %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install xfce4-terminal xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin pavucontrol xfwm4 xfce4-panel xfce4-session xfce4-settings thunar thunar-volman thunar-archive-plugin xfdesktop4 xfce4-screenshooter libsmbclient gigolo gvfs-fuse gvfs-backends gvfs-bin mousepad evince xarchiver lhasa lrzip lzip lzop ncompress zip unzip dmz-cursor-theme adapta-gtk-theme gconf-defaults-service xfce4-taskmanager -- no-install-recommends" 
+
+REM ## Install KDE and Patch out shm 
+%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install xdg-utils kde-plasma-desktop kinfocenter kwin-x11 ssh avahi-daemon libnss-mdns binutils systemsettings putty mousepad kde-config-gtk-style-preview breeze-gtk-theme kmix mesa-utils ntp ksysguard ksysguard-data kmenuedit kde-config-gtk-style ark bzip2 p7zip-full unar unzip zip flameshot kolourpaint extremetuxracer --no-install-recommends"
 %GO% "dpkg -i --force-all /tmp/kWSL/deb/libkf5activitiesstats1_5.70.0-1_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.17.5-2_amd64.deb /tmp/kWSL/deb/libkscreenlocker5_5.17.5-9wsl_amd64.deb /tmp/kWSL/deb/kde-config-screenlocker_5.17.5-9wsl_amd64.deb ; apt-mark hold kactivitymanagerd libkf5activitiesstats1 libkscreenlocker5 kde-config-screenlocker"
+PAUSE
 
 REM ## Install Seamonkey Browser
 %GO% "echo deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main >> /etc/apt/sources.list"
 %GO% "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 2667CA5C ; apt-get update ; apt-get -y install seamonkey-mozilla-build"
 %GO% "update-alternatives --install /usr/bin/www-browser www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/gnome-www-browser gnome-www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/seamonkey 100"
-
-REM ## Install dependencies for desktop environments
-%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install x11-apps x11-session-utils x11-xserver-utils pulseaudio dialog distro-info-data lsb-release dumb-init inetutils-syslogd xdg-utils avahi-daemon libnss-mdns binutils putty synaptic pulseaudio-utils pulseaudio mesa-utils bzip2 p7zip-full unar unzip zip libatkmm-1.6-1v5 libcairomm-1.0-1v5 libcanberra-gtk3-0 libcanberra-gtk3-module libglibmm-2.4-1v5 libgtkmm-3.0-1v5 libpangomm-1.4-1v5 libsigc++-2.0-0v5 dbus-x11 libdbus-glib-1-2 libqt5core5a --no-install-recommends"
-
-REM ## Install XFCE4
-%GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install xfce4-terminal xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin pavucontrol xfwm4 xfce4-panel xfce4-session xfce4-settings thunar thunar-volman thunar-archive-plugin xfdesktop4 xfce4-screenshooter libsmbclient gigolo gvfs-fuse gvfs-backends gvfs-bin mousepad evince xarchiver lhasa lrzip lzip lzop ncompress zip unzip dmz-cursor-theme adapta-gtk-theme gconf-defaults-service xfce4-taskmanager hardinfo --no-install-recommends" 
+PAUSE
 
 REM ## Install Media Player and Image Editor
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install mtpaint parole"
+PAUSE
 
 REM ## Additional items to install can go here...
 REM ## %GO% "cd /tmp ; wget https://files.multimc.org/downloads/multimc_1.4-1.deb"
 REM ## %GO% "apt-get -y install extremetuxracer tilix /tmp/multimc_1.4-1.deb"
 
 REM ## Remove un-needed packages
-%GO% "apt-get -qq purge cryptsetup cryptsetup-bin cryptsetup-initramfs cryptsetup-run irqbalance multipath-tools apparmor snapd squashfs-tools libplymouth5 plymouth plymouth-theme-ubuntu-text open-vm-tools cloud-init isc-dhcp-* gnustep* lvm2* mdadm apport open-iscsi powermgmt-base popularity-contest fwupd libfwupd2 ; apt-get -qq autoremove ; apt-get -qq clean" > NUL
+%GO% "apt-get -qq purge cryptsetup cryptsetup-bin cryptsetup-initramfs cryptsetup-run irqbalance multipath-tools apparmor snapd squashfs-tools plymouth  open-vm-tools cloud-init isc-dhcp-* gnustep* lvm2* mdadm apport open-iscsi powermgmt-base popularity-contest fwupd libfwupd2 ; apt-get -qq autoremove ; apt-get -qq clean" > NUL
 
 REM ## Customize
 IF %LINDPI% GEQ 288 ( %GO% "sed -i 's/HISCALE/3/g' /tmp/kWSL/dist/etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml" )
@@ -129,15 +119,14 @@ SET /A SESMAN = %RDPPRT% - 50
 %GO% "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config"
 %GO% "sed -i 's/kWSLINSTANCENAME/%DISTRO%/g' /tmp/kWSL/dist/usr/local/bin/initWSL"
 %GO% "sed -i 's/#enable-dbus=yes/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf ; sed -i 's/#host-name=foo/host-name=%COMPUTERNAME%-%DISTRO%/g' /etc/avahi/avahi-daemon.conf"
-%GO% "cp /mnt/c/Windows/Fonts/*.ttf /usr/share/fonts/truetype ; rm -rf /etc/pam.d/systemd-user ; rm -rf /etc/systemd ; rm -rf /usr/share/icons/breeze_cursors ; rm -rf /usr/share/icons/Breeze_Snow/cursors ; ssh-keygen -A ; adduser xrdp ssl-cert"
+%GO% "cp /mnt/c/Windows/Fonts/*.ttf /usr/share/fonts/truetype ; rm -rf /usr/share/icons/breeze_cursors ; rm -rf /usr/share/icons/Breeze_Snow/cursors"
 %GO% "mv /usr/bin/pkexec /usr/bin/pkexec.orig ; echo gksudo -k -S -g \$1 > /usr/bin/pkexec ; chmod 755 /usr/bin/pkexec"
 %GO% "chmod 644 /tmp/kWSL/dist/etc/wsl.conf"
 %GO% "chmod 644 /tmp/kWSL/dist/var/lib/xrdp-pulseaudio-installer/*.so"
-%GO% "chmod 700 /tmp/kWSL/dist/usr/local/bin/initWSL ; chmod 700 /tmp/kWSL/dist/etc/skel/.config ; chmod 700 /tmp/kWSL/dist/etc/skel/.local ; chmod 700 /tmp/kWSL/dist/etc/skel/.gconf ; chmod 700 /tmp/kWSL/dist/etc/skel/.mozilla"
+%GO% "chmod 700 /tmp/xWSL/dist/usr/local/bin/initWSL ; chmod 700 /tmp/xWSL/dist/etc/skel/.config ; chmod 700 /tmp/xWSL/dist/etc/skel/.local ; chmod 700 /tmp/xWSL/dist/etc/skel/.gconf ; chmod 700 /tmp/xWSL/dist/etc/skel/.mozilla"
 %GO% "chmod 644 /tmp/kWSL/dist/etc/profile.d/WinNT.sh"
 %GO% "chmod 644 /tmp/kWSL/dist/etc/xrdp/xrdp.ini"
 %GO% "cp -r /tmp/kWSL/dist/* /"
-%GO% "rm -rf /etc/apt/apt.conf.d/20snapd.conf /etc/rc2.d/S01whoopsie /etc/init.d/console-setup.sh"
 %GO% "strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5"
 
 REM ## Setup user access 
