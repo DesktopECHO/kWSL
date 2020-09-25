@@ -54,18 +54,30 @@ REM ## Add exclusions in Windows Defender if requested
 IF NOT EXIST %TEMP%\excludeWSL.ps1 POWERSHELL.EXE -Command "wget %BASE%/excludeWSL.ps1 -UseBasicParsing -OutFile %TEMP%\excludeWSL.ps1"
 IF %DEFEXL%==X POWERSHELL.EXE -ExecutionPolicy bypass -command "%TEMP%\excludeWSL.ps1 '%DISTROFULL%'"
 
+PAUSE
 REM ## Configure
 %GO% "cd /tmp ; wget -q http://deb.devuan.org/devuan/pool/main/d/devuan-keyring/devuan-keyring_2017.10.03_all.deb ; wget -q http://ftp.br.debian.org/debian/pool/main/c/ca-certificates/ca-certificates_20200601~deb9u1_all.deb ; wget -q http://ftp.br.debian.org/debian/pool/main/o/openssl/openssl_1.1.0l-1~deb9u1_amd64.deb ; wget -q http://ftp.br.debian.org/debian/pool/main/o/openssl/libssl1.1_1.1.0l-1~deb9u1_amd64.deb"
+PAUSE
 %GO% "cd /tmp ; dpkg -i --force-all ./devuan-keyring_2017.10.03_all.deb ./ca-certificates_20200601~deb9u1_all.deb ./openssl_1.1.0l-1~deb9u1_amd64.deb ./libssl1.1_1.1.0l-1~deb9u1_amd64.deb" > NUL
+PAUSE
 %GO% "echo deb     http://deb.devuan.org/merged chimaera main >  /etc/apt/sources.list" 
+PAUSE
 %GO% "echo deb-src http://deb.devuan.org/merged chimaera main >> /etc/apt/sources.list"
+PAUSE
 %GO% "cd /tmp ; apt-get update ; touch /etc/mtab ; wget -q %BASE%/deb/libc6_2.30-8_amd64.deb ; wget -q %BASE%/deb/libc-bin_2.30-8_amd64.deb ; apt-get -qq install ./libc6_2.30-8_amd64.deb ./libc-bin_2.30-8_amd64.deb ; apt-mark hold libc6"
+PAUSE
 %GO% "cd /tmp ; apt-get -y install base-files dirmngr git --no-install-recommends ; wget -q %BASE%/deb/locales_2.30-8_all.deb ; apt-get -y install ./locales_2.30-8_all.deb"
+PAUSE
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y dist-upgrade --no-install-recommends"
+PAUSE
 %GO% "update-locale LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LANG=en_US.UTF-8 ; dpkg-reconfigure --frontend noninteractive locales"
+PAUSE
 %GO% "cd /tmp ; git clone --depth=1 https://github.com/%GITORG%/%GITPRJ%.git"
+PAUSE
 %GO% "cd /tmp ; wget -q %BASE%/deb/libc-dev-bin_2.30-8_amd64.deb ; wget -q %BASE%/deb/libc6-dev_2.30-8_amd64.deb ; apt-get -qq install ./libc-dev-bin_2.30-8_amd64.deb ./libc6-dev_2.30-8_amd64.deb"
+PAUSE
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/gksu_2.1.0_amd64.deb /tmp/kWSL/deb/libgksu2-0_2.1.0_amd64.deb /tmp/kWSL/deb/libgnome-keyring0_3.12.0-1+b2_amd64.deb /tmp/kWSL/deb/libgnome-keyring-common_3.12.0-1_all.deb /tmp/kWSL/deb/xrdp_0.9.13.1-2_amd64.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb /tmp/kWSL/deb/libjpeg8_8d-1.deb /tmp/kWSL/deb/wslu_3.1.1-1_all.deb xorgxrdp dialog elogind libelogind0 libpam-elogind --no-install-recommends ; apt-get -y remove rsyslog"
+PAUSE
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install xdg-utils kde-plasma-desktop kinfocenter kwin-x11 ssh avahi-daemon libnss-mdns binutils systemsettings gnome-terminal putty mousepad synaptic kde-config-gtk-style-preview breeze-gtk-theme inetutils-syslogd kmix pulseaudio-utils pulseaudio mesa-utils ntp ksysguard ksysguard-data kmenuedit kde-config-gtk-style ark bzip2 p7zip-full unar unzip zip flameshot kolourpaint extremetuxracer distro-info-data lsb-release dumb-init --no-install-recommends"
 
 REM ## Download kWSL overlay
