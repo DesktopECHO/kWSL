@@ -1,4 +1,4 @@
-@ECHO On
+@ECHO OFF
 SET GITORG=DesktopECHO
 SET GITPRJ=kWSL
 SET BRANCH=testing
@@ -71,11 +71,9 @@ REM ## Download kWSL overlay
 
 REM ## Install local packages
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/gksu_2.1.0_amd64.deb /tmp/kWSL/deb/libgksu2-0_2.1.0_amd64.deb /tmp/kWSL/deb/libgnome-keyring0_3.12.0-1+b2_amd64.deb /tmp/kWSL/deb/libgnome-keyring-common_3.12.0-1_all.deb /tmp/kWSL/deb/multiarch-support_2.27-3ubuntu1_amd64.deb /tmp/kWSL/deb/xrdp_0.9.13.1-2_amd64.deb /tmp/kWSL/deb/xorgxrdp_0.2.12-1_amd64.deb /tmp/kWSL/deb/plata-theme_0.9.8-0ubuntu1~focal1_all.deb /tmp/kWSL/deb/libjpeg8_8d-1.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb --no-install-recommends ; adduser xrdp ssl-cert"
-PAUSE
 
 REM ## Install dependencies for desktop environments
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install x11-apps x11-session-utils x11-xserver-utils pulseaudio pulseaudio-utils dialog distro-info-data lsb-release dumb-init inetutils-syslogd xdg-utils avahi-daemon libnss-mdns binutils putty synaptic pulseaudio-utils mesa-utils bzip2 p7zip-full unar unzip zip libatkmm-1.6-1v5 libcairomm-1.0-1v5 libcanberra-gtk3-0 libcanberra-gtk3-module libglibmm-2.4-1v5 libgtkmm-3.0-1v5 libpangomm-1.4-1v5 libsigc++-2.0-0v5 dbus-x11 libdbus-glib-1-2 libqt5core5a hardinfo distro-info-data --no-install-recommends"
-PAUSE
 
 REM ## Install XFCE4
 REM ## %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/papirus-icon-theme_20200901-4672+pkg21~ubuntu20.04.1_all.deb xfce4-terminal xfce4-whiskermenu-plugin xfce4-pulseaudio-plugin pavucontrol xfwm4 xfce4-panel xfce4-session xfce4-settings thunar thunar-volman thunar-archive-plugin xfdesktop4 xfce4-screenshooter libsmbclient gigolo gvfs-fuse gvfs-backends gvfs-bin mousepad evince xarchiver lhasa lrzip lzip lzop ncompress zip unzip dmz-cursor-theme adapta-gtk-theme gconf-defaults-service xfce4-taskmanager -- no-install-recommends" 
@@ -83,17 +81,14 @@ REM ## %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install /tmp/kWSL/deb/pap
 REM ## Install KDE and Patch out shm 
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install xdg-utils kde-plasma-desktop kinfocenter kwin-x11 avahi-daemon libnss-mdns binutils systemsettings putty mousepad kde-config-gtk-style-preview breeze-gtk-theme kmix mesa-utils ntp ksysguard ksysguard-data kmenuedit kde-config-gtk-style ark bzip2 p7zip-full unar unzip zip flameshot kolourpaint --no-install-recommends"
 %GO% "dpkg -i --force-all /tmp/kWSL/deb/libkf5activitiesstats1_5.70.0-1_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.17.5-2_amd64.deb /tmp/kWSL/deb/libkscreenlocker5_5.17.5-9wsl_amd64.deb /tmp/kWSL/deb/kde-config-screenlocker_5.17.5-9wsl_amd64.deb ; apt-mark hold kactivitymanagerd libkf5activitiesstats1 libkscreenlocker5 kde-config-screenlocker"
-PAUSE
 
 REM ## Install Seamonkey Browser
 %GO% "echo deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main >> /etc/apt/sources.list"
 %GO% "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 2667CA5C ; apt-get update ; apt-get -y install seamonkey-mozilla-build"
 %GO% "update-alternatives --install /usr/bin/www-browser www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/gnome-www-browser gnome-www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/seamonkey 100"
-PAUSE
 
 REM ## Install Media Player
 %GO% "DEBIAN_FRONTEND=noninteractive apt-get -y install parole"
-PAUSE
 
 REM ## Additional items to install can go here...
 REM ## %GO% "cd /tmp ; wget https://files.multimc.org/downloads/multimc_1.4-1.deb"
@@ -124,8 +119,7 @@ SET /A SESMAN = %RDPPRT% - 50
 %GO% "chmod 644 /tmp/kWSL/dist/etc/wsl.conf"
 %GO% "chmod 644 /tmp/kWSL/dist/var/lib/xrdp-pulseaudio-installer/*.so"
 %GO% "chmod 700 /tmp/kWSL/dist/usr/local/bin/initWSL ; chmod 7700 /tmp/kWSL/dist/etc/skel/.config ; chmod 7700 /tmp/kWSL/dist/etc/skel/.local ; chmod 700 /tmp/kWSL/dist/etc/skel/.gconf ; chmod 700 /tmp/kWSL/dist/etc/skel/.mozilla"
-%GO% "chmod 644 /tmp/kWSL/dist/etc/profile.d/WinNT.sh"
-%GO% "chmod 644 /tmp/kWSL/dist/etc/xrdp/xrdp.ini"
+%GO% "chmod 644 /tmp/kWSL/dist/etc/profile.d/WinNT.sh ; chmod 644 /tmp/kWSL/dist/etc/xrdp/xrdp.ini ; chmod 755 /tmp/kWSL/dist/etc/xrdp/startwm.sh"
 %GO% "cp -rp /tmp/kWSL/dist/* /"
 %GO% "ssh-keygen -A ; strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5"
 
