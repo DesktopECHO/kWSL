@@ -35,7 +35,7 @@ LayoutName=org.kde.breeze.desktop
 
 [org.kde.kdecoration2]
 BorderSize=Normal
-BorderSizeAuto=true
+BorderSizeAuto=false
 ButtonsOnLeft=MS
 ButtonsOnRight=HIAX
 CloseOnDoubleClickOnMenu=false
