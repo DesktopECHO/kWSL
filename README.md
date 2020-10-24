@@ -8,6 +8,12 @@
 
 ![Screenshot](screenshot.png)
 
+**IMPORTANT!  Requires the recent (August/Sept 2020) WSL update for Windows 10:**
+
+* 1809 - KB4571748
+* 1909 - KB4566116
+* 2004 - KB4571756
+
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
 ```
