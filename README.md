@@ -1,4 +1,4 @@
-# kWSL.cmd
+# kWSL.cmd - KDE Neon 5.20 for WSL1
 
 - KDE Neon 5.20
 - Simplicity - Use the 'one-liner' below and everything is configured (see Wiki for a list of custom packages)
