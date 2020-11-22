@@ -17,45 +17,52 @@ PowerShell -executionpolicy bypass -command "wget https://github.com/DesktopECHO
 You will be asked a few questions.  The install script finds the current DPI scaling, you can set your own value if needed:
 
 ```
-kWSL --- 
-Enter a unique name for the distro or hit Enter to use default [kWSL]:
-Enter port number for xRDP traffic or hit Enter to use default [3399]:
-Enter port number for SSHd traffic or hit Enter to use default [3322]:
-Enter DPI Scaling or hit Enter to use default [96]:
-kWSL to be installed in C:\kWSL
-```
+[kWSL Installer 20201122-1]
 
-Exclusions will be automatically added to Windows Defender:
+Enter a unique name for your kWSL distro or hit Enter to use default.
+Keep this name simple, no space or underscore characters [kWSL]: Neon
+Port number for xRDP traffic or hit Enter to use default [3399]: 13399
+Port number for SSHd traffic or hit Enter to use default [3322]: 13322
+Set a custom DPI scale, or hit Enter for Windows default [1.5]: 1.25
+[Not recommended!] Type X to eXclude from Windows Defender:
 
-```
-Added exclusion for C:\kWSL
-Added exclusion for C:\kWSL\rootfs\bin\*
-Added exclusion for C:\kWSL\rootfs\sbin\*
-Added exclusion for C:\kWSL\rootfs\usr\bin\*
-Added exclusion for C:\kWSL\rootfs\usr\sbin\*
-Added exclusion for C:\kWSL\rootfs\usr\local\bin\*
-Added exclusion for C:\kWSL\rootfs\usr\local\go\bin\*
+Installing kWSL Distro [Neon] to "C:\Neon"
+This will take a few minutes, please wait...
 ```
 
 The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.
+
+```
+[16:12:55] Installing Ubuntu 20.04 LTS (~1m30s)
+[16:13:22] Git clone and update repositories (~1m15s)
+[16:14:28] Purge un-needed packages (~1m30s)
+[16:14:57] Migrate Ubuntu LTS to Neon (~3m15s)
+[16:16:09] KDE Plasma 5.20 (~11m30s)
+[16:21:17] Install Mozilla Seamonkey, media playback components (~1m30s)
+[16:34:33] Cleaning up packages no longer needed (~0m45s)
+```
+
 Near the end of the script you will be prompted to create a non-root user.  This user will be automatically added to sudo'ers.
 
 ```
-Enter name of kWSL user: zero
-Enter password: ********
+Open Windows Firewall Ports for xRDP, SSH, mDNS...
+Building RDP Connection file, Console link, Init system...
+Building Uninstaller... [C:\Neon\Uninstall Neon.cmd]
+Building Scheduled Task...
+SUCCESS: The scheduled task "Neon" has successfully been created.
 
-      Start: Sat 07/25/2020 @ 14:05:11.49
-        End: Sat 07/25/2020 @ 14:15:49.42
-   Packages: 962
+      Start: Sun 11/22/2020 @ 16:12
+        End: Sun 11/22/2020 @ 16:34
+   Packages: 1323
 
-  - xRDP Server listening on port 3399 and SSHd on port 3322.
+  - xRDP Server listening on port 13399 and SSHd on port 13322.
 
   - Links for GUI and Console sessions have been placed on your desktop.
 
   - (Re)launch init from the Task Scheduler or by running the following command:
-    schtasks /run /tn kWSL
+    schtasks /run /tn Neon
 
- kWSL Installation Complete!  GUI will start in a few seconds...
+ Neon Installation Complete!  GUI will start in a few seconds...
 ```
 
 Currently you should see approximately 962 packages installed.  If the number reported is much lower it means you had a download failure and need to re-start the install.
