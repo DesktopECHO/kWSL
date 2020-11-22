@@ -1,16 +1,36 @@
 #!/bin/bash
-# Remove services that make no sense in WSL1
-update-rc.d -f hwclock.sh remove >/dev/null 2>&1
-update-rc.d -f dbus remove >/dev/null 2>&1
-update-rc.d -f ntp  remove >/dev/null 2>&1
-update-rc.d -f pulseaudio-enable-autospawn remove >/dev/null 2>&1
-touch /run/initctl
+run_level=$1
+touch /run/initctl >/dev/null 2>&1
+chmod 644 /var/run/syslog.pid >/dev/null 2>&1
+strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5
+rm /usr/bin/konqueror ; ln -s  /opt/seamonkey/seamonkey-bin /usr/bin/konqueror
 clear
 
-echo "Runlevel" $1
+# Remove services not needed in WSL1
+# update-rc.d -f dbus remove >/dev/null 2>&1
+update-rc.d -f whoopsie remove >/dev/null 2>&1
+update-rc.d -f acpid remove >/dev/null 2>&1
+update-rc.d -f plymouth remove >/dev/null 2>&1
+update-rc.d -f plymouth-log remove >/dev/null 2>&1
+update-rc.d -f gdm3 remove >/dev/null 2>&1
+update-rc.d -f lightdm remove >/dev/null 2>&1
+update-rc.d -f ufw remove >/dev/null 2>&1
+update-rc.d -f bluetooth remove >/dev/null 2>&1
+update-rc.d -f open-iscsi remove >/dev/null 2>&1
+update-rc.d -f hwclock.sh remove >/dev/null 2>&1
+update-rc.d -f open-vm-tools remove >/dev/null 2>&1
+update-rc.d -f apport remove >/dev/null 2>&1
+update-rc.d -f udev remove >/dev/null 2>&1
+update-rc.d -f pulseaudio-enable-autospawn remove >/dev/null 2>&1
+
+echo "KWSLINSTANCENAME Runlevel" $1
 echo " "
+
+if [ $1 -eq "0" ]; then
+bash -c "sleep 10 && wslconfig.exe /t KWSLINSTANCENAME" &
+fi
+
 [[ -z $1 ]] && { echo "Need to specify a run level"; exit 127; }
-run_level=$1
 [[ -d /etc/rc${run_level}.d/ ]] ||  { echo "Need to specify a run level"; exit 127; }
 for rc_service in /etc/rc${run_level}.d/K*; do
         [[ -e "$rc_service" ]] && $rc_service stop
@@ -18,15 +38,14 @@ done
 for rc_service in /etc/rc${run_level}.d/S*; do
         [[ -e "$rc_service" ]] && $rc_service start
 done
-
-chmod 644 /var/run/syslog.pid
-
-echo ""
+echo "One moment..."
+sleep 8
 echo ""
 echo "2 = Multi-User System"
 echo "1 = Single-User System"
 echo "0 = Stop services and terminate instance."
 echo ""
-echo "Select Runlevel and hit [Enter]"
+echo -n "Select Runlevel and hit Enter: "
 read runlevel
+
 initWSL $runlevel

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Comment=PulseAudio Daemon for kWSL
+Exec=/usr/bin/pulseaudio --enable-memfd=FALSE
+GenericName=
+Icon=
+MimeType=
+Name=kWSL PulseAudio
+Path=
+StartupNotify=false
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

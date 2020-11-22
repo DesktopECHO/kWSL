@@ -1,5 +1,0 @@
-[Greeter]
-Theme=org.kde.breezedark.desktop
-
-[Daemon]
-Autolock=False

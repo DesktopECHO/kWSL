@@ -1,2 +1,5 @@
+[$Version]
+update_info=delete_cursor_old_default_size.upd:DeleteCursorOldDefaultSize
+
 [Mouse]
-cursorSize=32
+cursorTheme=breeze_cursors

@@ -1,5 +1,5 @@
 [$Version]
-update_info=filepicker.upd:filepicker-remove-old-previews-entry,fonts_global.upd:Fonts_Global,fonts_global_toolbar.upd:Fonts_Global_Toolbar
+update_info=filepicker.upd:filepicker-remove-old-previews-entry,fonts_global.upd:Fonts_Global,fonts_global_toolbar.upd:Fonts_Global_Toolbar,icons_remove_effects.upd:IconsRemoveEffects,kwin.upd:animation-speed,style_widgetstyle_default_breeze.upd:StyleWidgetStyleDefaultBreeze
 
 [ColorEffects:Disabled]
 Color=56,56,56
@@ -106,17 +106,17 @@ ForegroundPositive=39,174,96
 ForegroundVisited=127,140,141
 
 [General]
-BrowserApplication[$e]=seamonkey-mozilla-build.desktop
+BrowserApplication=seamonkey-mozilla-build.desktop
 ColorScheme=BreezeDark
 Name=Breeze Dark
 XftHintStyle=hintslight
 XftSubPixel=rgb
-fixed=Consolas,11,-1,5,50,0,0,0,0,0,Regular
-font=Segoe UI,10,-1,5,50,0,0,0,0,0,Regular
-menuFont=Segoe UI,10,-1,5,50,0,0,0,0,0,Regular
+fixed=Cascadia Code,11,-1,5,50,0,0,0,0,0
+font=Segoe UI,11,-1,5,50,0,0,0,0,0
+menuFont=Segoe UI,11,-1,5,50,0,0,0,0,0
 shadeSortColumn=true
-smallestReadableFont=Segoe UI,9,-1,5,50,0,0,0,0,0,Regular
-toolBarFont=Segoe UI,10,-1,5,50,0,0,0,0,0,Regular
+smallestReadableFont=Segoe UI,10,-1,5,50,0,0,0,0,0
+toolBarFont=Segoe UI,11,-1,5,50,0,0,0,0,0
 widgetStyle=Breeze
 
 [Icons]
@@ -125,20 +125,37 @@ Theme=breeze-dark
 [KDE]
 ColorScheme=Breeze
 LookAndFeelPackage=org.kde.breezedark.desktop
-ShowIconsInMenuItems=true
-ShowIconsOnPushButtons=true
 contrast=4
-widgetStyle=breeze
+widgetStyle=Breeze
 
-[Toolbar style]
-ToolButtonStyle=TextBesideIcon
-ToolButtonStyleOtherToolbars=TextBesideIcon
+[KFileDialog Settings]
+Allow Expansion=false
+Automatically select filename extension=true
+Breadcrumb Navigation=true
+Decoration position=2
+LocationCombo Completionmode=5
+PathCombo Completionmode=5
+Show Bookmarks=false
+Show Full Path=false
+Show Inline Previews=true
+Show Preview=false
+Show Speedbar=true
+Show hidden files=false
+Sort by=Name
+Sort directories first=true
+Sort reversed=false
+Speedbar Width=149
+View Style=DetailTree
 
 [WM]
 activeBackground=49,54,59
 activeBlend=255,255,255
-activeFont=Segoe UI,10,-1,5,63,0,0,0,0,0,Semibold
+activeFont=Segoe UI,11,-1,5,50,0,0,0,0,0
 activeForeground=239,240,241
 inactiveBackground=49,54,59
 inactiveBlend=75,71,67
 inactiveForeground=127,140,141
+
+[KScreen]
+ScaleFactor=QQQ
+ScreenScaleFactors=rdp0=QQQ;

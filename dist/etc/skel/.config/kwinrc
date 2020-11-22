@@ -1,44 +1,21 @@
 [$Version]
-update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize
+update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed
 
 [Compositing]
-AnimationSpeed=0
-Backend=OpenGL
-Enabled=false
 GLCore=true
-GLPreferBufferSwap=a
-GLTextureFilter=0
-HiddenPreviews=5
 OpenGLIsUnsafe=false
-WindowsBlockCompositing=true
-XRenderSmoothScale=false
 
 [Desktops]
-Id_1=9788b4a9-1c26-41e7-950c-2d4badacdf3a
+Id_1=95c4c1bd-5a11-4396-83d8-b9b5d71121a8
 Number=1
 Rows=1
-
-[Plugins]
-kwin4_effect_fadeEnabled=false
-kwin4_effect_loginEnabled=false
-kwin4_effect_logoutEnabled=false
-kwin4_effect_maximizeEnabled=false
-kwin4_effect_morphingpopupsEnabled=false
-kwin4_effect_squashEnabled=false
-kwin4_effect_translucencyEnabled=false
-slidingpopupsEnabled=false
 
 [TabBox]
 DesktopLayout=org.kde.breeze.desktop
 DesktopListLayout=org.kde.breeze.desktop
 LayoutName=org.kde.breeze.desktop
+TouchBorderActivate=9
 
 [org.kde.kdecoration2]
-BorderSize=Normal
-BorderSizeAuto=false
-ButtonsOnLeft=MS
-ButtonsOnRight=HIAX
-CloseOnDoubleClickOnMenu=false
-ShowToolTips=true
 library=org.kde.breeze
-theme=Breeze
+theme=kwin4_decoration_qml_plastik
