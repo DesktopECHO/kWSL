@@ -77,11 +77,17 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
 
    Reboot your PC when complete.  kWSL will automatically start at boot, no need to login to Windows.
 
-**Convert to WSL2 Virtual Machine:**
--  kWSL will convert easily to WSL2.  Only one additional adjustment is necessary; change the hostname in the .RDP connection file to point at the WSL2 instance.  First convert the instance:
-    ```wsl --set-version [DistroName] 2```
-- Assuming we're using the default distro name of ```kWSL``` (use whatever name you assigned to the distro)  Right click the .RDP file in Windows, click Edit.  Change the Computer name to your Windows hostname plus **```-kWSL.local```**  Your WSL2 instance resolves seamlessly using multicast DNS  
-- For example, if the current value is ```LAPTOP:3399```, change it to ```LAPTOP-kwsl.local:3399``` and save the RDP connection file.  
+**xWSL is configured to use Bonjour (Multicast DNS) for easy access in WSL2**
+
+Example of conversion to WSL2 on machine name "ENVY":
+- Stop WSL on ENVY:
+````wsl --shutdown````
+- Convert the instance to WSL2:
+````wsl --set-version kWSL 2````
+- Restart xWSL Instance:
+````schtasks /run /tn kWSL````
+- Adjust the RDP file saved on the desktop to now point at the new WSL2 instance:
+````ENVY-kWSL.local:3399````
 
 **Make it your own:**
 
