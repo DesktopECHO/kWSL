@@ -33,13 +33,13 @@ This will take a few minutes, please wait...
 The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.  Reference times will vary depending on system performance and the presence of antivrirus software.
 
 ```
-[16:12:55] Installing Ubuntu 20.04 LTS (~1m30s)
-[16:13:22] Git clone and update repositories (~1m15s)
-[16:14:28] Purge un-needed packages (~1m30s)
-[16:14:57] Migrate Ubuntu LTS to Neon (~3m15s)
-[16:16:09] KDE Plasma 5.20 (~11m30s)
-[16:21:17] Install Mozilla Seamonkey, media playback components (~1m30s)
-[16:34:33] Cleaning up packages no longer needed (~0m45s)
+[22:54:42] Installing Ubuntu 20.04 LTS (~1m30s)
+[22:55:27] Git clone and update repositories (~1m15s)
+[22:56:33] Remove un-needed packages (~1m30s)
+[22:57:10] Migrate Ubuntu LTS to Neon (~3m15s)
+[22:58:31] KDE Plasma 5.20 (~11m30s)
+[23:03:51] Install Mozilla Seamonkey and media playback (~1m30s)
+[23:04:18] Final clean-up (~0m45s)
 ```
 
 Near the end of the script you will be prompted to create a non-root user.  This user will be automatically added to sudo'ers.
@@ -65,7 +65,7 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
  Neon Installation Complete!  GUI will start in a few seconds...
 ```
 
-Currently you should see approximately 962 packages installed.  If the number reported is much lower it means you had a download failure and need to re-start the install.
+Currently you should see approximately 1331 packages installed.   
 
 Upon completion you'll be logged into an attractive and fully functional KDE Plasma.  A scheduled task is created for starting/managing kWSL. 
 
@@ -93,14 +93,15 @@ From a security standpoint, it would be best to fork this project so you (and on
 - Launch the script using your repository name:
  ```PowerShell -executionpolicy bypass -command "wget https://github.com/YOUR-REPO-NAME/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"```
 
-**Quirks Addressed / Additional Info:**
-- kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/WinNT.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
-- WSL1 Has issues with the latest libc6 library.  The package is being held until fixes from MS are released over Windows Update.  Unmark and update libc6 after MS releases the update.
-- WSL1 Doesn't work with PolicyKit.  Pulled-in GKSU and dependencies to accommodate GUI apps that need elevated rights.  
-- Patched KDE Lockscreen and KDE Activity Manager to resolve shared memory and PolicyKit issues
-- Rolled back and held xRDP until the current update is better-behaved (xrdp-chansrv high CPU %)
+**Quirks / Limitations / Additional Info:**
+- kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/kWSL.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
+- Plasma-discover doesn't work in Server 2019 / Win 10-1809 
+- WSL1 Doesn't work with PolicyKit.  Enabled kdesu for apps needing elevated rights (plasma-discover, ksystemlog, muon, root console.)    
+- Patched KDE Activity Manager to disable WAL in sqlite3.  KDE Lockscreen is disabled.  
+- xrdp 0.9.13 rebuilt thanks to http://packages.rusoft.ru/ppa/rusoft/xrdp/
 - Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
 - Installed image consumes approximately 2.6 GB of disk space
+- Apt-fast was added to improve download speed and reliability.
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
 - Copy/Paste of text and images work reliably between Windows and Linux
-- This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment run ```sudo apt-get install kde-full``` 
+- This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment (+3GB Disk) run ```sudo pkcon -y install neon-all``` 
