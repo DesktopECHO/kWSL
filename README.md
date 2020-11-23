@@ -30,7 +30,7 @@ Installing kWSL Distro [Neon] to "C:\Neon"
 This will take a few minutes, please wait...
 ```
 
-The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.
+The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.  Reference times will vary depending on system performance and the presence of antivrirus software.
 
 ```
 [16:12:55] Installing Ubuntu 20.04 LTS (~1m30s)
@@ -75,7 +75,7 @@ Upon completion you'll be logged into an attractive and fully functional KDE Pla
    - Click the checkboxes for **Run whether user is logged on or not** and **Hidden** then click **OK**
    - Enter your Windows credentials when prompted
 
-   Reboot your PC.  kWSL will automatically start at boot, no need to login to Windows.
+   Reboot your PC when complete.  kWSL will automatically start at boot, no need to login to Windows.
 
 **Convert to WSL2 Virtual Machine:**
 -  kWSL will convert easily to WSL2.  Only one additional adjustment is necessary; change the hostname in the .RDP connection file to point at the WSL2 instance.  First convert the instance:
