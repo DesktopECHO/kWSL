@@ -23,11 +23,11 @@ update-rc.d -f apport remove >/dev/null 2>&1
 update-rc.d -f udev remove >/dev/null 2>&1
 update-rc.d -f pulseaudio-enable-autospawn remove >/dev/null 2>&1
 
-echo "KWSLINSTANCENAME Runlevel" $1
+echo "WSLINSTANCENAME Runlevel" $1
 echo " "
 
 if [ $1 -eq "0" ]; then
-bash -c "sleep 10 && wslconfig.exe /t KWSLINSTANCENAME" &
+bash -c "sleep 10 && wslconfig.exe /t WSLINSTANCENAME" &
 fi
 
 [[ -z $1 ]] && { echo "Need to specify a run level"; exit 127; }
@@ -48,4 +48,4 @@ echo ""
 echo -n "Select Runlevel and hit Enter: "
 read runlevel
 
-initWSL $runlevel
+initwsl $runlevel
