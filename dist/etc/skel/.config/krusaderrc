@@ -39,13 +39,6 @@ Window Height=680
 Window Maximized=false
 Window Width=900
 
-[Private]
-PopularUrls=file:///home/one/
-PopularUrlsRank=23
-Start Position=719,633
-Start Size=893,460
-cmdline history=
-
 [Startup]
 Left Side Is Active=false
 Show Cmd Line=false
@@ -60,17 +53,6 @@ Vertical Mode=false
 [Startup][Left Tab Bar]
 ActiveTab=0
 
-[Startup][Left Tab Bar][Tabs][Tab0]
-PinnedUrl=
-Properties=0
-Type=0
-Url=file:///home/one
-
-[Startup][Left Tab Bar][Tabs][Tab0][History]
-CurrentIndex=0
-CurrentItems=..
-Entrys=file:///home/one
-
 [Startup][Left Tab Bar][Tabs][Tab0][View]
 AutoResizeColumns=true
 Descending Sort Order=0
@@ -83,17 +65,6 @@ Sort Column=0
 
 [Startup][Right Tab Bar]
 ActiveTab=0
-
-[Startup][Right Tab Bar][Tabs][Tab0]
-PinnedUrl=
-Properties=0
-Type=0
-Url=file:///home/one
-
-[Startup][Right Tab Bar][Tabs][Tab0][History]
-CurrentIndex=0
-CurrentItems=..
-Entrys=file:///home/one
 
 [Startup][Right Tab Bar][Tabs][Tab0][View]
 AutoResizeColumns=true
