@@ -27,7 +27,7 @@ echo "WSLINSTANCENAME Runlevel" $1
 echo " "
 
 if [ $1 -eq "0" ]; then
-bash -c "sleep 10 && wslconfig.exe /t WSLINSTANCENAME" &
+bash -c "sleep 5 && wslconfig.exe /t WSLINSTANCENAME" &
 fi
 
 [[ -z $1 ]] && { echo "Need to specify a run level"; exit 127; }
@@ -38,8 +38,6 @@ done
 for rc_service in /etc/rc${run_level}.d/S*; do
         [[ -e "$rc_service" ]] && $rc_service start
 done
-echo "One moment..."
-sleep 8
 echo ""
 echo "2 = Multi-User System"
 echo "1 = Single-User System"
