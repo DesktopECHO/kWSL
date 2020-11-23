@@ -1,10 +1,10 @@
 [Desktop Entry]
-Comment=PulseAudio Daemon for kWSL
+Comment=PulseAudio Daemon for WSL
 Exec=/usr/bin/pulseaudio --enable-memfd=FALSE --disable-shm=TRUE --high-priority=FALSE --realtime=FALSE --log-target=syslog
 GenericName=
-Icon=
+Icon=vvave
 MimeType=
-Name=kWSL PulseAudio
+Name=WSL PulseAudio
 Path=
 StartupNotify=false
 Terminal=false
