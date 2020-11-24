@@ -17,7 +17,7 @@ PowerShell -executionpolicy bypass -command "wget https://github.com/DesktopECHO
 You will be asked a few questions.  The install script finds the current DPI scaling, you can set your own value if needed:
 
 ```
-[kWSL Installer 20201122-1]
+[kWSL Installer 20201124]
 
 Enter a unique name for your kWSL distro or hit Enter to use default.
 Keep this name simple, no space or underscore characters [kWSL]: Neon
@@ -26,20 +26,21 @@ Port number for SSHd traffic or hit Enter to use default [3322]: 13322
 Set a custom DPI scale, or hit Enter for Windows default [1.5]: 1.25
 [Not recommended!] Type X to eXclude from Windows Defender:
 
-Installing kWSL Distro [Neon] to "C:\Neon"
+Installing kWSL Distro [Neon] to "C:\WSL Distros\Neon"
 This will take a few minutes, please wait...
 ```
 
 The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.  Reference times will vary depending on system performance and the presence of antivrirus software.
 
 ```
-[22:54:42] Installing Ubuntu 20.04 LTS (~1m30s)
-[22:55:27] Git clone and update repositories (~1m15s)
-[22:56:33] Remove un-needed packages (~1m30s)
-[22:57:10] Migrate Ubuntu LTS to Neon (~3m15s)
-[22:58:31] KDE Plasma 5.20 (~11m30s)
-[23:03:51] Install Mozilla Seamonkey and media playback (~1m30s)
-[23:04:18] Final clean-up (~0m45s)
+[16:07:04] Installing Ubuntu 20.04 LTS (~1m30s)
+[16:07:56] Git clone and update repositories (~1m15s)
+[16:08:51] Remove un-needed packages (~1m30s)
+[16:09:22] Configure apt-fast Downloader (~0m45s)
+[16:09:34] Remote Desktop Components (~2m45s)
+[16:11:07] KDE Neon 5.20 User Edition (~11m30s)
+[16:16:39] Install Mozilla Seamonkey and media playback (~1m30s)
+[16:17:02] Final clean-up (~0m45s)
 ```
 
 Near the end of the script you will be prompted to create a non-root user.  This user will be automatically added to sudo'ers.
@@ -47,13 +48,12 @@ Near the end of the script you will be prompted to create a non-root user.  This
 ```
 Open Windows Firewall Ports for xRDP, SSH, mDNS...
 Building RDP Connection file, Console link, Init system...
-Building Uninstaller... [C:\Neon\Uninstall Neon.cmd]
 Building Scheduled Task...
 SUCCESS: The scheduled task "Neon" has successfully been created.
 
-      Start: Sun 11/22/2020 @ 16:12
-        End: Sun 11/22/2020 @ 16:34
-   Packages: 1323
+      Start: Tue 11/24/2020 @ 16:06
+        End: Tue 11/24/2020 @ 16:17
+   Packages: 1316
 
   - xRDP Server listening on port 13399 and SSHd on port 13322.
 
@@ -65,17 +65,17 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
  Neon Installation Complete!  GUI will start in a few seconds...
 ```
 
-Currently you should see approximately 1331 packages installed.   
+Currently you should see approximately 1316 packages installed.   
 
-Upon completion you'll be logged into an attractive and fully functional KDE Plasma.  A scheduled task is created for starting/managing kWSL. 
+Upon completion you'll be logged into your KDE Desktop.  A scheduled task is created for starting kWSL. 
 
-   **If you want to start kWSL at boot (like a service with no console window) do the following:**
+**If you want to start kWSL at boot (like a service with no console window) do the following:**
 
-   - Right-click the task in Task Scheduler, click properties
-   - Click the checkboxes for **Run whether user is logged on or not** and **Hidden** then click **OK**
-   - Enter your Windows credentials when prompted
-
-   Reboot your PC when complete.  kWSL will automatically start at boot, no need to login to Windows.
+ - Right-click the task in Task Scheduler, click properties
+ - Click the checkboxes for **Run whether user is logged on or not** and **Hidden** then click **OK**
+ - Enter your Windows credentials when prompted
+ 
+ Reboot your PC when complete.  kWSL will automatically start at boot, no need to login to Windows.
 
 **xWSL is configured to use Bonjour (Multicast DNS) for easy access in WSL2**
 
@@ -101,12 +101,12 @@ From a security standpoint, it would be best to fork this project so you (and on
 
 **Quirks / Limitations / Additional Info:**
 - kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/kWSL.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
-- Plasma-discover doesn't work in Server 2019 / Win 10-1809 
+- Plasma-discover doesn't work in Server 2019 / Win 10 v.1809 -- The installer will remove it if you're running an affected OS. 
 - WSL1 Doesn't work with PolicyKit.  Enabled kdesu for apps needing elevated rights (plasma-discover, ksystemlog, muon, root console.)    
 - Patched KDE Activity Manager to disable WAL in sqlite3.  KDE Lockscreen is disabled.  
 - Rebuilt xrdp 0.9.13 thanks to Sergey Dryabzhinsky @ http://packages.rusoft.ru/ppa/rusoft/xrdp/
 - Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
-- Installed image consumes approximately 2.6 GB of disk space
+- Installed image consumes approximately 3 GB of disk space.
 - Apt-fast was added to improve download speed and reliability.
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
 - Copy/Paste of text and images work reliably between Windows and Linux
