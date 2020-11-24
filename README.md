@@ -6,7 +6,7 @@
 - xRDP Display Server, no additional X Server downloads required
 - RDP Audio playback enabled (YouTube playback in browser works)
 
-![Screenshot](screenshot.png)
+![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
@@ -111,3 +111,5 @@ From a security standpoint, it would be best to fork this project so you (and on
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
 - Copy/Paste of text and images work reliably between Windows and Linux
 - This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment (+3GB Disk) run ```sudo pkcon -y install neon-all``` 
+
+![image](https://user-images.githubusercontent.com/33142753/100148485-33cb2480-2e73-11eb-932b-54e34b445575.png)
