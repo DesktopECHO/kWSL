@@ -123,6 +123,7 @@ widgetStyle=Breeze
 Theme=breeze-dark
 
 [KDE]
+AnimationDurationFactor=0.33
 ColorScheme=Breeze
 LookAndFeelPackage=org.kde.breezedark.desktop
 contrast=4

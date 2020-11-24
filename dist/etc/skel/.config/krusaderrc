@@ -3,7 +3,7 @@ First Time=false
 Version=2.7.2
 
 [Archives]
-Supported Packers=tar,gzip,bzip2,lzma,xz,unzip,zip,cbz,lha,cpio,unrar,rar,cbr,arj,unace,dpkg,7z
+Supported Packers=tar,gzip,bzip2,lzma,xz,unzip,zip,cbz,lha,cpio,cbr,arj,unace,dpkg,7z
 
 [Dependencies]
 7z=/bin/7z
@@ -20,7 +20,6 @@ lha=/bin/lha
 lzma=/bin/lzma
 md5sum=/bin/md5sum
 mount=/bin/mount
-rar=/bin/rar
 sha1sum=/bin/sha1sum
 sha224sum=/bin/sha224sum
 sha256sum=/bin/sha256sum
@@ -29,7 +28,6 @@ sha512sum=/bin/sha512sum
 tar=/bin/tar
 umount=/bin/umount
 unace=/bin/unace
-unrar=/bin/unrar
 unzip=/bin/unzip
 xz=/bin/xz
 zip=/bin/zip
