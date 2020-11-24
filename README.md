@@ -1,10 +1,10 @@
 # kWSL.cmd - KDE Neon 5.20 for WSL1
 
-- KDE Neon 5.20
-- Simplicity - Use the 'one-liner' below and everything is configured (see Wiki for a list of custom packages)
-- Runs on Windows Server 2019 or Windows 10 Version 1803 (or newer, including Server Core)
+- NetInstall of KDE Neon 5.20 on WSL1
+- Simplicity - Use the 'one-liner' below and everything is configured for you
+- Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
 - xRDP Display Server, no additional X Server downloads required
-- RDP Audio playback enabled (YouTube playback in browser works)
+- RDP Audio playback enabled (YouTube playback in browser works with audio in sync)
 
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
@@ -30,7 +30,7 @@ Installing kWSL Distro [Neon] to "C:\WSL Distros\Neon"
 This will take a few minutes, please wait...
 ```
 
-The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.  Reference times will vary depending on system performance and the presence of antivrirus software.
+The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
 
 ```
 [16:07:04] Installing Ubuntu 20.04 LTS (~1m30s)
@@ -105,7 +105,7 @@ From a security standpoint, it would be best to fork this project so you (and on
 - WSL1 Doesn't work with PolicyKit.  Enabled kdesu for apps needing elevated rights (plasma-discover, ksystemlog, muon, root console.)    
 - Patched KDE Activity Manager to disable WAL in sqlite3.  KDE Lockscreen is disabled.  
 - Rebuilt xrdp 0.9.13 thanks to Sergey Dryabzhinsky @ http://packages.rusoft.ru/ppa/rusoft/xrdp/
-- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
+- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as a stable/maintained browser.  Working on getting Konqueror working. 
 - Installed image consumes approximately 3 GB of disk space.
 - Apt-fast was added to improve download speed and reliability.
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
