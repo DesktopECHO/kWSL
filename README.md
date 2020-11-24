@@ -104,7 +104,7 @@ From a security standpoint, it would be best to fork this project so you (and on
 - Plasma-discover doesn't work in Server 2019 / Win 10-1809 
 - WSL1 Doesn't work with PolicyKit.  Enabled kdesu for apps needing elevated rights (plasma-discover, ksystemlog, muon, root console.)    
 - Patched KDE Activity Manager to disable WAL in sqlite3.  KDE Lockscreen is disabled.  
-- xrdp 0.9.13 rebuilt thanks to http://packages.rusoft.ru/ppa/rusoft/xrdp/
+- Rebuilt xrdp 0.9.13 thanks to Sergey Dryabzhinsky @ http://packages.rusoft.ru/ppa/rusoft/xrdp/
 - Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as the 'official' stable/maintained browser
 - Installed image consumes approximately 2.6 GB of disk space
 - Apt-fast was added to improve download speed and reliability.
