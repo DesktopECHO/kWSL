@@ -1,12 +1,20 @@
 # kWSL.cmd - KDE Neon 5.20 for WSL1
 
-- NetInstall of KDE Neon 5.20 on WSL1
-- Simplicity - Use the 'one-liner' below and everything is configured for you
-- Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
-- xRDP Display Server, no additional X Server downloads required
-- RDP Audio playback enabled (YouTube playback in browser works with audio in sync)
+  - NetInstall of KDE Neon 5.20 on WSL1
+  - Easy to deploy
+  - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
+  - xRDP Display Server, no additional X Server downloads required
+  - RDP Audio playback enabled (YouTube playback in browser works with audio in sync)
 
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
+
+**IMPORTANT! Requires August/Sept 2020 WSL update for Windows 10, included in 20H2:**
+  - 1809 - KB4571748
+  - 1909 - KB4566116
+  - 2004 - KB4571756
+  - 20H2 - FIXED
+
+INSTRUCTIONS: From an elevated prompt, change to your desired install directory and type/paste the following command:
 
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
@@ -109,7 +117,6 @@ From a security standpoint, it would be best to fork this project so you (and on
 - Installed image consumes approximately 3 GB of disk space.
 - Apt-fast was added to improve download speed and reliability.
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
-- Copy/Paste of text and images work reliably between Windows and Linux
 - This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment (+3GB Disk) run ```sudo pkcon -y install neon-all``` 
 
 ![image](https://user-images.githubusercontent.com/33142753/100148485-33cb2480-2e73-11eb-932b-54e34b445575.png)
