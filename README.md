@@ -1,12 +1,18 @@
 # kWSL.cmd - KDE Neon 5.20 for WSL1
 
-- NetInstall of KDE Neon 5.20 on WSL1
-- Simplicity - Use the 'one-liner' below and everything is configured for you
-- Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
-- xRDP Display Server, no additional X Server downloads required
-- RDP Audio playback enabled (YouTube playback in browser works with audio in sync)
+  - NetInstall of KDE Neon 5.20 on WSL1
+  - Easy to deploy
+  - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
+  - xRDP Display Server, no additional X Server downloads required
+  - RDP Audio playback enabled (YouTube playback in browser works with audio in sync)
 
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
+
+**IMPORTANT! Requires August/Sept 2020 WSL update for Windows 10, included in 20H2:**
+  - 1809 - KB4571748
+  - 1909 - KB4566116
+  - 2004 - KB4571756
+  - 20H2 - FIXED
 
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
@@ -65,29 +71,31 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
  Neon Installation Complete!  GUI will start in a few seconds...
 ```
 
-Currently you should see approximately 1316 packages installed.   
+The install summary should show approximately 1316 packages.   
 
-Upon completion you'll be logged into your KDE Desktop.  A scheduled task is created for starting kWSL. 
+**Upon completion you'll be logged into your KDE Desktop.** 
 
-**If you want to start kWSL at boot (like a service with no console window) do the following:**
+**Configure kWSL to start at boot (like a service, no console window)**
 
  - Right-click the task in Task Scheduler, click properties
- - Click the checkboxes for **Run whether user is logged on or not** and **Hidden** then click **OK**
+ - Click the checkbox for **Run whether user is logged on or not** and click **OK**
  - Enter your Windows credentials when prompted
  
- Reboot your PC when complete.  kWSL will automatically start at boot, no need to login to Windows.
+ Reboot your PC when complete and kWSL will startup automatically.
 
 **xWSL is configured to use Bonjour (Multicast DNS) for easy access in WSL2**
 
+If your computer has virtualization support you can convert it to WSL2.  kWSL is faster on WSL1, but WSL2 has additional capabilities. 
+
 Example of conversion to WSL2 on machine name "ENVY":
-- Stop WSL on ENVY:
-````wsl --shutdown````
-- Convert the instance to WSL2:
-````wsl --set-version kWSL 2````
-- Restart xWSL Instance:
-````schtasks /run /tn kWSL````
-- Adjust the RDP file saved on the desktop to now point at the new WSL2 instance:
-````ENVY-kWSL.local:3399````
+ - Stop WSL on ENVY:
+ ````wsl --shutdown````
+ - Convert the instance to WSL2:
+ ````wsl --set-version kWSL 2````
+ - Restart kWSL Instance:
+ ````schtasks /run /tn kWSL````
+ - Adjust the RDP file saved on the desktop to now point at the new WSL2 instance:
+ ````ENVY-kWSL.local:3399````
 
 **Make it your own:**
 
@@ -103,13 +111,13 @@ From a security standpoint, it would be best to fork this project so you (and on
 - kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/kWSL.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
 - Plasma-discover doesn't work in Server 2019 / Win 10 v.1809 -- The installer will remove it if you're running an affected OS. 
 - WSL1 Doesn't work with PolicyKit.  Enabled kdesu for apps needing elevated rights (plasma-discover, ksystemlog, muon, root console.)    
-- Patched KDE Activity Manager to disable WAL in sqlite3.  KDE Lockscreen is disabled.  
+- KDE Lockscreen is disabled (due to policykit)  
+- Patched KDE Activity Manager to disable WAL in sqlite3. 
 - Rebuilt xrdp 0.9.13 thanks to Sergey Dryabzhinsky @ http://packages.rusoft.ru/ppa/rusoft/xrdp/
-- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as a stable/maintained browser.  Working on getting Konqueror working. 
+- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as a stable/maintained browser.  TODO: Get Konqueror working with an older version of the Chromium engine. 
 - Installed image consumes approximately 3 GB of disk space.
 - Apt-fast was added to improve download speed and reliability.
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
-- Copy/Paste of text and images work reliably between Windows and Linux
 - This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment (+3GB Disk) run ```sudo pkcon -y install neon-all``` 
 
 ![image](https://user-images.githubusercontent.com/33142753/100148485-33cb2480-2e73-11eb-932b-54e34b445575.png)
