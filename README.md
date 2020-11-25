@@ -14,8 +14,6 @@
   - 2004 - KB4571756
   - 20H2 - FIXED
 
-INSTRUCTIONS: From an elevated prompt, change to your desired install directory and type/paste the following command:
-
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
 ```
