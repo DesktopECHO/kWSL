@@ -162,8 +162,8 @@ NETSH AdvFirewall Firewall add rule name="%DISTRO% KDEinit" dir=in action=allow 
 START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.75.0-0xneon+20.04+focal+wsl_amd64.deb ; dpkg -i /tmp/kWSL/deb/kactivitymanagerd_5.20.0-0xneon+20.04+focal+wsl_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd"
 START /MIN "%DISTRO% Init" WSL ~ -u root -d %DISTRO% -e initwsl 2
 ECHO Building RDP Connection file, Console link, Init system...
-ECHO @WSLCONFIG /t %DISTRO% > "%DISTROFULL%\Init.cmd"
-ECHO @WSL ~ -u root -d %DISTRO% -e initwsl 2 >> "%DISTROFULL%\Init.cmd"
+ECHO START /MIN "%DISTRO%" WSLCONFIG.EXE /t %DISTRO%                  >  "%DISTROFULL%\Init.cmd"
+ECHO START /MIN "%DISTRO%" WSL.EXE ~ -u root -d %DISTRO% -e initwsl 2 >> "%DISTROFULL%\Init.cmd"
 ECHO @WSL ~ -u %XU% -d %DISTRO% > "%DISTROFULL%\%DISTRO% (%XU%) Console.cmd"
 POWERSHELL -Command "Copy-Item '%DISTROFULL%\%DISTRO% (%XU%) Console.cmd' ([Environment]::GetFolderPath('Desktop'))"
 POWERSHELL -Command "Copy-Item '%DISTROFULL%\%DISTRO% (%XU%) Desktop.rdp' ([Environment]::GetFolderPath('Desktop'))"
