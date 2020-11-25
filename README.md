@@ -8,11 +8,13 @@
 
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
+
 **IMPORTANT! Requires August/Sept 2020 WSL update for Windows 10, included in 20H2:**
   - 1809 - KB4571748
   - 1909 - KB4566116
   - 2004 - KB4571756
   - 20H2 - FIXED
+
 
 **INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
 
@@ -75,16 +77,19 @@ Currently you should see approximately 1316 packages installed.
 
 Upon completion you'll be logged into your KDE Desktop.  A scheduled task is created for starting kWSL. 
 
+
 **If you want to start kWSL at boot (like a service with no console window) do the following:**
 
  - Right-click the task in Task Scheduler, click properties
  - Click the checkboxes for **Run whether user is logged on or not** and **Hidden** then click **OK**
  - Enter your Windows credentials when prompted
  
- Reboot your PC when complete.  kWSL will automatically start at boot, no need to login to Windows.
+ Reboot your PC when complete and kWSL will startup automatically.
+
 
 **xWSL is configured to use Bonjour (Multicast DNS) for easy access in WSL2**
 
+If your computer has virtualization support you can convert it to WSL2.  kWSL is faster on WSL1, but WSL2 has additional capabilities. 
 Example of conversion to WSL2 on machine name "ENVY":
 - Stop WSL on ENVY:
 ````wsl --shutdown````
@@ -94,6 +99,7 @@ Example of conversion to WSL2 on machine name "ENVY":
 ````schtasks /run /tn kWSL````
 - Adjust the RDP file saved on the desktop to now point at the new WSL2 instance:
 ````ENVY-kWSL.local:3399````
+
 
 **Make it your own:**
 
