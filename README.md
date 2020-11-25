@@ -86,16 +86,16 @@ The install summary should show approximately 1316 packages.
 **xWSL is configured to use Bonjour (Multicast DNS) for easy access in WSL2**
 
 If your computer has virtualization support you can convert it to WSL2.  kWSL is faster on WSL1, but WSL2 has additional capabilities. 
-Example of conversion to WSL2 on machine name "ENVY":
-- Stop WSL on ENVY:
-````wsl --shutdown````
-- Convert the instance to WSL2:
-````wsl --set-version kWSL 2````
-- Restart xWSL Instance:
-````schtasks /run /tn kWSL````
-- Adjust the RDP file saved on the desktop to now point at the new WSL2 instance:
-````ENVY-kWSL.local:3399````
 
+Example of conversion to WSL2 on machine name "ENVY":
+ - Stop WSL on ENVY:
+ ````wsl --shutdown````
+ - Convert the instance to WSL2:
+ ````wsl --set-version kWSL 2````
+ - Restart kWSL Instance:
+ ````schtasks /run /tn kWSL````
+ - Adjust the RDP file saved on the desktop to now point at the new WSL2 instance:
+ ````ENVY-kWSL.local:3399````
 
 **Make it your own:**
 
