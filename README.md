@@ -71,9 +71,9 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
  Neon Installation Complete!  GUI will start in a few seconds...
 ```
 
-Currently you should see approximately 1316 packages installed.   
+The install summary should show approximately 1316 packages.   
 
-Upon completion you'll be logged into your KDE Desktop.  A scheduled task is created for starting kWSL. 
+**Upon completion you'll be logged into your KDE Desktop.** 
 
 **Configure kWSL to start at boot (like a service, no console window)**
 
