@@ -103,7 +103,7 @@ ECHO [%TIME:~0,8%] Install Mozilla Seamonkey and media playback (~1m30s)
 
 REM ## Additional items to install can go here...
 REM ## %GO% "cd /tmp ; wget https://files.multimc.org/downloads/multimc_1.4-1.deb"
-REM ## %GO% "apt-get -y install tilix /tmp/multimc_1.4-1.deb"
+REM ## %GO% "apt-get -y install supertuxkart /tmp/multimc_1.4-1.deb"
 
 ECHO [%TIME:~0,8%] Final clean-up (~0m45s)
 %GO% "apt-get -y purge libimobiledevice6 libplist3 libusbmuxd6 libupower-glib3 upower gnustep-base-runtime libgnustep-base1.26 gnustep-base-common gnustep-common libgc1c2 libobjc4 powermgmt-base unar ; apt-get -y clean" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Final clean-up.log"
