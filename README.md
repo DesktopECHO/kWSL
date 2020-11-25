@@ -111,9 +111,10 @@ From a security standpoint, it would be best to fork this project so you (and on
 - kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/kWSL.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
 - Plasma-discover doesn't work in Server 2019 / Win 10 v.1809 -- The installer will remove it if you're running an affected OS. 
 - WSL1 Doesn't work with PolicyKit.  Enabled kdesu for apps needing elevated rights (plasma-discover, ksystemlog, muon, root console.)    
-- Patched KDE Activity Manager to disable WAL in sqlite3.  KDE Lockscreen is disabled.  
+- KDE Lockscreen is disabled (due to policykit)  
+- Patched KDE Activity Manager to disable WAL in sqlite3. 
 - Rebuilt xrdp 0.9.13 thanks to Sergey Dryabzhinsky @ http://packages.rusoft.ru/ppa/rusoft/xrdp/
-- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as a stable/maintained browser.  Working on getting Konqueror working. 
+- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as a stable/maintained browser.  TODO: Get Konqueror working with an older version of the Chromium engine. 
 - Installed image consumes approximately 3 GB of disk space.
 - Apt-fast was added to improve download speed and reliability.
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
