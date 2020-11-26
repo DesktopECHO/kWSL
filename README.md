@@ -59,7 +59,7 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
 
       Start: Tue 11/24/2020 @ 16:06
         End: Tue 11/24/2020 @ 16:17
-   Packages: 1316
+   Packages: 1327
 
   - xRDP Server listening on port 13399 and SSHd on port 13322.
 
@@ -70,8 +70,7 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
 
  Neon Installation Complete!  GUI will start in a few seconds...
 ```
-
-The install summary should show approximately 1316 packages.   
+The install summary should indicate 1327 or 1328 packages installed, depending on Windows version.   
 
 **Upon completion you'll be logged into your KDE Desktop.** 
 
