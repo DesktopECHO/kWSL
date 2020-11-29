@@ -5,7 +5,7 @@
   - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
   - xRDP Display Server, no additional X Server downloads required
   - RDP Audio playback enabled (YouTube playback in browser works with audio in sync)
-  - Chrome Remote Desktop pre-installed, see wiki for simple steps to enable
+  - Chrome Remote Desktop pre-installed, see wiki for steps to enable
 
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
