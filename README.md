@@ -1,4 +1,4 @@
-# kWSL.cmd - KDE Neon 5.20 for WSL1
+# [kWSL.cmd - KDE Neon 5.20 for WSL1](https://github.com/DesktopECHO/kWSL)
 
   - NetInstall of KDE Neon 5.20 on WSL1 using xRDP.  If you prefer GTK, visit [xWSL](https://github.com/DesktopECHO/xWSL)
   - Easy to deploy
