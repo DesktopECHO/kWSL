@@ -1,6 +1,6 @@
 # kWSL.cmd - KDE Neon 5.20 for WSL1
 
-  - NetInstall of KDE Neon 5.20 on WSL1, if you prefer GTK, visit [xWSL](https://github.com/DesktopECHO/xWSL)
+  - NetInstall of KDE Neon 5.20 on WSL1 using xRDP.  If you prefer GTK, visit [xWSL](https://github.com/DesktopECHO/xWSL)
   - Easy to deploy
   - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
   - xRDP Display Server, no additional X Server downloads required
