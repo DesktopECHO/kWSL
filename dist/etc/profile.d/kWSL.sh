@@ -32,4 +32,4 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_RUNTIME_DIR=$HOME/.local
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
-export LIBGL_ALWAYS_INDIRECT=0
+unset LIBGL_ALWAYS_INDIRECT
