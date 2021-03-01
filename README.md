@@ -1,6 +1,6 @@
-# [kWSL.cmd - KDE Neon 5.20 for WSL1](https://github.com/DesktopECHO/kWSL)
+# [kWSL.cmd - KDE Neon 5.21 for WSL1](https://github.com/DesktopECHO/kWSL)
 
-  - NetInstall of KDE Neon 5.20 on WSL1 using xRDP.  If you prefer GTK, visit [xWSL](https://github.com/DesktopECHO/xWSL)
+  - NetInstall of KDE Neon 5.21 on WSL1 using xRDP.  If you prefer GTK, visit [xWSL](https://github.com/DesktopECHO/xWSL)
   - Easy to deploy
   - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
   - xRDP Display Server, no additional X Server downloads required
@@ -37,7 +37,7 @@ Installing kWSL Distro [Neon] to "C:\WSL Distros\Neon"
 This will take a few minutes, please wait...
 ```
 
-The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.20.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
+The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.21.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
 
 ```
 [16:07:04] Installing Ubuntu 20.04 LTS (~1m30s)
@@ -45,7 +45,7 @@ The installer will download all the necessary packages to convert the Windows St
 [16:08:51] Remove un-needed packages (~1m30s)
 [16:09:22] Configure apt-fast Downloader (~0m45s)
 [16:09:34] Remote Desktop Components (~2m45s)
-[16:11:07] KDE Neon 5.20 User Edition (~11m30s)
+[16:11:07] KDE Neon 5.21 User Edition (~11m30s)
 [16:16:39] Install Mozilla Seamonkey and media playback (~1m30s)
 [16:17:02] Final clean-up (~0m45s)
 ```
