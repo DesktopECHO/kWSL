@@ -162,7 +162,7 @@ NETSH AdvFirewall Firewall add rule name="%DISTRO% Secure Shell" dir=in action=a
 NETSH AdvFirewall Firewall add rule name="%DISTRO% Avahi Multicast DNS" dir=in action=allow program="%DISTROFULL%\rootfs\usr\sbin\avahi-daemon" enable=yes > NUL
 NETSH AdvFirewall Firewall add rule name="%DISTRO% KDE Connect" dir=in action=allow program="%DISTROFULL%\rootfs\usr\lib\x86_64-linux-gnu\libexec\kdeconnectd" enable=yes > NUL
 NETSH AdvFirewall Firewall add rule name="%DISTRO% KDEinit" dir=in action=allow program="%DISTROFULL%\rootfs\usr\bin\kdeinit5" enable=yes > NUL
-START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.80.0-0xneon+20.04+focal+wsl1_amd64.deb ; dpkg -i /tmp/kWSL/deb/kactivitymanagerd_5.21.4-0xneon+20.04+focal+release+wsl1_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd"
+START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.80.0-0xneon+20.04+focal+wsl1_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.21.4-0xneon+20.04+focal+release+wsl1_amd64.deb /tmp/kWSL/deb/systemsettings_5.22.5wsl1_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd"
 START /MIN "%DISTRO% Init" WSL ~ -u root -d %DISTRO% -e initwsl 2
 ECHO Building RDP Connection file, Console link, Init system...
 ECHO @START /MIN "%DISTRO%" WSLCONFIG.EXE /t %DISTRO%                  >  "%DISTROFULL%\Init.cmd"
