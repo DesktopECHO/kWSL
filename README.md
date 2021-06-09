@@ -1,6 +1,6 @@
 # [kWSL.cmd - KDE Neon 5.22 for WSL1](https://github.com/DesktopECHO/kWSL)
 
-  - NetInstall of KDE Neon 5.22 on WSL1 using xRDP.  If you prefer GTK, visit [**(xWSL)**](https://github.com/DesktopECHO/xWSL) or [**(Kali-xRDP)**](https://github.com/DesktopECHO/Kali-xRDP)
+  - NetInstall of KDE Neon 5.22 on WSL1 using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
   - Easy to deploy
   - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
   - xRDP Display Server, no additional X Server downloads required
