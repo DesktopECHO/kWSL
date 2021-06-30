@@ -1,6 +1,6 @@
-# [kWSL.cmd - KDE Neon 5.22 for WSL1](https://github.com/DesktopECHO/kWSL)
+# [kWSL.cmd - KDE Neon 5.22 for WSL](https://github.com/DesktopECHO/kWSL)
 
-  - NetInstall of KDE Neon 5.22 on WSL1 using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
+  - NetInstall of KDE Neon 5.22 on WSL using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
   - Easy to deploy
   - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
   - xRDP Display Server, no additional X Server downloads required
@@ -40,14 +40,14 @@ This will take a few minutes, please wait...
 The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.22.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
 
 ```
-[16:07:04] Installing Ubuntu 20.04 LTS (~1m30s)
-[16:07:56] Git clone and update repositories (~1m15s)
-[16:08:51] Remove un-needed packages (~1m30s)
-[16:09:22] Configure apt-fast Downloader (~0m45s)
-[16:09:34] Remote Desktop Components (~2m45s)
-[16:11:07] KDE Neon 5.22 User Edition (~11m30s)
-[16:16:39] Install Mozilla Seamonkey and media playback (~1m30s)
-[16:17:02] Final clean-up (~0m45s)
+[ 2:47:40] Installing Ubuntu 20.04 LTS (~1m30s)
+[ 2:48:48] Git clone and update repositories (~1m15s)
+[ 2:49:49] Remove un-needed packages (~1m30s)
+[ 2:50:28] Configure apt-fast Downloader (~0m45s)
+[ 2:50:42] Remote Desktop Components (~2m45s)
+[ 2:52:22] KDE Neon 5.22 User Edition (~11m30s)
+[ 2:58:14] Install Web Browser and CRD (~1m30s)
+[ 2:58:41] Final clean-up (~0m45s)
 ```
 
 Near the end of the script you will be prompted to create a non-root user.  This user will be automatically added to sudo'ers.
@@ -58,9 +58,9 @@ Building RDP Connection file, Console link, Init system...
 Building Scheduled Task...
 SUCCESS: The scheduled task "Neon" has successfully been created.
 
-      Start: Tue 11/24/2020 @ 16:06
-        End: Tue 11/24/2020 @ 16:17
-   Packages: 1327
+      Start: Thu 07/01/2021 @  2:46
+        End: Thu 07/01/2021 @  2:58
+   Packages: 1360
 
   - xRDP Server listening on port 13399 and SSHd on port 13322.
 
@@ -71,7 +71,7 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
 
  Neon Installation Complete!  GUI will start in a few seconds...
 ```
-The install summary should indicate 1327 or 1328 packages installed, depending on Windows version.   
+The install summary should indicate 1359 or 1360 packages installed, depending on Windows version.   
 
 **Upon completion you'll be logged into your KDE Desktop.** 
 
@@ -115,10 +115,10 @@ From a security standpoint, it would be best to fork this project so you (and on
 - WSL1 Doesn't work with PolicyKit.  Enabled kdesu for apps needing elevated rights (plasma-discover, ksystemlog, muon, root console.)    
 - KDE Lockscreen is disabled (due to policykit)  
 - Patched KDE Activity Manager to disable WAL in sqlite3. 
-- Rebuilt xrdp 0.9.13 thanks to Sergey Dryabzhinsky @ http://packages.rusoft.ru/ppa/rusoft/xrdp/
-- Current versions of Chrome / Firefox / Konqueror do not work in WSL1; Mozilla Seamonkey is included as a stable/maintained browser.  TODO: Get Konqueror working with an older version of the Chromium engine. 
+- Mozilla Seamonkey is included as a stable/maintained browser. 
+- QtWebEngine (Chromium-based) browsers like Falkon and Konqueror now work. (July/21)
 - Installed image consumes approximately 3 GB of disk space.
-- Apt-fast was added to improve download speed and reliability.
+- Apt-fast added to improve download speed and reliability.
 - KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
 - This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment (+3GB Disk) run ```sudo pkcon -y install neon-all``` 
 
