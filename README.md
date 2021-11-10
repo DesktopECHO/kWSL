@@ -1,12 +1,10 @@
-# [kWSL.cmd - KDE Neon 5.22 for WSL](https://github.com/DesktopECHO/kWSL)
+# [kWSL.cmd - KDE Neon for WSL](https://github.com/DesktopECHO/kWSL)
 
-  - NetInstall of KDE Neon 5.22 on WSL using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
-  - Easy to deploy
-  - Runs on Windows Server 2019 or Windows 10 Version 1809 (or newer, including Server Core)
-  - xRDP Display Server, no additional X Server downloads required
-  - RDP Audio playback enabled (YouTube playback in browser works with audio in sync)
-  - Chrome Remote Desktop pre-installed, see wiki for steps to enable
-
+  - Net-install of KDE Neon on WSL1 using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
+  - Runs on Windows 10 and Server 2019/2022 (including Hyper-V Core)
+  - xRDP Display Server; no additional Xserver download/configuration required
+  - High-quality RDP audio playback, video playback and YouTube work well and audio maintains sync reliably.
+  - If you want to accesss kWSL remotely, Chrome Remote Desktop is pre-installed (Never expose RDP servers to the Internet.) [**Wiki Link**](https://github.com/DesktopECHO/xWSL/Wiki
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
 **IMPORTANT!**  Requires August/Sept 2020 WSL update for Windows 10.  This update is already included in Windows 20H2 and newer:
@@ -37,7 +35,7 @@ Installing kWSL Distro [Neon] to "C:\WSL Distros\Neon"
 This will take a few minutes, please wait...
 ```
 
-The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon 5.22.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
+The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon User Edition.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
 
 ```
 [ 2:47:40] Installing Ubuntu 20.04 LTS (~1m30s)
@@ -73,7 +71,7 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
 ```
 The install summary should indicate 1359 or 1360 packages installed, depending on Windows version.   
 
-**Upon completion you'll be logged into your KDE Desktop.** 
+**Upon completion you'll be logged-into your KDE Neon Desktop.** 
 
 **Configure kWSL to start at boot (like a service, no console window)**
 
