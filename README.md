@@ -4,7 +4,7 @@
   - Runs on Windows 10 and Server 2019/2022 (including Hyper-V Core)
   - xRDP Display Server; no additional Xserver download/configuration required
   - High-quality RDP audio playback, video playback and YouTube work well and audio maintains sync reliably.
-  - If you want to accesss kWSL remotely, Chrome Remote Desktop is pre-installed (Never expose RDP servers to the Internet.) [**Wiki Link**](https://github.com/DesktopECHO/xWSL/Wiki
+  - If you want to accesss kWSL remotely, Chrome Remote Desktop is pre-installed (Never expose RDP servers to the Internet.) Configuration steps are [**here**](https://github.com/DesktopECHO/kWSL/wiki/Enable-Chrome-Remote-Desktop)
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
 **IMPORTANT!**  Requires August/Sept 2020 WSL update for Windows 10.  This update is already included in Windows 20H2 and newer:
