@@ -65,7 +65,7 @@ immutability=1
 plugin=org.kde.plasma.icontasks
 
 [Containments][2][Applets][5][Configuration][General]
-launchers=applications:systemsettings.desktop,applications:org.kde.discover.desktop,preferred://filemanager,applications:seamonkey-mozilla-build.desktop,applications:org.kde.konsole.desktop
+launchers=applications:systemsettings.desktop,applications:org.kde.discover.desktop,preferred://filemanager,applications:org.kde.falkon.desktop,applications:org.kde.konsole.desktop
 
 [Containments][2][Applets][6]
 immutability=1

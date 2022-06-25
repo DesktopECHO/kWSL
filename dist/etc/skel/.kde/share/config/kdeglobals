@@ -103,17 +103,17 @@ ForegroundPositive=39,174,96
 ForegroundVisited=127,140,141
 
 [General]
-ColorScheme=Breeze Dark
-Name=Breeze Dark
-font=Segoe UI,11,-1,5,50,0,0,0,0,0
-menuFont=Segoe UI,11,-1,5,50,0,0,0,0,0
+ColorScheme=Breeze
+Name=Breeze
+font=Segoe UI,10,-1,5,50,0,0,0,0,0
+menuFont=Segoe UI,10,-1,5,50,0,0,0,0,0
 shadeSortColumn=true
-smallestReadableFont=Segoe UI,10,-1,5,50,0,0,0,0,0
-toolBarFont=Segoe UI,11,-1,5,50,0,0,0,0,0
+smallestReadableFont=Segoe UI,8,-1,5,50,0,0,0,0,0
+toolBarFont=Segoe UI,10,-1,5,50,0,0,0,0,0
 widgetStyle=Breeze
 
 [Icons]
-Theme=breeze-dark
+Theme=breeze
 
 [KDE]
 ShowIconsInMenuItems=true

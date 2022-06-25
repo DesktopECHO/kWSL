@@ -16,10 +16,10 @@ FOR /f "delims=" %%a in ('powershell -ExecutionPolicy bypass -command "%TEMP%\wi
 CLS && SET RUNSTART=%date% @ %time:~0,5%
 IF EXIST .\CMD.EXE CD ..\..
 
-ECHO [kWSL Installer 20220208]
+ECHO [kWSL Installer 20220718]
 ECHO:
-ECHO Enter a unique name for your kWSL distro or hit Enter to use default. 
-SET DISTRO=kWSL& SET /p DISTRO=Keep this name simple, no space or underscore characters [kWSL]: 
+ECHO Set a name for this KDE Neon instance.  Hit Enter to use default. 
+SET DISTRO=NeonWSL& SET /p DISTRO=Keep this name simple, no space or underscore characters [NeonWSL]: 
 IF EXIST "%DISTRO%" (ECHO. & ECHO Folder exists with that name, choose a new folder name. & PAUSE & GOTO DI)
 WSL.EXE -d %DISTRO% -e . > "%TEMP%\InstCheck.tmp"
 FOR /f %%i in ("%TEMP%\InstCheck.tmp") do set CHKIN=%%~zi 
@@ -60,7 +60,7 @@ ECHO @NETSH AdvFirewall Firewall del rule name="%DISTRO% KDEinit"               
 ECHO @RD /S /Q "%DISTROFULL%"                                                                                 >> "%DISTROFULL%\Uninstall %DISTRO%.cmd"
 ECHO Installing kWSL Distro [%DISTRO%] to "%DISTROFULL%" & ECHO This will take a few minutes, please wait... 
 IF %DEFEXL%==X (POWERSHELL.EXE -Command "wget %BASE%/excludeWSL.ps1 -UseBasicParsing -OutFile '%DISTROFULL%\excludeWSL.ps1'" & START /WAIT /MIN "Add exclusions in Windows Defender" "POWERSHELL.EXE" "-ExecutionPolicy" "Bypass" "-Command" ".\excludeWSL.ps1" "%DISTROFULL%" &  DEL ".\excludeWSL.ps1")
-ECHO:& ECHO [%TIME:~0,8%] Installing Ubuntu 20.04 LTS (~1m30s)
+ECHO:& ECHO [%TIME:~0,8%] Importing distro userspace (~1m30s)
 START /WAIT /MIN "Installing Distro Base..." "%TEMP%\LxRunOffline.exe" "i" "-n" "%DISTRO%" "-f" "%TEMP%\Ubuntu2004.tar.gz" "-d" "%DISTROFULL%"
 (FOR /F "usebackq delims=" %%v IN (`PowerShell -Command "whoami"`) DO set "WAI=%%v") & ICACLS "%DISTROFULL%" /grant "%WAI%":(CI)(OI)F > NUL
 (COPY /Y "%TEMP%\LxRunOffline.exe" "%DISTROFULL%" > NUL ) & "%DISTROFULL%\LxRunOffline.exe" sd -n "%DISTRO%"
@@ -68,15 +68,13 @@ ECHO [%TIME:~0,8%] Git clone and update repositories (~1m15s)
 %GO% "echo 'deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe' > /etc/apt/sources.list"
 %GO% "echo 'deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe' >> /etc/apt/sources.list"
 %GO% "echo 'deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe' >> /etc/apt/sources.list"
-%GO% "echo 'deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main' >> /etc/apt/sources.list.d/mozilla.list"
+%GO% "echo 'deb http://downloads.sourceforge.net/project/ubuntuzilla/mozilla/apt all main' > /etc/apt/sources.list.d/mozilla.list"
 %GO% "echo 'deb http://archive.neon.kde.org/user/ focal main' >>  /etc/apt/sources.list.d/neon.list"
-%GO% "echo 'deb http://ppa.launchpad.net/oibaf/graphics-drivers/ubuntu focal main' >>  /etc/apt/sources.list.d/ubuntu-graphics.list"
 %GO% "rm -rf /etc/apt/apt.conf.d/20snapd.conf /etc/rc2.d/S01whoopsie /etc/init.d/console-setup.sh" 
 :APTRELY
 START /MIN /WAIT "Git Clone kWSL" %GO% "cd /tmp ; git clone -b %BRANCH% --depth=1 https://github.com/%GITORG%/%GITPRJ%.git"
 START /MIN /WAIT "Acquire KDE Neon Keys" %GO% "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com E6D4736255751E5D"
 START /MIN /WAIT "Acquire Mozilla Seamonkey Keys" %GO% "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 2667CA5C"
-START /MIN /WAIT "Acquire Ubuntu Graphics Keys" %GO% "apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 957D2708A03A4626"
 START /MIN /WAIT "apt-get update" %GO% "apt-get update 2> /tmp/apterr"
 FOR /F %%A in ("%DISTROFULL%\rootfs\tmp\apterr") do If %%~zA NEQ 0 GOTO APTRELY 
 
@@ -88,10 +86,10 @@ ECHO [%TIME:~0,8%] Configure apt-fast Downloader (~0m45s)
 %GO% "chmod +x /tmp/kWSL/dist/usr/local/bin/apt-fast ; cp -p /tmp/kWSL/dist/usr/local/bin/apt-fast /usr/local/bin" > NUL
 
 ECHO [%TIME:~0,8%] Remote Desktop Components (~2m45s)
-%GO% "DEBIAN_FRONTEND=noninteractive apt-fast -y install /tmp/kWSL/deb/xrdp_0.9.17-2ubuntu1_amd64.deb /tmp/kWSL/deb/xorgxrdp_0.2.17-1ubuntu1_amd64.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb /tmp/kWSL/deb/fonts-cascadia-code_2102.03-1_all.deb x11-apps x11-session-utils x11-xserver-utils dialog distro-info-data dumb-init inetutils-syslogd xdg-utils avahi-daemon libnss-mdns binutils putty unzip zip unar unzip dbus-x11 samba-common-bin base-files ubuntu-release-upgrader-core python3-distupgrade packagekit packagekit-tools lhasa arj unace liblhasa0 apt-config-icons apt-config-icons-hidpi apt-config-icons-large apt-config-icons-large-hidpi libgtkd-3-0 libphobos2-ldc-shared90 libvte-2.91-0 libvte-2.91-common libvted-3-0 tilix tilix-common libdbus-glib-1-2 --no-install-recommends" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Remote Desktop Components.log" 2>&1
+%GO% "DEBIAN_FRONTEND=noninteractive apt-fast -y install /tmp/kWSL/deb/xrdp_0.9.19-1_amd64.deb /tmp/kWSL/deb/xorgxrdp_0.2.18-1_amd64.deb /tmp/kWSL/deb/libfdk-aac1_0.1.6-1_amd64.deb /tmp/kWSL/deb/fonts-cascadia-code_2102.03-1_all.deb x11-apps x11-session-utils x11-xserver-utils dialog distro-info-data dumb-init inetutils-syslogd xdg-utils avahi-daemon libnss-mdns binutils putty unzip zip unar unzip dbus-x11 samba-common-bin base-files ubuntu-release-upgrader-core python3-distupgrade packagekit packagekit-tools lhasa arj unace liblhasa0 apt-config-icons apt-config-icons-hidpi apt-config-icons-large apt-config-icons-large-hidpi libgtkd-3-0 libphobos2-ldc-shared90 libvte-2.91-0 libvte-2.91-common libvted-3-0 tilix tilix-common libdbus-glib-1-2 --no-install-recommends" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Remote Desktop Components.log" 2>&1
 
-ECHO [%TIME:~0,8%] KDE Neon User Edition (~11m30s)
-%GO% "DEBIAN_FRONTEND=noninteractive apt-fast -y install appstream apulse ark aspell-en breeze-gtk-theme desktop-file-utils gdb gdbserver gstreamer1.0-plugins-base hunspell-en-us im-config javascript-common kaccounts-providers kactivities-bin kde-config-gtk-style kde-config-gtk-style-preview kde-plasma-desktop kdeconnect kdiff3 kgamma5 khelpcenter kimageformat-plugins kinfocenter kio-extras kmenuedit kpackagelauncherqml kpackagetool5 krename krusader kscreen ksshaskpass ksysguard ksysguard-data kuserfeedback-doc kwalletmanager kwin-x11 kwrited libaacs0 libappstream-glib8 libavahi-glib1 libbdplus0 libcanberra-gtk3-module libcc1-0 libc-dbg libfftw3-single3 libfwupd2 libgdk-pixbuf2.0-bin libgtk-3-bin libjs-jquery libkf5baloowidgets-bin libkf5config-bin libkf5dbusaddons-bin libkf5iconthemes-bin libkf5kdelibs4support5-bin libkf5khtml-bin libkf5pulseaudioqt2 libkf5purpose-bin libkf5xmlgui-bin libmarkdown2 libmtp-runtime libostree-1-1 libpam-kwallet5 libproxy-tools libqt5designer5 libqt5help5 libqt5multimedia5-plugins libqt5test5 libblkid1 libbrotli1 libfreetype6 libglib2.0-0 libglib2.0-bin libmount1 libsqlite3-0 libuuid1 libx11-6 zlib1g media-player-info mesa-utils mesa-va-drivers debconf-kde-data libdebconf-kde1 muon p11-kit p11-kit-modules p7zip-full pulseaudio pavucontrol plasma-discover plasma-discover-common plasma-workspace-wallpapers policykit-desktop-privileges poppler-data pulseaudio-equalizer python3-dbus.mainloop.pyqt5 python3-pyqt5 python3-sip qml-module-org-kde-runnermodel qml-module-org-kde-purpose qml-module-org-kde-prison qt5-gtk-platformtheme qtspeech5-speechd-plugin qttranslations5-l10n qtwayland5 ruby sonnet-plugins systemsettings va-driver-all xdg-dbus-proxy apt-xapian-index libqapt3 libqapt3-runtime neon-apport python3-apport python3-problem-report python3-systemd python3-xapian qapt-batch debconf-kde-helper software-properties-qt ksystemlog ubuntu-drivers-common libcanberra-pulse plasma-pa pulseaudio-module-gsettings python3-psutil xbase-clients xinit xvfb dolphin kfind kwrite libdolphinvcs5 libkuserfeedbackwidgets1 fonts-urw-base35 libgs9 libgs9-common libijs-0.35 libjbig2dec0 libkf5kexiv2-15.0.0 libokular5core9 libpaper1 libqmobipocket2 libspectre1 okular okular-backends kde-spectacle libkcolorpicker0 libkf5kipi-data libkf5kipi32.0.0 libkimageannotator-common libkimageannotator0 --no-install-recommends " > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% KDE Neon User Edition.log" 2>&1
+ECHO [%TIME:~0,8%] KDE Neon User Edition (~7m30s)
+%GO% "DEBIAN_FRONTEND=noninteractive apt-fast -y install appstream apulse ark aspell-en breeze-gtk-theme desktop-file-utils gdb gdbserver gstreamer1.0-plugins-base hunspell-en-us im-config javascript-common kaccounts-providers kactivities-bin kde-config-gtk-style kde-config-gtk-style-preview kde-plasma-desktop kdeconnect kdiff3 kgamma5 khelpcenter kimageformat-plugins kinfocenter kio-extras kmenuedit kpackagelauncherqml kpackagetool5 krename krusader kscreen ksshaskpass ksysguard ksysguard-data kuserfeedback-doc kwalletmanager kwin-x11 kwrited libaacs0 libappstream-glib8 libavahi-glib1 libbdplus0 libcanberra-gtk3-module libcc1-0 libc-dbg libfftw3-single3 libfwupd2 libgdk-pixbuf2.0-bin libgtk-3-bin libjs-jquery libkf5baloowidgets-bin libkf5config-bin libkf5dbusaddons-bin libkf5iconthemes-bin libkf5kdelibs4support5-bin libkf5khtml-bin libkf5pulseaudioqt2 libkf5purpose-bin libkf5xmlgui-bin libmarkdown2 libmtp-runtime libostree-1-1 libpam-kwallet5 libproxy-tools libqt5designer5 libqt5help5 libqt5multimedia5-plugins libqt5test5 libblkid1 libbrotli1 libfreetype6 libglib2.0-0 libglib2.0-bin libmount1 libsqlite3-0 libuuid1 libx11-6 zlib1g media-player-info mesa-utils mesa-va-drivers debconf-kde-data libdebconf-kde1 muon p11-kit p11-kit-modules p7zip-full pulseaudio pavucontrol plasma-discover plasma-discover-common plasma-workspace-wallpapers policykit-desktop-privileges poppler-data pulseaudio-equalizer python3-dbus.mainloop.pyqt5 python3-pyqt5 python3-sip qml-module-org-kde-runnermodel qml-module-org-kde-purpose qml-module-org-kde-prison qt5-gtk-platformtheme qtspeech5-speechd-plugin qttranslations5-l10n qtwayland5 libqt5waylandcompositor5 libwayland-cursor0 libwayland-client0 ruby sonnet-plugins systemsettings va-driver-all xdg-dbus-proxy apt-xapian-index libqapt3 libqapt3-runtime neon-apport python3-apport python3-problem-report python3-systemd python3-xapian qapt-batch debconf-kde-helper software-properties-qt ksystemlog ubuntu-drivers-common libcanberra-pulse plasma-pa pulseaudio-module-gsettings python3-psutil xbase-clients xinit xvfb dolphin kfind kwrite libdolphinvcs5 libkuserfeedbackwidgets1 fonts-urw-base35 libgs9 libgs9-common libijs-0.35 libjbig2dec0 libkf5kexiv2-15.0.0 libokular5core9 libpaper1 libqmobipocket2 libspectre1 okular okular-backends kde-spectacle libkcolorpicker0 libkf5kipi-data libkf5kipi32.0.0 libkimageannotator-common libkimageannotator0 mesa-utils-extra khotkeys kaccounts-integration libkf5guiaddons-bin libpaper-utils libvlc-bin --no-install-recommends " > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% KDE Neon User Edition.log" 2>&1
 
 ECHO [%TIME:~0,8%] Install Web Browser and CRD (~1m30s)
 %GO% "DEBIAN_FRONTEND=noninteractive apt-fast -y install falkon seamonkey-mozilla-build vlc vlc-bin vlc-l10n vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization --no-install-recommends ; update-alternatives --install /usr/bin/www-browser www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/gnome-www-browser gnome-www-browser /usr/bin/seamonkey 100 ; update-alternatives --install /usr/bin/x-www-browser x-www-browser /usr/bin/seamonkey 100 ; cd /tmp/kWSL/deb ; wget -q https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb ; dpkg -i /tmp/kWSL/deb/chrome-remote-desktop_current_amd64.deb" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Web Browser and CRD.log" 2>&1
@@ -100,8 +98,8 @@ REM ## Additional items to install can go here...
 REM ## %GO% "cd /tmp ; wget https://files.multimc.org/downloads/multimc_1.4-1.deb"
 REM ## %GO% "apt-get -y install supertuxkart /tmp/multimc_1.4-1.deb"
 
-ECHO [%TIME:~0,8%] Final clean-up (~0m45s)
-%GO% "apt-get -y purge mesa-vulkan-drivers gnustep-base-runtime libgnustep-base1.26 gnustep-base-common gnustep-common libgc1c2 libobjc4 powermgmt-base unar ; apt-get -y clean" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Final clean-up.log"
+ECHO [%TIME:~0,8%] Cleaning-up... (~0m45s)
+%GO% "apt-get -y purge upower mesa-vulkan-drivers gnustep-base-runtime libgnustep-base1.26 gnustep-base-common gnustep-common libgc1c2 libobjc4 powermgmt-base unar ; apt-get -y clean" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Final clean-up.log"
 
 SET /A SESMAN = %RDPPRT% - 50
 %GO% "which schtasks.exe" > "%TEMP%\SCHT.tmp" & set /p SCHT=<"%TEMP%\SCHT.tmp"
@@ -116,6 +114,7 @@ SET /A SESMAN = %RDPPRT% - 50
 %GO% "sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config"
 %GO% "sed -i 's/WSLINSTANCENAME/%DISTRO%/g' /tmp/kWSL/dist/usr/local/bin/initwsl"
 %GO% "sed -i 's/\\h/%DISTRO%/g' /tmp/kWSL/dist/etc/skel/.bashrc ; ln -s /usr/lib/x86_64-linux-gnu/libexec/kf5/kdesu /usr/bin/kdesu"
+%GO% "rm /usr/lib/x86_64-linux-gnu/qt5/plugins/discover/fwupd-backend.so"
 %GO% "sed -i 's#Exec=ksystemlog -qwindowtitle %%c#Exec=kdesu -n --noignorebutton -d -- bash -c +source /etc/profile.d/kWSL.sh ; ksystemlog -qwindowtitle %%c+#g' /usr/share/applications/org.kde.ksystemlog.desktop ; sed -i 's#+#\"#g' /usr/share/applications/org.kde.ksystemlog.desktop ; sed -i 's#X-KDE-SubstituteUID=true#X-KDE-SubstituteUID=false#g' /usr/share/applications/org.kde.ksystemlog.desktop"
 %GO% "sed -i 's#Exec=plasma-discover %%F#Exec=kdesu -n --noignorebutton -d -- bash -c +source /etc/profile.d/kWSL.sh ; plasma-discover --backends packagekit-backend,kns-backend %%F+#g' /usr/share/applications/org.kde.discover.desktop"
 %GO% "sed -i 's#Exec=plasma-discover --mode update#Exec=kdesu -n --noignorebutton -d -- bash -c +source /etc/profile.d/kWSL.sh ; plasma-discover --backends packagekit-backend,kns-backend --mode update+#g' /usr/share/applications/org.kde.discover.desktop ; sed -i 's#+#\"#g' /usr/share/applications/org.kde.discover.desktop"
@@ -139,7 +138,7 @@ SET /p XU=Enter name of primary user for %DISTRO%:
 POWERSHELL -Command $prd = read-host "Enter password for %XU%" -AsSecureString ; $BSTR=[System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($prd) ; [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR) > .tmp & set /p PWO=<.tmp
 %GO% "useradd -m -p nulltemp -s /bin/bash %XU%"
 %GO% "(echo '%XU%:%PWO%') | chpasswd"
-%GO% "echo '%XU% ALL=(ALL:ALL) ALL' >> /etc/sudoers"
+%GO% "echo '%XU% ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
 %GO% "sed -i 's/PLACEHOLDER/%XU%/g' /tmp/kWSL/kWSL.rdp"
 %GO% "sed -i 's/COMPY/%COMPUTERNAME%/g' /tmp/kWSL/kWSL.rdp"
 %GO% "sed -i 's/RDPPRT/%RDPPRT%/g' /tmp/kWSL/kWSL.rdp"
@@ -157,7 +156,7 @@ NETSH AdvFirewall Firewall add rule name="%DISTRO% Secure Shell" dir=in action=a
 NETSH AdvFirewall Firewall add rule name="%DISTRO% Avahi Multicast DNS" dir=in action=allow program="%DISTROFULL%\rootfs\usr\sbin\avahi-daemon" enable=yes > NUL
 NETSH AdvFirewall Firewall add rule name="%DISTRO% KDE Connect" dir=in action=allow program="%DISTROFULL%\rootfs\usr\lib\x86_64-linux-gnu\libexec\kdeconnectd" enable=yes > NUL
 NETSH AdvFirewall Firewall add rule name="%DISTRO% KDEinit" dir=in action=allow program="%DISTROFULL%\rootfs\usr\bin\kdeinit5" enable=yes > NUL
-START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.80.0-0xneon+20.04+focal+wsl1_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.21.4-0xneon+20.04+focal+release+wsl1_amd64.deb /tmp/kWSL/deb/systemsettings_5.22.5wsl1_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd systemsettings"
+START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.95.0-0xneon+20.04+focal+release+build42_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.25.0-0xneon+20.04+focal+release+build44_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd systemsettings"
 START /MIN "%DISTRO% Init" WSL ~ -u root -d %DISTRO% -e initwsl 2
 ECHO Building RDP Connection file, Console link, Init system...
 ECHO @START /MIN "%DISTRO%" WSLCONFIG.EXE /t %DISTRO%                  >  "%DISTROFULL%\Init.cmd"

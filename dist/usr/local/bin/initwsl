@@ -5,7 +5,7 @@ chmod 644 /var/run/syslog.pid >/dev/null 2>&1
 strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >/dev/null 2>&1
 chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
 clear
-
+apt-get -qqy remove upower
 # Remove services not needed in WSL1
 # update-rc.d -f dbus remove >/dev/null 2>&1
 update-rc.d -f whoopsie remove >/dev/null 2>&1
