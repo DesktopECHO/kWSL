@@ -99,7 +99,7 @@ REM ## %GO% "cd /tmp ; wget https://files.multimc.org/downloads/multimc_1.4-1.de
 REM ## %GO% "apt-get -y install supertuxkart /tmp/multimc_1.4-1.deb"
 
 ECHO [%TIME:~0,8%] Cleaning-up... (~0m45s)
-%GO% "apt-get -y purge distro-info upower mesa-vulkan-drivers gnustep-base-runtime libgnustep-base1.26 gnustep-base-common gnustep-common libgc1c2 libobjc4 powermgmt-base unar ; apt-get -y clean" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Final clean-up.log"
+%GO% "apt-get -y purge libimobiledevice6 libplist3 libupower-glib3 libusbmuxd6 wayland-utils ubuntu-advantage-tools distro-info upower mesa-vulkan-drivers gnustep-base-runtime libgnustep-base1.26 gnustep-base-common gnustep-common libgc1c2 libobjc4 powermgmt-base unar ; apt-get -y clean" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Final clean-up.log"
 
 SET /A SESMAN = %RDPPRT% - 50
 %GO% "which schtasks.exe" > "%TEMP%\SCHT.tmp" & set /p SCHT=<"%TEMP%\SCHT.tmp"
@@ -131,6 +131,7 @@ SET /A SESMAN = %RDPPRT% - 50
 %GO% "rm /usr/share/dbus-1/services/org.freedesktop.systemd1.service /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service /usr/share/dbus-1/system.d/org.freedesktop.systemd1.conf /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy"
 %GO% "unamestr=`uname -r` ; if [[ "$unamestr" == '4.4.0-17763-Microsoft' ]]; then apt-get purge -y plasma-discover ; sed -i 's/discover/muon/g' /tmp/kWSL/dist/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc ; ln -s /usr/bin/software-properties-qt /usr/bin/software-properties-kde ; fi" > NUL
 %GO% "cp -Rp /tmp/kWSL/dist/* / ; cp -Rp /tmp/kWSL/dist/etc/skel/.cache /root ; cp -Rp /tmp/kWSL/dist/etc/skel/.config /root ; cp -Rp /tmp/kWSL/dist/etc/skel/.local /root"
+START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.95.0-0xneon+20.04+focal+release+build42_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.25.0-0xneon+20.04+focal+release+build44_amd64.deb /tmp/kWSL/deb/kinfocenter_5.18.5-0ubuntu0.1_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd kinfocenter ; DEBIAN_FRONTEND=noninteractive apt-get -qqy dist-upgrade"
 SET RUNEND=%date% @ %time:~0,5%
 CD %DISTROFULL% 
 ECHO:
@@ -156,7 +157,6 @@ NETSH AdvFirewall Firewall add rule name="%DISTRO% Secure Shell" dir=in action=a
 NETSH AdvFirewall Firewall add rule name="%DISTRO% Avahi Multicast DNS" dir=in action=allow program="%DISTROFULL%\rootfs\usr\sbin\avahi-daemon" enable=yes > NUL
 NETSH AdvFirewall Firewall add rule name="%DISTRO% KDE Connect" dir=in action=allow program="%DISTROFULL%\rootfs\usr\lib\x86_64-linux-gnu\libexec\kdeconnectd" enable=yes > NUL
 NETSH AdvFirewall Firewall add rule name="%DISTRO% KDEinit" dir=in action=allow program="%DISTROFULL%\rootfs\usr\bin\kdeinit5" enable=yes > NUL
-START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.95.0-0xneon+20.04+focal+release+build42_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.25.0-0xneon+20.04+focal+release+build44_amd64.deb /tmp/kWSL/deb/kinfocenter_5.18.5-0ubuntu0.1_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd kinfocenter"
 START /MIN "%DISTRO% Init" WSL ~ -u root -d %DISTRO% -e initwsl 2
 ECHO Building RDP Connection file, Console link, Init system...
 ECHO @START /MIN "%DISTRO%" WSLCONFIG.EXE /t %DISTRO%                  >  "%DISTROFULL%\Init.cmd"
