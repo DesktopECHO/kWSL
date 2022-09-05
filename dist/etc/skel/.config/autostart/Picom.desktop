@@ -1,0 +1,12 @@
+[Desktop Entry]
+Categories=Utility;
+Comment=An X compositor
+Exec=picom
+GenericName=X compositor
+Icon=picom
+Keywords=compositor;composite manager;window effects;transparency;opacity;
+Name=picom
+NoDisplay=false
+TryExec=picom
+Type=Application
+Version=1.0
