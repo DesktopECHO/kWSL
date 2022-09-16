@@ -6,6 +6,9 @@ strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >
 chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
 echo "exit 0" > /usr/sbin/policy-rc.d
 chmod +x /usr/sbin/policy-rc.d
+rm -f /usr/sbin/runlevel
+echo 'echo N 2' > /usr/sbin/runlevel
+chmod +x /usr/sbin/runlevel
 dpkg-divert --local --rename --add /sbin/initctl
 ln -fs /bin/true /sbin/initctl
 clear
