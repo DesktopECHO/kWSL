@@ -3,6 +3,7 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 
 [Compositing]
 Enabled=false
+OpenGLIsUnsafe=false
 
 [Desktops]
 Id_1=95c4c1bd-5a11-4396-83d8-b9b5d71121a8
