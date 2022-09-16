@@ -1,6 +1,6 @@
 [Desktop Entry]
 Comment=
-Exec=/usr/bin/kglobalaccel5
+Exec=/usr/local/bin/kglobalaccel5
 GenericName=Global desktop keyboard shortcuts
 Icon=ibus-keyboard
 MimeType=
