@@ -26,4 +26,5 @@ if test -r /etc/default/locale; then
         test -z "${LOCPATH+x}" || export LOCPATH
 fi
 
-startplasma-x11
+export KDE_DEBUG=1
+/usr/lib/x86_64-linux-gnu/libexec/plasma-dbus-run-session-if-needed /usr/bin/startplasma-x11
