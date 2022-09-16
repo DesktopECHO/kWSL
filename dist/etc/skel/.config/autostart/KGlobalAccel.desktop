@@ -1,12 +1,9 @@
 [Desktop Entry]
 Comment=
-Comment=
 Exec=/usr/bin/kglobalaccel5
-GenericName=Global desktop keyboard shortcuts
 GenericName=Global desktop keyboard shortcuts
 Icon=ibus-keyboard
 MimeType=
-Name=KGlobalAccel
 Name=KGlobalAccel
 Path=
 StartupNotify=true

@@ -1,6 +1,7 @@
 #!/bin/bash
 run_level=$1
 touch /run/initctl >/dev/null 2>&1
+cp /var/lib/dbus/machine-id /etc/machine-id
 chmod 644 /var/run/syslog.pid >/dev/null 2>&1
 strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >/dev/null 2>&1
 chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
