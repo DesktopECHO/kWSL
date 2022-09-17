@@ -1,0 +1,16 @@
+[Desktop Entry]
+Comment=
+Exec=/usr/local/bin/kglobalaccel5
+GenericName=Global desktop keyboard shortcuts
+Icon=ibus-keyboard
+MimeType=
+Name=KGlobalAccel
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=unique
+X-KDE-SubstituteUID=false
+X-KDE-Username=
