@@ -3,7 +3,7 @@ IF %ERRORLEVEL% == 0 (ECHO Administrator check passed...) ELSE (ECHO You need to
 COLOR 1F
 SET GITORG=DesktopECHO
 SET GITPRJ=kWSL
-SET BRANCH=picom
+SET BRANCH=master
 SET BASE=https://github.com/%GITORG%/%GITPRJ%/raw/%BRANCH%
 
 REM ## Enable WSL if required
@@ -16,7 +16,7 @@ FOR /f "delims=" %%a in ('powershell -ExecutionPolicy bypass -command "%TEMP%\wi
 CLS && SET RUNSTART=%date% @ %time:~0,5%
 IF EXIST .\CMD.EXE CD ..\..
 
-ECHO [kWSL Installer 20220813]
+ECHO [kWSL Installer 20220917]
 ECHO:
 ECHO Set a name for this KDE Neon instance.  Hit Enter to use default. 
 SET DISTRO=NeonWSL& SET /p DISTRO=Keep this name simple, no space or underscore characters [NeonWSL]: 
