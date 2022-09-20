@@ -16,7 +16,7 @@ FOR /f "delims=" %%a in ('powershell -ExecutionPolicy bypass -command "%TEMP%\wi
 CLS && SET RUNSTART=%date% @ %time:~0,5%
 IF EXIST .\CMD.EXE CD ..\..
 
-ECHO [kWSL Installer 20220917]
+ECHO [kWSL Installer 20220921]
 ECHO:
 ECHO Set a name for this KDE Neon instance.  Hit Enter to use default. 
 SET DISTRO=NeonWSL& SET /p DISTRO=Keep this name simple, no space or underscore characters [NeonWSL]: 
@@ -131,7 +131,7 @@ SET /A SESMAN = %RDPPRT% - 50
 %GO% "rm /usr/share/dbus-1/services/org.freedesktop.systemd1.service /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service /usr/share/dbus-1/system.d/org.freedesktop.systemd1.conf /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy"
 %GO% "unamestr=`uname -r` ; if [[ "$unamestr" == '4.4.0-17763-Microsoft' ]]; then apt-get purge -y plasma-discover ; sed -i 's/discover/muon/g' /tmp/kWSL/dist/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc ; ln -s /usr/bin/software-properties-qt /usr/bin/software-properties-kde ; fi" > NUL
 %GO% "cp -Rp /tmp/kWSL/dist/* / ; cp -Rp /tmp/kWSL/dist/etc/skel/.cache /root ; cp -Rp /tmp/kWSL/dist/etc/skel/.config /root ; cp -Rp /tmp/kWSL/dist/etc/skel/.local /root"
-START /MIN /WAIT "KDE Patches for WSL1" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats1_5.95.0-0xneon+20.04+focal+release+build42_amd64.deb /tmp/kWSL/deb/kactivitymanagerd_5.25.0-0xneon+20.04+focal+release+build44_amd64.deb /tmp/kWSL/deb/kinfocenter_5.18.5-0ubuntu0.1_amd64.deb /tmp/kWSL/deb/klassy_4.0.breeze5.25.80-1_amd64.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd kinfocenter ; DEBIAN_FRONTEND=noninteractive apt-get -qqy dist-upgrade"
+START /MIN /WAIT "KDE Patches for WSL1 Compatibility" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "dpkg -i /tmp/kWSL/deb/libkf5activitiesstats*.deb /tmp/kWSL/deb/kactivitymanagerd*.deb /tmp/kWSL/deb/kinfocenter*.deb /tmp/kWSL/deb/klassy*.deb ; apt-mark hold libkf5activitiesstats1 kactivitymanagerd kinfocenter ; DEBIAN_FRONTEND=noninteractive apt-get -qqy dist-upgrade"
 SET RUNEND=%date% @ %time:~0,5%
 CD %DISTROFULL% 
 ECHO:
@@ -141,7 +141,7 @@ POWERSHELL -Command $prd = read-host "Enter password for %XU%" -AsSecureString ;
 %GO% "(echo '%XU%:%PWO%') | chpasswd"
 %GO% "echo '%XU% ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
 %GO% "sed -i 's/PLACEHOLDER/%XU%/g' /tmp/kWSL/kWSL.rdp"
-%GO% "sed -i 's/COMPY/%COMPUTERNAME%/g' /tmp/kWSL/kWSL.rdp"
+%GO% "sed -i 's/COMPY/LocalHost/g' /tmp/kWSL/kWSL.rdp"
 %GO% "sed -i 's/RDPPRT/%RDPPRT%/g' /tmp/kWSL/kWSL.rdp"
 %GO% "cp /tmp/kWSL/kWSL.rdp ./kWSL._"
 ECHO $prd = Get-Content .tmp > .tmp.ps1

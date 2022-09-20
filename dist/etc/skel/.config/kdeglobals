@@ -1,6 +1,9 @@
 [$Version]
 update_info=filepicker.upd:filepicker-remove-old-previews-entry,fonts_global.upd:Fonts_Global,fonts_global_toolbar.upd:Fonts_Global_Toolbar,icons_remove_effects.upd:IconsRemoveEffects,kwin.upd:animation-speed,style_widgetstyle_default_breeze.upd:StyleWidgetStyleDefaultBreeze
 
+[KDE]
+widgetStyle=Klassy
+
 [ColorEffects:Disabled]
 ChangeSelectionColor=
 Color=56,56,56

@@ -3,24 +3,21 @@
   - Net-install of KDE Neon on WSL1 using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
   - Runs on Windows 10 and Server 2019/2022 (including Hyper-V Core)
   - xRDP Display Server; no additional Xserver download/configuration required
-  - High-quality RDP audio playback, video playback and YouTube work well and audio maintains sync reliably.
+  - High-quality RDP audio playback; video playback and YouTube work well and maintains audio sync.
   - If you want to accesss kWSL remotely, Chrome Remote Desktop is pre-installed (Never expose RDP servers to the Internet.) Configuration steps are [**here**](https://github.com/DesktopECHO/kWSL/wiki/Enable-Chrome-Remote-Desktop)
 
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
-**IMPORTANT!**  Requires August/Sept 2020 WSL update for Windows 10.  This update is already included in Windows 20H2 and newer:
+**IMPORTANT!**  Windows 10 Requires the August/Sept 2020 WSL update (included in Windows 20H2 and newer) and Windows 11 requires *Sun Valley 2* (version 22H2)
 
-* 1809  · KB4571748
-* 1909  · KB4566116
-* 2004  · KB4571756
-
-**INSTRUCTIONS:  From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:**
+## INSTALL INSTRUCTIONS
+From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:
 
 ```
 PowerShell -executionpolicy bypass -command "wget https://github.com/DesktopECHO/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"
 ```
 
-You will be asked a few questions.  The install script finds the current DPI scaling, you can set your own value if needed:
+You will be asked a few questions.  The install script will determine current DPI scaling, or set your own value if preferred:
 
 ```
 [kWSL Installer 20210609]
@@ -36,7 +33,7 @@ Installing kWSL Distro [Neon] to "C:\WSL Distros\Neon"
 This will take a few minutes, please wait...
 ```
 
-The installer will download all the necessary packages to convert the Windows Store Ubuntu 20.04 image into KDE Neon User Edition.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
+The installer will download all the necessary packages to transform the [Focal base image](https://cloud-images.ubuntu.com/focal/current/) into KDE Neon User Edition.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
 
 ```
 [ 2:47:40] Installing Ubuntu 20.04 LTS (~1m30s)
@@ -70,11 +67,10 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
 
  Neon Installation Complete!  GUI will start in a few seconds...
 ```
-The install summary should indicate 1359 or 1360 packages installed, depending on Windows version.   
 
-**Upon completion you'll be logged-into your KDE Neon Desktop.** 
+**When the script completes you will be logged-in to your KDE Neon Desktop.** 
 
-**Configure kWSL to start at boot (like a service, no console window)**
+## Configure kWSL to start at boot (like a service, no console window)
 
  - Right-click the task in Task Scheduler, click properties
  - Click the checkbox for **Run whether user is logged on or not** and click **OK**
@@ -82,21 +78,17 @@ The install summary should indicate 1359 or 1360 packages installed, depending o
  
  Reboot your PC when complete and kWSL will startup automatically.
 
-**xWSL is configured to use Bonjour (Multicast DNS) for easy access in WSL2**
+## Convert WSL Instance to WSL2 and/or go back to WSL1
 
-If your computer has virtualization support you can convert it to WSL2.  kWSL is faster on WSL1, but WSL2 has additional capabilities. 
-
-Example of conversion to WSL2 on machine name "ENVY":
- - Stop WSL on ENVY:
- ````wsl --shutdown````
+Example of conversion to WSL2:
+ - Stop WSL instance (Using default instance name _NeonWSL_ in this example):
+ ````wslconfig /t NeonWSL````
  - Convert the instance to WSL2:
- ````wsl --set-version kWSL 2````
- - Restart kWSL Instance:
- ````schtasks /run /tn kWSL````
- - Adjust the RDP file saved on the desktop to now point at the new WSL2 instance:
- ````ENVY-kWSL.local:3399````
+ ````wsl --set-version NeonWSL 2````
+ - Restart KDE Neon Instance:
+ ````schtasks /run /tn NeonWSL````
 
-**Make it your own:**
+## Make it your own
 
 From a security standpoint, it would be best to fork this project so you (and only you) control the packages and files in the repository.
 
@@ -106,7 +98,7 @@ From a security standpoint, it would be best to fork this project so you (and on
 - Launch the script using your repository name:
  ```PowerShell -executionpolicy bypass -command "wget https://github.com/YOUR-REPO-NAME/kWSL/raw/master/kWSL.cmd -UseBasicParsing -OutFile kWSL.cmd ; .\kWSL.cmd"```
 
-**Quirks / Limitations / Additional Info:**
+## Quirks / Limitations / Additional Info:
 
 - When you log out out of a KDE session the WSL instance is restarted.  This is the equivilent to having a freshly-booted desktop environment at every login, but the 'reboot' process only takes about 5 seconds.  
 - kWSL should work fine with an X Server instead of xRDP but this has not been thoroughly tested.  The file ```/etc/profile.d/kWSL.sh``` contains WSL-centric environment variables that may need adjustment such as LIBGL_ALWAYS_INDIRECT.
@@ -118,7 +110,8 @@ From a security standpoint, it would be best to fork this project so you (and on
 - QtWebEngine (Chromium-based) browsers like Falkon and Konqueror now work. (July/21)
 - Installed image consumes approximately 3 GB of disk space.
 - Apt-fast added to improve download speed and reliability.
-- KDE uses the Breeze-Dark theme and Windows fonts (Segoe UI / Consolas)
+- Default installation uses the Breeze theme and Windows fonts (Segoe UI / Cascadia Code)
+- Compositor replaced with Picom for better RDP performance and includes the [Klassy](https://www.reddit.com/r/kde/comments/wju5g9/klassy_v40_window_decoration_application_style/) window decoration / application style plugin
 - This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment (+3GB Disk) run ```sudo pkcon -y install neon-all``` 
 
 ![image](https://user-images.githubusercontent.com/33142753/100148485-33cb2480-2e73-11eb-932b-54e34b445575.png)

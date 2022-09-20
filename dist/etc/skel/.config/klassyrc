@@ -1,0 +1,11 @@
+[Common]
+ButtonIconStyle=StyleRedmond10
+
+[Default Windeco Exception 0]
+BorderSize=1
+Enabled=true
+ExceptionProgramNamePattern=kdenlive
+ExceptionWindowPropertyPattern=.*Kdenlive
+ExceptionWindowPropertyType=1
+HideTitleBar=false
+Mask=0
