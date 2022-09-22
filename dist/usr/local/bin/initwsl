@@ -1,10 +1,9 @@
 #!/bin/bash
 run_level=$1
 touch /run/initctl >/dev/null 2>&1
-cp /var/lib/dbus/machine-id /etc/machine-id
 chmod 644 /var/run/syslog.pid >/dev/null 2>&1
 strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >/dev/null 2>&1
-chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
+# chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
 echo "exit 0" > /usr/sbin/policy-rc.d
 chmod +x /usr/sbin/policy-rc.d
 rm -f /usr/sbin/runlevel
@@ -14,10 +13,17 @@ dpkg-divert --local --rename --add /sbin/initctl
 ln -fs /bin/true /sbin/initctl
 clear
 rm /usr/bin/systemctl ; cd / ; tar xf /etc/systemctl-service-shim.tar
+/usr/local/bin/dbus-watchdog &
 clear
-apt-get -qqy remove upower ; rm -f /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service /usr/share/dbus-1/system.d/org.freedesktop.UDisks2.conf /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy /usr/share/dbus-1/services/org.kde.KSplash.service /usr/share/dbus-1/system-services/org.kde.kinfocenter.dmidecode.service /usr/share/dbus-1/system.d/org.kde.kinfocenter.dmidecode.conf /usr/share/polkit-1/actions/org.kde.kinfocenter.dmidecode.policy /usr/lib/systemd/system/dbus-org.freedesktop.hostname1.service /usr/share/dbus-1/system-services/org.freedesktop.hostname1.service /usr/share/dbus-1/system.d/org.freedesktop.hostname1.conf /usr/share/polkit-1/actions/org.freedesktop.hostname1.policy /lib/x86_64-linux-gnu/qt5/plugins/kcm_pci.so /etc/dbus-1/system.d/pulseaudio-system.conf /usr/share/dbus-1/services/org.kde.kglobalaccel.service /lib/systemd/user/plasma-kglobalaccel.service
+rm /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
+rm /etc/dbus-1/system.d/pulseaudio-system.conf
+rm /lib/systemd/user/plasma-kglobalaccel.service
+rm /usr/share/dbus-1/services/org.kde.kglobalaccel.service
+# rm /usr/share/dbus-1/system-services/org.freedesktop.PolicyKit1.service
+# rm /usr/lib/x86_64-linux-gnu/libexec/polkit-kde-authentication-agent-1
+# apt-get -qqy remove upower ; rm -f /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service /usr/share/dbus-1/system.d/org.freedesktop.UDisks2.conf /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy /usr/share/dbus-1/services/org.kde.KSplash.service /usr/share/dbus-1/system-services/org.kde.kinfocenter.dmidecode.service /usr/share/dbus-1/system.d/org.kde.kinfocenter.dmidecode.conf /usr/share/polkit-1/actions/org.kde.kinfocenter.dmidecode.policy /usr/lib/systemd/system/dbus-org.freedesktop.hostname1.service /usr/share/dbus-1/system-services/org.freedesktop.hostname1.service /usr/share/dbus-1/system.d/org.freedesktop.hostname1.conf /usr/share/polkit-1/actions/org.freedesktop.hostname1.policy /lib/x86_64-linux-gnu/qt5/plugins/kcm_pci.so
 # Remove services not needed in WSL1
-# update-rc.d -f dbus remove >/dev/null 2>&1
+update-rc.d -f dbus remove >/dev/null 2>&1
 update-rc.d -f whoopsie remove >/dev/null 2>&1
 update-rc.d -f acpid remove >/dev/null 2>&1
 update-rc.d -f plymouth remove >/dev/null 2>&1
@@ -48,6 +54,7 @@ done
 for rc_service in /etc/rc${run_level}.d/S*; do
         [[ -e "$rc_service" ]] && $rc_service start
 done
+echo ""
 echo "2 = Multi-User System"
 echo "1 = Single-User System"
 echo "0 = Stop services and terminate instance."

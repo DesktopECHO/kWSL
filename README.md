@@ -8,7 +8,9 @@
 
 ![image](https://user-images.githubusercontent.com/33142753/100149597-d3d57d80-2e74-11eb-899a-a7476b016e27.png)
 
-**IMPORTANT!**  Windows 10 Requires the August/Sept 2020 WSL update (included in Windows 20H2 and newer) and Windows 11 requires *Sun Valley 2* (version 22H2)
+**IMPORTANT!** 
+ - Windows 11 requires 22H2 Update *(Sun Valley 2, September 2022)*
+ - Windows Server / Windows 10 require latest updates from Windows Update.
 
 ## INSTALL INSTRUCTIONS
 From an elevated CMD.EXE prompt change to your desired install directory and type/paste the following command:
@@ -78,7 +80,7 @@ SUCCESS: The scheduled task "Neon" has successfully been created.
  
  Reboot your PC when complete and kWSL will startup automatically.
 
-## Convert WSL Instance to WSL2 and/or go back to WSL1
+## Convert WSL Instance
 
 Example of conversion to WSL2:
  - Stop WSL instance (Using default instance name _NeonWSL_ in this example):
@@ -87,6 +89,10 @@ Example of conversion to WSL2:
  ````wsl --set-version NeonWSL 2````
  - Restart KDE Neon Instance:
  ````schtasks /run /tn NeonWSL````
+
+Restart the instance when the conversion is complete: `schtasks.exe /run /tn NeonWSL`
+
+Procedure is the same for switching back to WSL1: ````wsl --set-version NeonWSL 1````
 
 ## Make it your own
 

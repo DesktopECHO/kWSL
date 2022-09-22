@@ -1,6 +1,7 @@
 #!/bin/sh
 # xrdp X session start script (c) 2015, 2017 mirabilos
 # published under The MirOS Licence
+# export KDE_DEBUG=0
 
 if test -r /etc/profile; then
         . /etc/profile
@@ -26,5 +27,4 @@ if test -r /etc/default/locale; then
         test -z "${LOCPATH+x}" || export LOCPATH
 fi
 
-export KDE_DEBUG=1
 /usr/lib/x86_64-linux-gnu/libexec/plasma-dbus-run-session-if-needed /usr/bin/startplasma-x11
