@@ -103,6 +103,9 @@ plugin=org.kde.plasma.notifications
 immutability=1
 plugin=org.kde.plasma.volume
 
+[Containments][7][Applets][8][Configuration][General]
+showVirtualDevices=true
+
 [Containments][7][Applets][9]
 immutability=1
 plugin=org.kde.plasma.clipboard

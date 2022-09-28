@@ -27,4 +27,5 @@ if test -r /etc/default/locale; then
         test -z "${LOCPATH+x}" || export LOCPATH
 fi
 
-/usr/lib/x86_64-linux-gnu/libexec/plasma-dbus-run-session-if-needed /usr/bin/startplasma-x11
+export $(dbus-launch)
+dbus-run-session startplasma-x11

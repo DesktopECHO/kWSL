@@ -1,3 +1,4 @@
 [General]
+loginMode=emptySession
 confirmLogout=false
 offerShutdown=false
