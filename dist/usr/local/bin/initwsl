@@ -12,13 +12,17 @@ dpkg-divert --local --rename --add /sbin/initctl
 ln -fs /bin/true /sbin/initctl
 clear
 rm /usr/bin/systemctl ; cd / ; tar xf /etc/systemctl-service-shim.tar
-/usr/local/bin/dbus-watchdog &
 clear
 apt-get -qqy remove upower
 rm -rf /tmp/.ICE-unix /etc/xdg/autostart/pulseaudio.desktop /etc/dbus-1/system.d/pulseaudio-system.conf
 rm -rf /usr/share/dbus-1/system.d/org.freedesktop.login1.conf /usr/lib/systemd/system/dbus-org.freedesktop.login1.service /usr/share/dbus-1/system-services/org.freedesktop.login1.service /usr/share/polkit-1/actions/org.freedesktop.login1.policy
 rm -rf /usr/lib/systemd/system/systemd-timedated.service /usr/share/dbus-1/system-services/org.freedesktop.timedate1.service /usr/share/dbus-1/system-services/org.freedesktop.timedate1.service /usr/share/polkit-1/actions/org.freedesktop.timedate1.policy
+sed -i 's/Exec=systemsettings5/Exec=dbus-launch systemsettings5 kcm_about_distro/g' /usr/share/applications/kdesystemsettings.desktop
+sed -i 's/Exec=systemsettings/Exec=dbus-launch systemsettings kcm_about_distro/g' /usr/share/applications/systemsettings.desktop
+sed -i 's/Exec=systemsettings/Exec=dbus-launch systemsettings kcm_about_distro/g' /usr/share/kglobalaccel/systemsettings.desktop
+mv /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service .. >/dev/null 2>&1
 chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
+rm -f /usr/lib/x86_64-linux-gnu/libexec/drkonqi
 
 # Remove services not needed in WSL1
 update-rc.d -f dbus remove >/dev/null 2>&1
