@@ -50,8 +50,8 @@ update-rc.d -f open-vm-tools remove >/dev/null 2>&1
 update-rc.d -f apport remove >/dev/null 2>&1
 update-rc.d -f udev remove >/dev/null 2>&1
 update-rc.d -f pulseaudio-enable-autospawn remove >/dev/null 2>&1
-rm -rf /etc/init.d/udev
-rm -rf /etc/init.d/dbus
+mv /etc/init.d/udev ..
+mv /etc/init.d/dbus ..
 
 echo "WSLINSTANCENAME Runlevel" $1
 echo " "
