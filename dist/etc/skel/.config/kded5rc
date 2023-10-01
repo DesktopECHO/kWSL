@@ -5,10 +5,13 @@ autoload=true
 autoload=true
 
 [Module-colorcorrectlocationupdater]
-autoload=true
+autoload=false
 
 [Module-device_automounter]
 autoload=false
+
+[Module-distroreleasenotifier]
+autoload=true
 
 [Module-freespacenotifier]
 autoload=true
@@ -16,14 +19,23 @@ autoload=true
 [Module-gtkconfig]
 autoload=true
 
+[Module-kded_accounts]
+autoload=true
+
 [Module-kded_bolt]
+autoload=false
+
+[Module-kded_touchpad]
 autoload=false
 
 [Module-keyboard]
 autoload=true
 
-[Module-kscreen]
+[Module-khotkeys]
 autoload=true
+
+[Module-kscreen]
+autoload=false
 
 [Module-ksysguard]
 autoload=true
@@ -35,6 +47,12 @@ autoload=true
 autoload=true
 
 [Module-networkstatus]
+autoload=false
+
+[Module-plasma_accentcolor_service]
+autoload=true
+
+[Module-plasmavault]
 autoload=true
 
 [Module-proxyscout]
@@ -43,8 +61,8 @@ autoload=true
 [Module-remotenotifier]
 autoload=true
 
-[Module-statusnotifierwatcher]
+[Module-smbwatcher]
 autoload=true
 
-[Module-touchpad]
-autoload=false
+[Module-statusnotifierwatcher]
+autoload=true

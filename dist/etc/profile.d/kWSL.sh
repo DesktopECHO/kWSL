@@ -35,4 +35,5 @@ export XDG_DATA_HOME=$HOME/.local/share
 export KDE_FULL_SESSION=true
 export KDE_SESSION_VERSION=5
 export QTWEBENGINE_CHROMIUM_FLAGS="--single-process"
+export DBUS_FATAL_WARNINGS=0
 unset LIBGL_ALWAYS_INDIRECT

@@ -12,15 +12,29 @@ dpkg-divert --local --rename --add /sbin/initctl
 ln -fs /bin/true /sbin/initctl
 clear
 rm /usr/bin/systemctl ; cd / ; tar xf /etc/systemctl-service-shim.tar
-/usr/local/bin/dbus-watchdog &
+# bash -c 'while : ; do DBWG=$(ps -u messagebus | grep dbus) ; [ ! "$DBWG" ] && service dbus start ; sleep 1 ; done' &
 clear
 apt-get -qqy remove upower
 rm -rf /tmp/.ICE-unix /etc/xdg/autostart/pulseaudio.desktop /etc/dbus-1/system.d/pulseaudio-system.conf
-rm -rf /usr/share/dbus-1/system.d/org.freedesktop.login1.conf /usr/lib/systemd/system/dbus-org.freedesktop.login1.service /usr/share/dbus-1/system-services/org.freedesktop.login1.service /usr/share/polkit-1/actions/org.freedesktop.login1.policy
-rm -rf /usr/lib/systemd/system/systemd-timedated.service /usr/share/dbus-1/system-services/org.freedesktop.timedate1.service /usr/share/dbus-1/system-services/org.freedesktop.timedate1.service /usr/share/polkit-1/actions/org.freedesktop.timedate1.policy
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.login1.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.timedate1.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.timesync1.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.PolicyKit1.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.bolt.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service
+
+sed -i 's/Exec=systemsettings5/Exec=systemsettings5 kcm_about_distro/g' /usr/share/applications/kdesystemsettings.desktop
+sed -i 's/Exec=systemsettings/Exec=systemsettings kcm_about_distro/g' /usr/share/applications/systemsettings.desktop
+sed -i 's/Exec=systemsettings/Exec=systemsettings kcm_about_distro/g' /usr/share/kglobalaccel/systemsettings.desktop
+
 chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
+rm -f /usr/lib/x86_64-linux-gnu/libexec/drkonqi
 
 # Remove services not needed in WSL1
+update-rc.d -f irqbalance remove >/dev/null 2>&1
+update-rc.d -f lvmpolld remove >/dev/null 2>&1
+update-rc.d -f multipathd remove >/dev/null 2>&1
 update-rc.d -f dbus remove >/dev/null 2>&1
 update-rc.d -f whoopsie remove >/dev/null 2>&1
 update-rc.d -f acpid remove >/dev/null 2>&1
@@ -36,6 +50,8 @@ update-rc.d -f open-vm-tools remove >/dev/null 2>&1
 update-rc.d -f apport remove >/dev/null 2>&1
 update-rc.d -f udev remove >/dev/null 2>&1
 update-rc.d -f pulseaudio-enable-autospawn remove >/dev/null 2>&1
+rm -rf /etc/init.d/udev
+rm -rf /etc/init.d/dbus
 
 echo "WSLINSTANCENAME Runlevel" $1
 echo " "
