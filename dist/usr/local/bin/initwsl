@@ -1,0 +1,76 @@
+#!/bin/bash
+run_level=$1
+touch /run/initctl >/dev/null 2>&1
+chmod 644 /var/run/syslog.pid >/dev/null 2>&1
+strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >/dev/null 2>&1
+echo "exit 0" > /usr/sbin/policy-rc.d
+chmod +x /usr/sbin/policy-rc.d
+rm -f /usr/sbin/runlevel
+echo 'echo N 2' > /usr/sbin/runlevel
+chmod +x /usr/sbin/runlevel
+dpkg-divert --local --rename --add /sbin/initctl
+ln -fs /bin/true /sbin/initctl
+clear
+rm /usr/bin/systemctl ; cd / ; tar xf /etc/systemctl-service-shim.tar
+# bash -c 'while : ; do DBWG=$(ps -u messagebus | grep dbus) ; [ ! "$DBWG" ] && service dbus start ; sleep 1 ; done' &
+clear
+apt-get -qqy remove upower
+rm -rf /tmp/.ICE-unix /etc/xdg/autostart/pulseaudio.desktop
+rm -rf /etc/dbus-1/system.d/pulseaudio-system.conf
+rm -rf /usr/share/dbus-1/services/org.freedesktop.systemd1.service /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service /usr/share/dbus-1/system.d/org.freedesktop.systemd1.conf /usr/share/man/man5/org.freedesktop.systemd1.5.gz /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+rm -rf /usr/bin/ksplashqml /usr/lib/systemd/user/plasma-ksplash-ready.service /usr/lib/systemd/user/plasma-ksplash.service /usr/share/dbus-1/services/org.kde.KSplash.service /usr/share/knsrcfiles/ksplash.knsrc
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.bolt.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service
+# rm -rf /usr/share/dbus-1/system-services/org.freedesktop.login1.service
+# rm -rf /usr/share/dbus-1/system-services/org.freedesktop.timedate1.service
+# rm -rf /usr/share/dbus-1/system-services/org.freedesktop.timesync1.service
+# rm -rf /usr/share/dbus-1/system-services/org.freedesktop.PolicyKit1.service
+
+chmod a-x /usr/lib/x86_64-linux-gnu/libexec/kscreenlocker_greet >/dev/null 2>&1
+rm -f /usr/lib/x86_64-linux-gnu/libexec/drkonqi
+
+# Remove services not needed in WSL1
+update-rc.d -f irqbalance remove >/dev/null 2>&1
+update-rc.d -f lvmpolld remove >/dev/null 2>&1
+update-rc.d -f multipathd remove >/dev/null 2>&1
+update-rc.d -f dbus remove >/dev/null 2>&1
+update-rc.d -f whoopsie remove >/dev/null 2>&1
+update-rc.d -f acpid remove >/dev/null 2>&1
+update-rc.d -f plymouth remove >/dev/null 2>&1
+update-rc.d -f plymouth-log remove >/dev/null 2>&1
+update-rc.d -f gdm3 remove >/dev/null 2>&1
+update-rc.d -f lightdm remove >/dev/null 2>&1
+update-rc.d -f ufw remove >/dev/null 2>&1
+update-rc.d -f bluetooth remove >/dev/null 2>&1
+update-rc.d -f open-iscsi remove >/dev/null 2>&1
+update-rc.d -f hwclock.sh remove >/dev/null 2>&1
+update-rc.d -f open-vm-tools remove >/dev/null 2>&1
+update-rc.d -f apport remove >/dev/null 2>&1
+update-rc.d -f udev remove >/dev/null 2>&1
+update-rc.d -f pulseaudio-enable-autospawn remove >/dev/null 2>&1
+rm -rf /etc/init.d/udev
+
+echo "WSLINSTANCENAME Runlevel" $1
+echo " "
+
+if [ $1 -eq "0" ]; then
+bash -c "sleep 5 && wslconfig.exe /t WSLINSTANCENAME" &
+fi
+
+[[ -z $1 ]] && { echo "Need to specify a run level"; exit 127; }
+[[ -d /etc/rc${run_level}.d/ ]] ||  { echo "Need to specify a run level"; exit 127; }
+for rc_service in /etc/rc${run_level}.d/K*; do
+        [[ -e "$rc_service" ]] && $rc_service stop
+done
+for rc_service in /etc/rc${run_level}.d/S*; do
+        [[ -e "$rc_service" ]] && $rc_service start
+done
+echo ""
+echo "2 = Multi-User System"
+echo "1 = Single-User System"
+echo "0 = Stop services and terminate instance."
+echo ""
+echo -n "Select Runlevel and hit Enter: "
+read runlevel
+
+initwsl $runlevel

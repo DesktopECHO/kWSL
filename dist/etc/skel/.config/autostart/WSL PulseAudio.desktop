@@ -1,0 +1,16 @@
+[Desktop Entry]
+Comment=PulseAudio Daemon for WSL
+Exec=/usr/bin/pulseaudio --enable-memfd=FALSE --disable-shm=TRUE --log-target=syslog
+GenericName=
+Icon=vvave
+MimeType=
+Name=WSL PulseAudio
+Path=
+StartupNotify=false
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=

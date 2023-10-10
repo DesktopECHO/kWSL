@@ -19,7 +19,7 @@ if (!$currentExclusions) {
 $exclusionsToAdd = ((Compare-Object $wslPaths $currentExclusions) | Where-Object SideIndicator -eq "<=").InputObject
 
 # List of paths inside the Linux distro to exclude (https://github.com/Microsoft/WSL/issues/1932#issuecomment-407855346)
-$dirs = @("\bin", "\sbin", "\usr\bin", "\usr\sbin", "\usr\local\bin", "\var\cache", "\usr\share")
+$dirs = @("\bin", "\sbin", "\usr\bin", "\usr\sbin", "\usr\local\bin", "\usr\share", "\var\cache", "\var\cache\apt", "\var\cache\apt\apt-fast")
 
 # Add the missing entries to Windows Defender
 if ($exclusionsToAdd.Length -gt 0) {
