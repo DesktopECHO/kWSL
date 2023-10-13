@@ -14,4 +14,4 @@ if test -r $HOME/.profile; then
         . $HOME/.profile
 fi
 
-dbus-run-session startplasma-x11
+exec dbus-run-session plasma_session

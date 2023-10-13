@@ -1,0 +1,6 @@
+#!/bin/bash
+sudo /etc/init.d/dbus start
+sudo /usr/libexec/packagekitd --disable-timer &
+kdesu -c 'export QT_QPA_PLATFORMTHEME=qt5ct ; /usr/bin/plasma-discover'
+sudo /etc/init.d/dbus stop
+reset

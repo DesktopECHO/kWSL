@@ -1,7 +1,3 @@
-# NOTE!  
-# Project in hiatus due to crashes in Qt-DBUS on WSL1 :(
-# [xWSL](https://github.com/DesktopECHO/xWSL) and [Kali-xRDP](https://github.com/DesktopECHO/Kali-xRDP) continue to work reliably.
-_______________________________
 # kWSL.cmd - KDE Neon for WSL
 
   - Net-install of KDE Neon on WSL1 using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
