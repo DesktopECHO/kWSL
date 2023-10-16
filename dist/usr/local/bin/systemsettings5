@@ -1,2 +1,7 @@
 #!/bin/bash
-/usr/bin/systemsettings .
+if [ -z "$1" ]
+then
+      /usr/bin/systemsettings .
+      else
+      /usr/bin/systemsettings $1 $2 $3 $4
+fi

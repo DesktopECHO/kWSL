@@ -5,4 +5,4 @@ action/start_new_session=false
 start_new_session=false
 action/lock_screen=false
 lock_screen=false
-logout=false
+logout=true

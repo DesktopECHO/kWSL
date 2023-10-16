@@ -34,3 +34,7 @@ export XDG_DATA_HOME=$HOME/.local/share
 export KDE_FULL_SESSION=true
 export KDE_SESSION_VERSION=5
 export QTWEBENGINE_CHROMIUM_FLAGS="--single-process"
+export DBUS_SESSION_BUS_ADDRESS=tcp:host=localhost,port=15373
+export KWIN_COMPOSE=O2
+export KWIN_DIRECT_GL=1
+export KWIN_EFFECTS_FORCE_ANIMATIONS=1

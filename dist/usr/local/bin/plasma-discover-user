@@ -3,8 +3,8 @@ sudo /etc/init.d/dbus start
 sudo /usr/libexec/packagekitd --disable-timer &
 if [ -z "$1" ]
 then
-      gksudo -k "/usr/bin/plasma-discover"
+      /usr/bin/plasma-discover --backends kns-backend
 else
-      gksudo -k "/usr/bin/plasma-discover $1 $2 $3 $4"
+      /usr/bin/plasma-discover $1 $2 $3 $4
 fi
 sudo /etc/init.d/dbus stop

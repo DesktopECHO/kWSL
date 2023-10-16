@@ -1,10 +1,24 @@
 [$Version]
-update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed
+update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize,kwin.upd:animation-speed,kwin.upd:desktop-grid-click-behavior,kwin.upd:no-swap-encourage,kwin.upd:make-translucency-effect-disabled-by-default,kwin.upd:remove-flip-switch-effect,kwin.upd:remove-cover-switch-effect,kwin.upd:remove-cubeslide-effect,kwin.upd:remove-xrender-backend,kwin.upd:enable-scale-effect-by-default,kwin.upd:overview-group-plugin-id,kwin.upd:animation-speed-cleanup,kwin.upd:replace-cascaded-zerocornered
 
 [Compositing]
-Enabled=false
+Enabled=true
+LatencyPolicy=Low
 OpenGLIsUnsafe=false
 WindowsBlockCompositing=false
+
+[Plugins]
+blurEnabled=true
+contrastEnabled=true
+kwin4_effect_fadeEnabled=true
+kwin4_effect_fadedesktopEnabled=true
+kwin4_effect_fullscreenEnabled=false
+kwin4_effect_loginEnabled=false
+kwin4_effect_scaleEnabled=false
+kwin4_effect_translucencyEnabled=true
+sheetEnabled=true
+slideEnabled=false
+thumbnailasideEnabled=true
 
 [TabBox]
 DesktopLayout=org.kde.breeze.desktop

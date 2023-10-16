@@ -1,0 +1,8 @@
+[general]
+file_manager=gio open
+terminal=konsole
+autoconnect_interval=60
+
+[ui]
+show_in_systray=true
+start_in_systray=false

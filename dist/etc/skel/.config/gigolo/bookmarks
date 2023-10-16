@@ -1,0 +1,9 @@
+[Windows Host C:\]
+host=127.0.0.1
+folder=
+user=
+scheme=smb
+share=c$
+domain=
+path=
+color=rgb(26,95,180)

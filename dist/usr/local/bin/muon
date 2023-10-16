@@ -1,0 +1,4 @@
+#!/bin/bash
+gksudo '/etc/init.d/dbus start ; /usr/libexec/packagekitd'
+gksudo -k '/usr/bin/muon'
+gksudo '/etc/init.d/dbus stop'
