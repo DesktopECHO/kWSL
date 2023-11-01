@@ -3,22 +3,18 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 
 [Compositing]
 Enabled=true
-LatencyPolicy=Low
+LatencyPolicy=Medium
 OpenGLIsUnsafe=false
 WindowsBlockCompositing=false
 
 [Plugins]
-blurEnabled=true
-contrastEnabled=true
+fallapartEnabled=true
 kwin4_effect_fadeEnabled=true
-kwin4_effect_fadedesktopEnabled=true
-kwin4_effect_fullscreenEnabled=false
-kwin4_effect_loginEnabled=false
 kwin4_effect_scaleEnabled=false
+kwin4_effect_squashEnabled=false
 kwin4_effect_translucencyEnabled=true
-sheetEnabled=true
-slideEnabled=false
-thumbnailasideEnabled=true
+magiclampEnabled=true
+wobblywindowsEnabled=true
 
 [TabBox]
 DesktopLayout=org.kde.breeze.desktop
