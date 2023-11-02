@@ -1,8 +1,8 @@
-# kWSL.cmd - KDE Neon for WSL
+# kWSL.cmd • KDE Plasma Desktop for WSL
 
   - Net-install of KDE Neon on WSL1 using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
-  - Runs on Windows 10 and Server 2019/2022 (including Hyper-V Core)
-  - xRDP Display Server; no additional Xserver download/configuration required
+  - Runs on Windows 10 / Windows Server 2019 and newer, including Hyper-V Core.
+  - xRDP Display Server; no additional Xserver download/configuration required.
   - High-quality RDP audio playback; video playback and YouTube work well and maintains audio sync.
   - If you want to accesss kWSL remotely, Chrome Remote Desktop is pre-installed (Never expose RDP servers to the Internet.) Configuration steps are [**here**](https://github.com/DesktopECHO/kWSL/wiki/Enable-Chrome-Remote-Desktop)
 
@@ -35,7 +35,7 @@ Installing kWSL Distro [Neon] to "C:\WSL Distros\Neon"
 This will take a few minutes, please wait...
 ```
 
-The installer will download all the necessary packages to transform the [Focal base image](https://cloud-images.ubuntu.com/focal/current/) into KDE Neon User Edition.  Reference times will vary depending on system performance and the presence of antivrirus software.  A fast system/network can complete the install in about 10 minutes.
+The installer will download all the necessary packages to transform the [Jammy base image](https://cloud-images.ubuntu.com/jammy/current/) into KDE Neon User Edition.  Reference times will vary depending on system performance and the presence of antivirus software.  A fast system/network can complete the install in about 10 minutes.
 
 ```
 [ 2:47:40] Installing Ubuntu 20.04 LTS (~1m30s)
