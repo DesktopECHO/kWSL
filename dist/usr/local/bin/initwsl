@@ -1,8 +1,10 @@
 #!/bin/bash
 run_level=$1
 touch /run/initctl >/dev/null 2>&1
+mkdir -p /run/dbus
 chmod 644 /var/run/syslog.pid >/dev/null 2>&1
 strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >/dev/null 2>&1
+strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt6Core.so.6 >/dev/null 2>&1
 echo "exit 0" > /usr/sbin/policy-rc.d
 chmod +x /usr/sbin/policy-rc.d
 rm -f /usr/sbin/runlevel
@@ -12,15 +14,14 @@ dpkg-divert --local --rename --add /sbin/initctl
 ln -fs /bin/true /sbin/initctl
 clear
 rm /usr/bin/systemctl ; cd / ; tar xf /etc/systemctl-service-shim.tar
-# bash -c 'while : ; do DBWG=$(ps -u messagebus | grep dbus) ; [ ! "$DBWG" ] && service dbus start ; sleep 1 ; done' &
 clear
 apt-get -qqy remove upower
-rm -rf /etc/xdg/autostart/lts_eol.desktop
-rm -rf /usr/share/dbus-1/system-services/org.freedesktop.bolt.service
-rm -rf /tmp/.ICE-unix /tmp/.X* /etc/xdg/autostart/pulseaudio.desktop
-rm -rf /etc/dbus-1/system.d/pulseaudio-system.conf
-rm -rf /usr/share/dbus-1/services/org.freedesktop.systemd1.service /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service /usr/share/dbus-1/system.d/org.freedesktop.systemd1.conf /usr/share/man/man5/org.freedesktop.systemd1.5.gz /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
-rm -rf /usr/lib/systemd/system/dbus-org.freedesktop.login1.service /usr/share/dbus-1/system-services/org.freedesktop.login1.service /usr/share/dbus-1/system.d/org.freedesktop.login1.conf /usr/share/man/man5/org.freedesktop.login1.5.gz /usr/share/polkit-1/actions/org.freedesktop.login1.policy
+# rm -rf /etc/xdg/autostart/lts_eol.desktop
+# rm -rf /usr/share/dbus-1/system-services/org.freedesktop.bolt.service
+# rm -rf /tmp/.ICE-unix /tmp/.X* /etc/xdg/autostart/pulseaudio.desktop
+# rm -rf /etc/dbus-1/system.d/pulseaudio-system.conf
+# rm -rf /usr/share/dbus-1/services/org.freedesktop.systemd1.service /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service /usr/share/dbus-1/system.d/org.freedesktop.systemd1.conf /usr/share/man/man5/org.freedesktop.systemd1.5.gz /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy
+# rm -rf /usr/lib/systemd/system/dbus-org.freedesktop.login1.service /usr/share/dbus-1/system-services/org.freedesktop.login1.service /usr/share/dbus-1/system.d/org.freedesktop.login1.conf /usr/share/man/man5/org.freedesktop.login1.5.gz /usr/share/polkit-1/actions/org.freedesktop.login1.policy
 # rm -rf /usr/bin/ksplashqml /usr/lib/systemd/user/plasma-ksplash-ready.service /usr/lib/systemd/user/plasma-ksplash.service /usr/share/dbus-1/services/org.kde.KSplash.service /usr/share/knsrcfiles/ksplash.knsrc
 # rm -rf /etc/xdg/autostart/polkit-kde-authentication-agent-1.desktop
 # rm -rf /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service
@@ -54,6 +55,7 @@ echo "exit 0" > /etc/init.d/udev
 
 echo "WSLINSTANCENAME Runlevel" $1
 echo " "
+bash -c 'while : ; do DBWG=$(ps -u messagebus | grep dbus) ; [ ! "$DBWG" ] && service dbus start ; sleep 1 ; done' &
 
 if [ $1 -eq "0" ]; then
 bash -c "sleep 5 && wslconfig.exe /t WSLINSTANCENAME" &

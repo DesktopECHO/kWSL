@@ -4,7 +4,7 @@ Exec=/usr/bin/pulseaudio --enable-memfd=FALSE --disable-shm=TRUE --log-target=sy
 GenericName=
 Icon=vvave
 MimeType=
-Name=WSL PulseAudio
+Name=PulseAudio
 Path=
 StartupNotify=false
 Terminal=false

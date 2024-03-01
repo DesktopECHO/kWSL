@@ -1,27 +1,9 @@
 [ActionPlugins][0]
-MidButton;NoModifier=org.kde.paste
+MiddleButton;NoModifier=org.kde.paste
 RightButton;NoModifier=org.kde.contextmenu
-wheel:Vertical;NoModifier=org.kde.switchdesktop
 
 [ActionPlugins][1]
 RightButton;NoModifier=org.kde.contextmenu
-
-[Containments][15]
-activityId=471eb530-c6e9-4585-9f27-96ce34165780
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][15][ConfigDialog]
-DialogHeight=900
-DialogWidth=1200
-
-[Containments][15][Wallpaper][org.kde.image][General]
-Image=file:///usr/share/wallpapers/Elarun/contents/images/2560x1600.png
-SlidePaths=/usr/share/wallpapers
 
 [Containments][2]
 activityId=
@@ -32,11 +14,11 @@ location=4
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
 
-[Containments][2][Applets][13]
+[Containments][2][Applets][19]
 immutability=1
 plugin=org.kde.plasma.digitalclock
 
-[Containments][2][Applets][14]
+[Containments][2][Applets][20]
 immutability=1
 plugin=org.kde.plasma.showdesktop
 
@@ -46,6 +28,8 @@ plugin=org.kde.plasma.kickoff
 
 [Containments][2][Applets][3][Configuration]
 PreloadWeight=100
+popupHeight=510
+popupWidth=639
 
 [Containments][2][Applets][3][Configuration][General]
 favoritesPortedToKAstats=true
@@ -69,16 +53,39 @@ launchers=applications:systemsettings.desktop,applications:org.kde.discover.desk
 
 [Containments][2][Applets][6]
 immutability=1
+plugin=org.kde.plasma.marginsseparator
+
+[Containments][2][Applets][7]
+immutability=1
 plugin=org.kde.plasma.systemtray
 
-[Containments][2][Applets][6][Configuration]
-PreloadWeight=55
-SystrayContainmentId=7
+[Containments][2][Applets][7][Configuration]
+SystrayContainmentId=8
 
 [Containments][2][General]
-AppletOrder=3;4;5;6;13;14
+AppletOrder=3;4;5;6;7;19;20
 
-[Containments][7]
+[Containments][21]
+ItemGeometries-2048x1280=
+ItemGeometriesHorizontal=
+activityId=471eb530-c6e9-4585-9f27-96ce34165780
+formfactor=0
+immutability=1
+lastScreen=0
+location=0
+plugin=org.kde.desktopcontainment
+wallpaperplugin=org.kde.image
+
+[Containments][21][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][21][Wallpaper][org.kde.image][General]
+Image=/usr/share/pixmaps/Wallpaper.jpg
+PreviewImage=/usr/share/pixmaps/Wallpaper.jpg
+SlidePaths=/usr/share/wallpapers/
+
+[Containments][8]
 activityId=
 formfactor=2
 immutability=1
@@ -87,32 +94,55 @@ location=4
 plugin=org.kde.plasma.private.systemtray
 wallpaperplugin=org.kde.image
 
-[Containments][7][Applets][10]
+[Containments][8][Applets][10]
 immutability=1
-plugin=org.kde.plasma.devicenotifier
+plugin=org.kde.kscreen
 
-[Containments][7][Applets][11]
+[Containments][8][Applets][11]
 immutability=1
-plugin=org.kde.kdeconnect
+plugin=org.kde.plasma.cameraindicator
 
-[Containments][7][Applets][12]
-immutability=1
-plugin=org.kde.plasma.notifications
-
-[Containments][7][Applets][8]
-immutability=1
-plugin=org.kde.plasma.volume
-
-[Containments][7][Applets][8][Configuration][General]
-showVirtualDevices=true
-
-[Containments][7][Applets][9]
+[Containments][8][Applets][12]
 immutability=1
 plugin=org.kde.plasma.clipboard
 
-[Containments][7][General]
-extraItems=org.kde.kdeconnect,org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.volume
-knownItems=org.kde.kdeconnect,org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.volume
+[Containments][8][Applets][13]
+immutability=1
+plugin=org.kde.plasma.devicenotifier
+
+[Containments][8][Applets][14]
+immutability=1
+plugin=org.kde.plasma.keyboardlayout
+
+[Containments][8][Applets][14][Configuration]
+PreloadWeight=70
+
+[Containments][8][Applets][15]
+immutability=1
+plugin=org.kde.plasma.manage-inputmethod
+
+[Containments][8][Applets][16]
+immutability=1
+plugin=org.kde.plasma.notifications
+
+[Containments][8][Applets][17]
+immutability=1
+plugin=org.kde.plasma.vault
+
+[Containments][8][Applets][18]
+immutability=1
+plugin=org.kde.plasma.volume
+
+[Containments][8][Applets][18][Configuration][General]
+migrated=true
+
+[Containments][8][Applets][9]
+immutability=1
+plugin=org.kde.kdeconnect
+
+[Containments][8][General]
+extraItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.vault,org.kde.plasma.volume
+knownItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.vault,org.kde.plasma.volume
 
 [ScreenMapping]
 itemsOnDisabledScreens=

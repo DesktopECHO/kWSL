@@ -1,4 +1,4 @@
 [General]
 loginMode=restoreSavedSession
-confirmLogout=true
+confirmLogout=false
 offerShutdown=false

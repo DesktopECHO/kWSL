@@ -1,0 +1,12 @@
+#!/bin/bash
+export GTK2_RC_FILES="/etc/gtk-2.0/gtkrc:/home/zero/.gtkrc-2.0:/home/zero/.config/gtkrc-2.0"
+export GTK_RC_FILES="/etc/gtk/gtkrc:/home/zero/.gtkrc:/home/zero/.config/gtkrc"
+export HOME="/root"
+export PWD="/root"
+export SUDO_USER="zero"
+export XDG_CACHE_HOME="/root/.cache"
+export XDG_CONFIG_DIRS="/root/.config/kdedefaults:/etc/xdg"
+export XDG_CONFIG_HOME="/root/.config"
+export XDG_DATA_HOME="/root/.local/share"
+export XDG_RUNTIME_DIR="/root/.local"
+/usr/bin/plasma-discover --backends packagekit-backend,kns-backend --mode Update

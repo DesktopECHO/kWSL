@@ -1,6 +1,6 @@
-# kWSL.cmd • KDE Plasma Desktop for WSL
+# kWSL.cmd • KDE Neon 6 Desktop for WSL
 
-  - Net-install of KDE Neon on WSL1 using xRDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
+  - Online install of KDE Neon in WSL, accessible via RDP.  If you prefer GTK, see [**xWSL**](https://github.com/DesktopECHO/xWSL) or [**Kali-xRDP**](https://github.com/DesktopECHO/Kali-xRDP)
   - Runs on Windows 10 / Windows Server 2019 and newer, including Hyper-V Core.
   - xRDP Display Server; no additional Xserver download/configuration required.
   - High-quality RDP audio playback; video playback and YouTube work well and maintains audio sync.
@@ -22,30 +22,29 @@ PowerShell -executionpolicy bypass -command "wget https://github.com/DesktopECHO
 You will be asked a few questions.  The install script will determine current DPI scaling, or set your own value if preferred:
 
 ```
-[kWSL Installer 20210609]
+[KDE Neon 6 Installer for WSL v.20240301]
 
-Enter a unique name for your kWSL distro or hit Enter to use default.
-Keep this name simple, no space or underscore characters [kWSL]: Neon
-Port number for xRDP traffic or hit Enter to use default [3399]: 13399
-Port number for SSHd traffic or hit Enter to use default [3322]: 13322
-Set a custom DPI scale, or hit Enter for Windows default [1.5]: 1.25
+Set a name for this KDE Neon instance.  Hit Enter to use default.
+Keep this name simple, no space or underscore characters [Neon]:
+Port number for xRDP traffic or hit Enter to use default [3399]:
+Port number for SSHd traffic or hit Enter to use default [3322]:
+Set a custom DPI scale, or hit Enter for Windows default [1]: 1.25
 [Not recommended!] Type X to eXclude from Windows Defender:
 
-Installing kWSL Distro [Neon] to "C:\WSL Distros\Neon"
+Installing kWSL Distro [Neon] to "C:\Neon"
 This will take a few minutes, please wait...
 ```
 
 The installer will download all the necessary packages to transform the [Jammy base image](https://cloud-images.ubuntu.com/jammy/current/) into KDE Neon User Edition.  Reference times will vary depending on system performance and the presence of antivirus software.  A fast system/network can complete the install in about 10 minutes.
 
 ```
-[ 2:47:40] Installing Ubuntu 20.04 LTS (~1m30s)
-[ 2:48:48] Git clone and update repositories (~1m15s)
-[ 2:49:49] Remove un-needed packages (~1m30s)
-[ 2:50:28] Configure apt-fast Downloader (~0m45s)
-[ 2:50:42] Remote Desktop Components (~2m45s)
-[ 2:52:22] KDE Neon 5.22 User Edition (~11m30s)
-[ 2:58:14] Install Web Browser and CRD (~1m30s)
-[ 2:58:41] Final clean-up (~0m45s)
+[19:19:01] Importing distro userspace (~0m30s)
+[19:19:14] Git clone and update repositories (~1m00s)
+[19:20:22] Prepare userspace (~1m00s)
+[19:20:45] Installing Prerequisites (~2m00s)
+[19:23:12] KDE Neon 6 (~7m00s)
+[19:31:12] Web Browser, CRD, VLC 4 (~1m00s)
+[19:32:10] Cleaning-up... (~0m15s)
 ```
 
 Near the end of the script you will be prompted to create a non-root user.  This user will be automatically added to sudo'ers.
@@ -56,47 +55,46 @@ Building RDP Connection file, Console link, Init system...
 Building Scheduled Task...
 SUCCESS: The scheduled task "Neon" has successfully been created.
 
-      Start: Thu 07/01/2021 @  2:46
-        End: Thu 07/01/2021 @  2:58
-   Packages: 1360
+      Start: Fri 03/01/2024 @ 19:18
+        End: Fri 03/01/2024 @ 19:32
+   Packages: 1434
 
-  - xRDP Server listening on port 13399 and SSHd on port 13322.
+  - xRDP Server listening on port 3399 and SSHd on port 3322.
 
   - Links for GUI and Console sessions have been placed on your desktop.
 
   - (Re)launch init from the Task Scheduler or by running the following command:
     schtasks /run /tn Neon
 
- Neon Installation Complete!  GUI will start in a few seconds...
+ Neon Installation Complete!  GUI will start in a few secon
 ```
 
 **When the script completes you will be logged-in to your KDE Neon Desktop.** 
 
-## Configure kWSL to start at boot (like a service, no console window)
+## Optional: Set KDE to start at boot (like a service) instead of starting at login (default setting)
 
  - Right-click the task in Task Scheduler, click properties
  - Click the checkbox for **Run whether user is logged on or not** and click **OK**
+ - Click the Triggers tab and change the trigger from **At log on** to **At startup**
  - Enter your Windows credentials when prompted
  
  Reboot your PC when complete and kWSL will startup automatically.
 
-## Convert WSL Instance
+## Optional: Convert WSL Instance
 
 Example of conversion to WSL2:
  - Stop WSL instance (Using default instance name _NeonWSL_ in this example):
- ````wslconfig /t NeonWSL````
+ ````wsl --terminate Neon````
  - Convert the instance to WSL2:
- ````wsl --set-version NeonWSL 2````
- - Restart KDE Neon Instance:
- ````schtasks /run /tn NeonWSL````
-
-Restart the instance when the conversion is complete: `schtasks.exe /run /tn NeonWSL`
+ ````wsl --set-version Neon 2````
+ - Restart KDE Neon Instance under WSL2:
+ ````schtasks /run /tn Neon````
 
 Procedure is the same for switching back to WSL1: ````wsl --set-version NeonWSL 1````
 
 ## Make it your own
 
-From a security standpoint, it would be best to fork this project so you (and only you) control the packages and files in the repository.
+It's best to fork this project so you (and only you) control the packages and files in the deployment.
 
 - Sign into GitHub and fork this project
 - Edit ```kWSL.cmd```.  On line 2 you will see ```SET GITORG=DesktopECHO``` - Change ```DesktopECHO``` to the name of your own repository.
@@ -119,7 +117,6 @@ From a security standpoint, it would be best to fork this project so you (and on
 - Installed image consumes approximately 3 GB of disk space.
 - Apt-fast added to improve download speed and reliability.
 - Default installation uses the Breeze theme and Windows fonts (Segoe UI / Cascadia Code)
-- Includes the [Klassy](https://www.reddit.com/r/kde/comments/wju5g9/klassy_v40_window_decoration_application_style/) window decoration / application style plugin
 - This is a basic installation of KDE to save bandwidth.  If you want the **complete** KDE Desktop environment (+3GB Disk) run ```sudo pkcon -y install neon-all``` 
 
 ![image](https://user-images.githubusercontent.com/33142753/100148485-33cb2480-2e73-11eb-932b-54e34b445575.png)

@@ -8,23 +8,17 @@ OpenGLIsUnsafe=false
 WindowsBlockCompositing=false
 
 [Plugins]
-blurEnabled=true
-contrastEnabled=true
+fadeEnabled=true
 kwin4_effect_fadeEnabled=true
 kwin4_effect_fadedesktopEnabled=true
 kwin4_effect_fullscreenEnabled=false
 kwin4_effect_loginEnabled=false
 kwin4_effect_scaleEnabled=false
 kwin4_effect_translucencyEnabled=true
-sheetEnabled=true
-slideEnabled=false
-thumbnailasideEnabled=true
+scaleEnabled=false
+translucencyEnabled=true
 
 [TabBox]
 DesktopLayout=org.kde.breeze.desktop
 DesktopListLayout=org.kde.breeze.desktop
 TouchBorderActivate=9
-
-[org.kde.kdecoration2]
-library=org.kde.klassy
-theme=Klassy

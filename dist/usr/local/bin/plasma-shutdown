@@ -1,6 +1,0 @@
-#!/bin/bash
-kdialog --icon "preferences-system" --title "Log Out" --yesno "   Leave this desktop session?\n   Any unsaved work will be lost.     \n"
-if [ $? = 0 ]; then
- bash -c "sleep 8 ; schtasks.exe /run /tn WSLINSTANCENAME ; pkill 'plasma'" &
- qdbus org.kde.ksmserver /KSMServer logout 0 0 0
-fi
