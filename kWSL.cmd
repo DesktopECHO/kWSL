@@ -1,7 +1,7 @@
 @ECHO OFF & NET SESSION >NUL 2>&1
 IF %ERRORLEVEL% == 0 (ECHO Administrator check passed...) ELSE (ECHO You need to run this command with administrative rights.  Is User Account Control enabled? && pause && goto ENDSCRIPT)
 COLOR 1F
-SET WSLREV=20240301
+SET WSLREV=20240313
 SET GITORG=DesktopECHO
 SET GITPRJ=kWSL
 SET BRANCH=master
