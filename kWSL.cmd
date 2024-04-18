@@ -1,7 +1,7 @@
 @ECHO OFF & NET SESSION >NUL 2>&1
 IF %ERRORLEVEL% == 0 (ECHO Administrator check passed...) ELSE (ECHO You need to run this command with administrative rights.  Is User Account Control enabled? && pause && goto ENDSCRIPT)
 COLOR 1F
-SET WSLREV=20240313
+SET WSLREV=20240418
 SET GITORG=DesktopECHO
 SET GITPRJ=kWSL
 SET BRANCH=master
@@ -36,7 +36,7 @@ SET _rlt=%DISTROFULL:~2,2%
 IF "%_rlt%"=="\\" SET DISTROFULL=%CD%%DISTRO%
 SET GO="%DISTROFULL%\LxRunOffline.exe" r -n "%DISTRO%" -c
 REM ## Download Ubuntu and install packages
-IF NOT EXIST "%TEMP%\Ubuntu2204.tar.gz" POWERSHELL.EXE -Command "Start-BitsTransfer -source https://github.com/DesktopECHO/wsl-images/releases/download/v1.0/ubuntu-22.04-amd64.tar.gz -destination '%TEMP%\Ubuntu2204.tar.gz'"
+IF NOT EXIST "%TEMP%\neon-6.0.2-amd64.tar.gz" POWERSHELL.EXE -Command "Start-BitsTransfer -source https://github.com/DesktopECHO/wsl-images/releases/download/v1.0/neon-6.0.2-amd64.tar.gz -destination '%TEMP%\neon-6.0.2-amd64.tar.gz'"
 %DISTROFULL:~0,1%: & MKDIR "%DISTROFULL%" & CD "%DISTROFULL%" & MKDIR logs > NUL
 (ECHO [kWSL Inputs] && ECHO. && ECHO.   Distro: %DISTRO% && ECHO.     Path: %DISTROFULL% && ECHO. RDP Port: %RDPPRT% && ECHO. SSH Port: %SSHPRT% && ECHO.DPI Scale: %WINDPI% && ECHO.) > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% kWSL Inputs.log"
 IF NOT EXIST "%TEMP%\LxRunOffline.exe" POWERSHELL.EXE -Command "wget %BASE%/LxRunOffline.exe -UseBasicParsing -OutFile '%TEMP%\LxRunOffline.exe'"
@@ -61,48 +61,49 @@ ECHO @NETSH AdvFirewall Firewall del rule name="%DISTRO% DBUS Daemon"           
 ECHO @RD /S /Q "%DISTROFULL%"                                                                                 >> "%DISTROFULL%\Uninstall %DISTRO%.cmd"
 ECHO Installing kWSL Distro [%DISTRO%] to "%DISTROFULL%" & ECHO This will take a few minutes, please wait...
 IF %DEFEXL%==X (POWERSHELL.EXE -Command "wget %BASE%/excludeWSL.ps1 -UseBasicParsing -OutFile '%DISTROFULL%\excludeWSL.ps1'" & START /WAIT /MIN "Add exclusions in Windows Defender" "POWERSHELL.EXE" "-ExecutionPolicy" "Bypass" "-Command" ".\excludeWSL.ps1" "%DISTROFULL%" &  DEL ".\excludeWSL.ps1")
-ECHO:& ECHO [%TIME:~0,8%] Importing distro userspace (~0m30s)
-START /WAIT /MIN "Installing Distro Base..." "%TEMP%\LxRunOffline.exe" "i" "-n" "%DISTRO%" "-f" "%TEMP%\Ubuntu2204.tar.gz" "-d" "%DISTROFULL%"
+ECHO:& ECHO [%TIME:~0,8%] Importing distro userspace (~2m00s)
+START /WAIT /MIN "Installing Distro Base..." "%TEMP%\LxRunOffline.exe" "i" "-n" "%DISTRO%" "-f" "%TEMP%\neon-6.0.2-amd64.tar.gz" "-d" "%DISTROFULL%"
 (FOR /F "usebackq delims=" %%v IN (`PowerShell -Command "whoami"`) DO set "WAI=%%v") & ICACLS "%DISTROFULL%" /grant "%WAI%":(CI)(OI)F > NUL
 (COPY /Y "%TEMP%\LxRunOffline.exe" "%DISTROFULL%" > NUL ) & "%DISTROFULL%\LxRunOffline.exe" sd -n "%DISTRO%"
 ECHO [%TIME:~0,8%] Git clone and update repositories (~1m00s)
 %GO% "echo 'deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe' > /etc/apt/sources.list"
 %GO% "echo 'deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe' >> /etc/apt/sources.list"
 %GO% "echo 'deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe' >> /etc/apt/sources.list"
-%GO% "echo 'deb http://archive.neon.kde.org/user/ jammy main' >> /etc/apt/sources.list.d/neon.list"
+%GO% "echo 'deb http://archive.neon.kde.org/user/ jammy main' >  /etc/apt/sources.list.d/neon.list"
 %GO% "rm -rf /etc/apt/apt.conf.d/20snapd.conf /etc/rc2.d/S01whoopsie /etc/init.d/console-setup.sh"
 
 :APTRELY
 START /MIN /WAIT "Git Clone kWSL" %GO% "cd /tmp ; rm -rf kWSL ; git clone -b %BRANCH% --depth=1 https://github.com/%GITORG%/%GITPRJ%.git ; cp /tmp/kWSL/keyrings/*.gpg /etc/apt/trusted.gpg.d/"
 START /MIN /WAIT "apt-get update" %GO% "apt-get update 2> /tmp/apterr"
-START /MIN /WAIT "apt-get update" %GO% "add-apt-repository -y ppa:videolan/master-daily 2>> /tmp/apterr"
 FOR /F %%A in ("%DISTROFULL%\rootfs\tmp\apterr") do If %%~zA NEQ 0 GOTO APTRELY
+START /MIN /WAIT "apt-get update" %GO% "add-apt-repository -y ppa:videolan/master-daily 2>> /tmp/apterr"
 START /MIN /WAIT "apt-fast" %GO% "DEBIAN_FRONTEND=noninteractive dpkg -i /tmp/kWSL/deb/aria2*.deb /tmp/kWSL/deb/libaria2-0*.deb /tmp/kWSL/deb/libssh2-1*.deb /tmp/kWSL/deb/libc-ares2*.deb ; chmod +x /tmp/kWSL/dist/usr/local/bin/apt-fast ; cp -p /tmp/kWSL/dist/usr/local/bin/apt-fast /usr/local/bin" > NUL
 
-ECHO [%TIME:~0,8%] Prepare userspace (~1m00s)
-%GO% "DEBIAN_FRONTEND=noninteractive apt-get -qqy purge apparmor* apport* irqbalance* libnuma1* plymouth* plymouth-theme-ubuntu-text* rsyslog* snapd* ; DEBIAN_FRONTEND=noninteractive apt-fast -qqy dist-upgrade" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Prepare userspace.log" 2>&1 
+REM ECHO [%TIME:~0,8%] Prepare userspace (~1m00s)
+REM %GO% "DEBIAN_FRONTEND=noninteractive apt-get -qqy purge apparmor* apport* irqbalance* libnuma1* plymouth* plymouth-theme-ubuntu-text* rsyslog* snapd* ; DEBIAN_FRONTEND=noninteractive apt-fast -qqy dist-upgrade" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Prepare userspace.log" 2>&1 
 
-ECHO [%TIME:~0,8%] Installing Prerequisites (~2m00s)
-%GO% "DEBIAN_FRONTEND=noninteractive apt-fast -qqy install /tmp/kWSL/deb/libfdk*.deb /tmp/kWSL/pa/*.deb /tmp/kWSL/deb/fonts-cascadia-code_2102.03-1_all.deb openssh-server geoclue-2.0 libudev1 x11-apps x11-session-utils x11-xserver-utils dialog dumb-init inetutils-syslogd xdg-utils binutils putty unzip zip unzip bzip2 samba-common-bin base-files ubuntu-release-upgrader-core python3-distupgrade lhasa unace liblhasa0 apt-config-icons apt-config-icons-hidpi apt-config-icons-large apt-config-icons-large-hidpi libgtkd-3-0 libvte-2.91-0 libvte-2.91-common libvted-3-0 moreutils tilix tilix-common libdbus-glib-1-2 libgdk-pixbuf2.0-bin libgtk-3-bin python3-gpg samba-dsdb-modules xbitmaps xterm xserver-xorg-video-dummy python3-xdg python3-packaging python3-pyparsing acl libid3tag0 libimlib2 ssl-cert libxxf86dga1 x11-utils xbase-clients xinit xvfb mesa-utils mesa-va-drivers mesa-vulkan-drivers vulkan-tools mesa-opencl-icd x11-xfs-utils mesa-utils-extra libglu1-mesa --no-install-recommends ; echo 'exit 0' > /bin/setfacl" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Installing Prerequisites.log" 2>&1
+REM ECHO [%TIME:~0,8%] Installing Prerequisites (~2m00s)
+REM %GO% "DEBIAN_FRONTEND=noninteractive apt-fast -qqy install /tmp/kWSL/deb/libfdk*.deb /tmp/kWSL/pa/*.deb /tmp/kWSL/deb/fonts-cascadia-code_2102.03-1_all.deb openssh-server geoclue-2.0 libudev1 x11-apps x11-session-utils x11-xserver-utils dialog dumb-init inetutils-syslogd xdg-utils binutils putty unzip zip unzip bzip2 samba-common-bin base-files ubuntu-release-upgrader-core python3-distupgrade lhasa unace liblhasa0 apt-config-icons apt-config-icons-hidpi apt-config-icons-large apt-config-icons-large-hidpi libgtkd-3-0 libvte-2.91-0 libvte-2.91-common libvted-3-0 moreutils tilix tilix-common libdbus-glib-1-2 libgdk-pixbuf2.0-bin libgtk-3-bin python3-gpg samba-dsdb-modules xbitmaps xterm xserver-xorg-video-dummy python3-xdg python3-packaging python3-pyparsing acl libid3tag0 libimlib2 ssl-cert libxxf86dga1 x11-utils xbase-clients xinit xvfb mesa-utils mesa-va-drivers mesa-vulkan-drivers vulkan-tools mesa-opencl-icd x11-xfs-utils mesa-utils-extra libglu1-mesa --no-install-recommends ; echo 'exit 0' > /bin/setfacl" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Installing Prerequisites.log" 2>&1
  
-ECHO [%TIME:~0,8%] KDE Neon 6 (~7m00s)
-%GO% "DEBIAN_FRONTEND=noninteractive apt-fast -qqy install /tmp/kWSL/deb/gstreamer*.deb /tmp/kWSL/deb/*activ*.deb plasma-workspace plasma-desktop plasma-runners-addons plasma-systemmonitor plasma-vault plasma-discover plasma-discover-common plasma-pa plasma-browser-integration plasma-framework6 dolphin dolphin-plugins libdolphinvcs6 kolourpaint keditbookmarks kmenuedit hunspell-en-us kate libtorrent-rasterbar2.0 qbittorrent kwin-x11 frameworkintegration qt6-image-formats-plugins ffmpegthumbs gwenview kde-config-gtk-style-preview flameshot kdeconnect kdegraphics-thumbnailers kdialog kf6-kimageformat-plugins kimageformat-plugins kaccounts-integration konsole kscreen kwin-addons breeze-gtk-theme gtk2-engines-pixbuf kde-config-gtk-style kde-config-updates khelpcenter ksshaskpass libcanberra-pulse libpam-kwallet-common libxapian30 p11-kit p11-kit-modules qt6-webview socat xdg-dbus-proxy xsettingsd smbclient okular okular-backends neon-adwaita zstd tcl8.6 unrar-free update-inetd qt6-phonon-backend-vlc libtcl8.6 kf6-baloowidgets p7zip p7zip-full apt-xapian-index debconf-kde-data libdebconf-kde1 libqapt3 libqapt3-runtime muon python3-debian python3-xapian qml-module-org-kde-syntaxhighlighting ocean-sound-theme kinfocenter ksystemlog --no-install-recommends" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% KDE Neon 6.log" 2>&1
+REM ECHO [%TIME:~0,8%] KDE Neon 6 (~7m00s)
+REM %GO% "DEBIAN_FRONTEND=noninteractive apt-fast -qqy install /tmp/kWSL/deb/gstreamer*.deb /tmp/kWSL/deb/*activ*.deb plasma-workspace plasma-desktop plasma-runners-addons plasma-systemmonitor plasma-vault plasma-discover plasma-discover-common plasma-pa plasma-browser-integration plasma-framework6 dolphin dolphin-plugins libdolphinvcs6 kolourpaint keditbookmarks kmenuedit hunspell-en-us kate libtorrent-rasterbar2.0 qbittorrent kwin-x11 frameworkintegration qt6-image-formats-plugins ffmpegthumbs gwenview kde-config-gtk-style-preview flameshot kdeconnect kdegraphics-thumbnailers kdialog kf6-kimageformat-plugins kimageformat-plugins kaccounts-integration konsole kscreen kwin-addons breeze-gtk-theme gtk2-engines-pixbuf kde-config-gtk-style kde-config-updates khelpcenter ksshaskpass libcanberra-pulse libpam-kwallet-common libxapian30 p11-kit p11-kit-modules qt6-webview socat xdg-dbus-proxy xsettingsd smbclient okular okular-backends neon-adwaita zstd tcl8.6 unrar-free update-inetd qt6-phonon-backend-vlc libtcl8.6 kf6-baloowidgets p7zip p7zip-full apt-xapian-index debconf-kde-data libdebconf-kde1 libqapt3 libqapt3-runtime muon python3-debian python3-xapian qml-module-org-kde-syntaxhighlighting ocean-sound-theme kinfocenter ksystemlog --no-install-recommends" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% KDE Neon 6.log" 2>&1
 
-ECHO [%TIME:~0,8%] Web Browser, CRD, VLC 4 (~1m00s)
-%GO% "DEBIAN_FRONTEND=noninteractive apt-fast -qqy install /tmp/kWSL/deb/*xrdp*.deb /tmp/kWSL/deb/seamonkey*.deb falkon vlc vlc-plugin-access-extra vlc-l10n vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization vlc-plugin-access-extra vlc-plugin-svg libvncclient1 --no-install-recommends ; cd /tmp/kWSL/deb ; wget -q https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb ; apt-get -qy install pcmanfm /tmp/kWSL/deb/chrome-remote-desktop_current_amd64.deb" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Web Browser CRD VLC4.log" 2>&1
+ECHO [%TIME:~0,8%] CRD, VLC 4 (~1m00s)
+%GO% "RUNLEVEL=1 DEBIAN_FRONTEND=noninteractive apt-fast -qqy install /tmp/kWSL/deb/*xrdp*.deb ssh vlc vlc-plugin-access-extra vlc-l10n vlc-plugin-notify vlc-plugin-qt vlc-plugin-samba vlc-plugin-skins2 vlc-plugin-video-splitter vlc-plugin-visualization vlc-plugin-access-extra vlc-plugin-svg libvncclient1 --no-install-recommends ; cd /tmp/kWSL/deb ; wget -q https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb ; apt-get -qy install pcmanfm /tmp/kWSL/deb/chrome-remote-desktop_current_amd64.deb" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Web Browser CRD VLC4.log" 2>&1
 
 REM ## Additional items to install can go here...
 REM ## %GO% "cd /tmp ; wget https://files.multimc.org/downloads/multimc_1.4-1.deb"
 REM ## %GO% "apt-get -y install supertuxkart /tmp/multimc_1.4-1.deb"
 
 ECHO [%TIME:~0,8%] Cleaning-up... (~0m15s)
-%GO% "dbus-uuidgen --ensure ; apt-get -qqy purge --autoremove apport-symptoms* libplymouth5* python3-apport* python3-problem-report* python3-systemd* ubuntu-advantage-tools* ubuntu-pro-client-l10n* update-manager-core* ; apt-get -y clean" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Final clean-up.log"
+%GO% "rm -f /var/lib/dbus/machine-id ; dbus-uuidgen --ensure ; make-ssl-cert generate-default-snakeoil --force-overwrite ; apt-get -qqy purge --autoremove apport-symptoms* libplymouth5* python3-apport* python3-problem-report* python3-systemd* ubuntu-advantage-tools* ubuntu-pro-client-l10n* update-manager-core* ; apt-get -y clean" > ".\logs\%TIME:~0,2%%TIME:~3,2%%TIME:~6,2% Final clean-up.log"
 
 %GO% "which schtasks.exe" > "%TEMP%\SCHT.tmp" & set /p SCHT=<"%TEMP%\SCHT.tmp"
-%GO% "grep -rl Exec=plasma-discover /usr/share/applications | xargs sed -i 's#Exec=plasma-discover#Exec=gksudo -k /usr/local/bin/plasma-discover-root#'"
-%GO% "sed -i 's/Exec=systemsettings5/Exec=systemsettings5 ./g' /usr/share/applications/kdesystemsettings.desktop"
-%GO% "sed -i 's/Exec=systemsettings/Exec=systemsettings ./g' /usr/share/applications/systemsettings.desktop"
-%GO% "sed -i 's/Exec=systemsettings/Exec=systemsettings ./g' /usr/share/kglobalaccel/systemsettings.desktop"
+REM %GO% "sed -i 's/Exec=systemsettings5/Exec=systemsettings5 ./g' /usr/share/applications/kdesystemsettings.desktop"
+REM %GO% "sed -i 's/Exec=systemsettings/Exec=systemsettings ./g' /usr/share/applications/systemsettings.desktop"
+REM %GO% "sed -i 's/Exec=systemsettings/Exec=systemsettings ./g' /usr/share/kglobalaccel/systemsettings.desktop"
+REM %GO% "grep -rl Exec=plasma-discover /usr/share/applications | xargs sed -i 's#Exec=plasma-discover#Exec=gksudo -k /usr/local/bin/plasma-discover-root#'"
+
 %GO% "sed -i 's#SCHT#%SCHT%#g' /tmp/kWSL/dist/usr/local/bin/restartwsl ; sed -i 's#DISTRO#%DISTRO%#g' /tmp/kWSL/dist/usr/local/bin/restartwsl"
 %GO% "sed -i 's/QQQ/%WINDPI%/g' /tmp/kWSL/dist/etc/skel/.config/kdeglobals"
 %GO% "sed -i 's/QQQ/%LINDPI%/g' /tmp/kWSL/dist/etc/skel/.config/kcmfonts"
@@ -116,14 +117,14 @@ ECHO [%TIME:~0,8%] Cleaning-up... (~0m15s)
 %GO% "ssh-keygen -A ; adduser xrdp ssl-cert" > NUL
 %GO% "chmod 644 /tmp/kWSL/dist/etc/wsl.conf"
 %GO% "echo 'exit 0' > /usr/lib/x86_64-linux-gnu/utempter/utempter"
-%GO% "sed -i 's$<listen>.*</listen>$<listen>tcp:host=localhost,bind=*,port=15373,family=ipv4</listen>$' /usr/share/dbus-1/session.conf"
-%GO% "sed -i 's$<auth>EXTERNAL</auth>$<auth>EXTERNAL</auth>\n  <auth>ANONYMOUS</auth>\n  <allow_anonymous/>$' /usr/share/dbus-1/session.conf"
+REM %GO% "sed -i 's$<listen>.*</listen>$<listen>tcp:host=localhost,bind=*,port=15373,family=ipv4</listen>$' /usr/share/dbus-1/session.conf"
+REM %GO% "sed -i 's$<auth>EXTERNAL</auth>$<auth>EXTERNAL</auth>\n  <auth>ANONYMOUS</auth>\n  <allow_anonymous/>$' /usr/share/dbus-1/session.conf"
 %GO% "chmod +x /tmp/kWSL/dist/usr/local/bin/* ; chmod 755 /tmp/kWSL/dist/usr/local/bin/* ; cp /tmp/kWSL/dist/usr/local/bin/restartwsl /tmp/kWSL/dist/etc/skel/.config/plasma-workspace/shutdown/restartwsl ; chmod -R 700 /tmp/kWSL/dist/etc/skel/.config ; chmod -R 7700 /tmp/kWSL/dist/etc/skel/.local ; chmod -R 7700 /tmp/kWSL/dist/etc/skel/.cache ; chmod 700 /tmp/kWSL/dist/etc/skel/.mozilla"
 %GO% "chmod 755 /tmp/kWSL/dist/etc/profile.d/kWSL.sh ; chmod +x /tmp/kWSL/dist/etc/profile.d/kWSL.sh ; printf '#!/bin/bash' > /etc/xrdp/startwm.sh ; printf '\n. /etc/profile\ndbus-run-session startplasma-x11 >~/session.log 2>&1\n' >> /etc/xrdp/startwm.sh ; chmod +x /etc/xrdp/startwm.sh"
 %GO% "unamestr=`uname -r` ; if [[ "$unamestr" == '4.4.0-17763-Microsoft' ]]; then apt-get purge -y plasma-discover ; sed -i 's/discover/muon/g' /tmp/kWSL/dist/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc ; ln -s /usr/bin/software-properties-qt /usr/bin/software-properties-kde ; fi" > NUL
 %GO% "cp -Rp /tmp/kWSL/dist/* / ; cp -Rp /tmp/kWSL/dist/etc/skel/.cache /root ; cp -Rp /tmp/kWSL/dist/etc/skel/.config /root ; cp -Rp /tmp/kWSL/dist/etc/skel/.local /root ; cp /tmp/kWSL/dist/etc/init.d/xrdp /etc/init.d/ ; chmod +x /etc/init.d/xrdp ; update-rc.d -f xrdp defaults ; chmod +x /usr/local/bin/* ; chmod 000 /usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings/kcm_mouse.so"
 START /MIN /WAIT "Install Xorg sudo tools" "%DISTROFULL%\LxRunOffline.exe" "r" "-n" "%DISTRO%" "-c" "apt-fast -y install /tmp/kWSL/deb/libg*.deb /tmp/kWSL/deb/gksu*.deb"
-%GO% "apt-mark hold pulseaudio libpulse0 kactivitymanagerd libkf6activitiesstats1 plasma-activities-stats" > NUL
+%GO% "apt-mark hold kwin-x11 kwin-addons kinfocenter plasma-browser-integration kscreen plasma-desktop pulseaudio pulseaudio-equalizer pulseaudio-module-gsettings plasma-activities-stats qt6-* qml6-*" > NUL
 SET RUNEND=%date% @ %time:~0,5%
 CD %DISTROFULL%
 ECHO:

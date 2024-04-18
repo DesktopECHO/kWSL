@@ -15,9 +15,7 @@ fi
 if [ -z "$XDG_DATA_DIRS" ]; then
     export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 fi
-#export GTK2_RC_FILES=$HOME/.config/gtkrc-2.0
 export QT_X11_NO_MITSHM=1
-export XLIB_SKIP_ARGB_VISUALS=1
 export NO_AT_BRIDGE=1
 export LIBXCB_ALLOW_SLOPPY_LOCK=1
 export MOZ_FORCE_DISABLE_E10S=1
@@ -32,7 +30,7 @@ export XDG_RUNTIME_DIR=$HOME/.local
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export KDE_FULL_SESSION=true
-export KDE_SESSION_VERSION=5
+export KDE_SESSION_VERSION=6
 export QTWEBENGINE_CHROMIUM_FLAGS="--single-process"
 export DBUS_SESSION_BUS_ADDRESS=tcp:host=localhost,port=15373
 export KWIN_COMPOSE=O2
@@ -42,3 +40,4 @@ export WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=1
 export LIBGL_DRI2_DISABLE=true
 export LIBGL_DRI3_DISABLE=true
 export GVFS_REMOTE_VOLUME_MONITOR_IGNORE=1
+export LIBGL_ALWAYS_SOFTWARE=1
