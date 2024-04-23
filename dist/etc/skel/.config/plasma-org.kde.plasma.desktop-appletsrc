@@ -81,8 +81,6 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][21][Wallpaper][org.kde.image][General]
-Image=/usr/share/pixmaps/Wallpaper.jpg
-PreviewImage=/usr/share/pixmaps/Wallpaper.jpg
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][8]

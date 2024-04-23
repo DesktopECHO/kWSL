@@ -1,9 +1,3 @@
-[$Version]
-update_info=filepicker.upd:filepicker-remove-old-previews-entry,fonts_global.upd:Fonts_Global,fonts_global_toolbar.upd:Fonts_Global_Toolbar,icons_remove_effects.upd:IconsRemoveEffects,kwin.upd:animation-speed,style_widgetstyle_default_breeze.upd:StyleWidgetStyleDefaultBreeze
-
-[KDE]
-widgetStyle=Klassy
-
 [ColorEffects:Disabled]
 ChangeSelectionColor=
 Color=56,56,56
@@ -139,27 +133,21 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [General]
-BrowserApplication=org.kde.falkon.desktop
-Name=Breeze
 XftHintStyle=hintslight
-XftSubPixel=rgb
-fixed=Cascadia Code,11,-1,5,29,0,0,0,0,0,SemiLight
-font=Segoe UI,10,-1,5,50,0,0,0,0,0
-menuFont=Segoe UI,10,-1,5,50,0,0,0,0,0
-shadeSortColumn=true
-smallestReadableFont=Segoe UI,8,-1,5,50,0,0,0,0,0
-toolBarFont=Segoe UI,10,-1,5,50,0,0,0,0,0
-widgetStyle=Breeze
+XftSubPixel=none
+fixed=Hack,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 
-[WM]
-activeBackground=227,229,231
-activeBlend=227,229,231
-activeFont=Segoe UI,10,-1,5,63,0,0,0,0,0,Semibold
-activeForeground=35,38,41
-inactiveBackground=239,240,241
-inactiveBlend=239,240,241
-inactiveForeground=112,125,138
+[KDE]
+AnimationDurationFactor=0.5
 
 [KScreen]
 ScaleFactor=QQQ
 ScreenScaleFactors=rdp0=QQQ;
+
+[WM]
+activeBackground=227,229,231
+activeBlend=227,229,231
+activeForeground=35,38,41
+inactiveBackground=239,240,241
+inactiveBlend=239,240,241
+inactiveForeground=112,125,138
