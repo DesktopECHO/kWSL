@@ -70,7 +70,7 @@ done
 for rc_service in /etc/rc${run_level}.d/S*; do
         [[ -e "$rc_service" ]] && $rc_service start
 done
-bash -c "while : ; do DBWG=$(ps -u messagebus | grep dbus) ; [ ! "$DBWG" ] && service dbus restart ; date > /tmp/dbus.log ; sleep 0.1 ; done" &
+nohup bash -c 'while sleep 1; do pgrep -u messagebus dbus >/dev/null || (service dbus restart && echo "$(date): Restarted dbus" >> /tmp/dbus.log); done' >/dev/null 2>&1 &
 
 echo ""
 echo "2 = Multi-User System"
