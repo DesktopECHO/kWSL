@@ -1,0 +1,199 @@
+#!/bin/sh
+# Copyright (c) 2018 - 2022 Chris Cromer
+# Released under the 2-clause BSD license.
+#
+# This is an implementation of the systemd-sysusers command
+
+sysusersver=0.7.3
+
+warninvalid() {
+	printf "sysusers: %s on line %d of '%s'\n" "${1:-ignoring invalid entry}" \
+		"${lineno}" "${file}"
+	: "$((error += 1))"
+} >&2
+
+add_group() {
+	# add_group <name> <id>
+	if [ "$2" = '-' ]; then
+		grep -q "^$1:" "$root/etc/group" || groupadd --prefix "$root" -r "$1"
+	elif ! grep -q "^$1:\|^[^:]*:[^:]*:$2:[^:]*$" "$root/etc/group"; then
+		groupadd --prefix "$root" -g "$2" "$1"
+	fi
+}
+
+add_user() {
+	# add_user <name> <uid> <gid> <gecos> <home>
+	if ! id "$1" >/dev/null 2>&1; then
+		if [ "$2" = '-' ]; then
+			if [ "$3" = '-' ]; then
+				useradd --prefix "$root" -rc "$4" -g "$1" -d "$5" -s '/sbin/nologin' "$1"
+			else
+				useradd --prefix "$root" -rc "$4" -g "$3" -d "$5" -s '/sbin/nologin' "$1"
+			fi
+		else
+			useradd --prefix "$root" -rc "$4" -u "$2" -g "$3" -d "$5" -s '/sbin/nologin' "$1"
+		fi
+		passwd --prefix "$root" -l "$1" >/dev/null 2>&1
+	fi
+}
+
+update_login_defs() {
+	# update_login_defs <name> <id>
+	[ "$1" != '-' ] && warninvalid && return
+	min="${2%%-*}" max="${2#*-}"
+	[ "${max}" != "${max#*-}" ] && warninvalid && return
+	[ "${min}" -ge "${max}" ] && warninvalid "invalid range" && return
+
+	while read -r key val; do
+		case "${key}" in
+			SYS_UID_MAX) suid_max="${val}" ;;
+			SYS_GID_MAX) sgid_max="${val}" ;;
+		esac
+	done < "${root}/etc/login.defs"
+	[ "${min}" -lt "${suid_max}" ] && warninvalid "invalid range" && return
+	[ "${min}" -lt "${sgid_max}" ] && warninvalid "invalid range" && return
+
+	sed -e "/[GU]ID_MIN[[:space:]]\+/s/[^[:space:]]*$/${min}/" \
+		-e "/[GU]ID_MAX[[:space:]]\+/s/[^[:space:]]*$/${max}/" \
+		-i "${root}/etc/login.defs"
+}
+
+parse_file() {
+	while read -r conf; do
+		lineno=0
+		while read -r line; do
+			parse_string "${line}" "$((lineno += 1))"
+		done < "${conf}"
+		[ -n "${line}" ] && parse_string "${line}"
+	done
+}
+
+parse_string() {
+	[ -n "${1%%#*}" ] || return
+	full_line=$1
+
+	#eval "set -- $1" # do not  use eval, see CVE-2021-40084
+	set -- $1
+	type="$1" name="$2" id="$3" gecos="$4" home="$5"
+
+	# and now set the GECOS field without eval
+	if [ "${type}" = u ]; then
+		if  [ ! -z "$4" ] && [  "$4" != '-' ]; then
+			# strip everything before the first "
+			gecosplus=${full_line#*\"}
+			# now strip everything after the last "
+			gecos=${gecosplus%\"*}
+			# check if there are other valid fields after GECOS
+			gecostest=$(echo $gecosplus | grep -o '".*' -)
+			if [ "$gecostest" = '"' ]; then
+				home=
+			else
+				set -- $gecostest
+				home=$2
+			fi
+		fi
+	fi
+
+	case "${type}" in
+		u)
+			uid=${id%%:*}
+			gid=${id##*:}
+			case "${uid}" in 65535|4294967295) warninvalid; return; esac
+			case "${gid}" in 65535|4294967295) warninvalid; return; esac
+			if [ "${uid}" != '-' ] && [ "${gid}" = '-' ]; then warninvalid; return; fi
+			[ "${home:--}" = '-' ] && home='/'
+			if [ "${uid}" = "${id}" ]; then
+				# No specific gid, create group for this user
+				add_group "${name}" "${id}"
+			fi
+			add_user "${name}" "${uid}" "${gid}" "${gecos}" "${home}"
+		;;
+		g)
+			case "${id}" in 65535|4294967295) warninvalid; return; esac
+			add_group "${name}" "${id}"
+		;;
+		m)
+			add_group "${id}" '-'
+			if id "${name}" >/dev/null 2>&1; then
+				usermod --prefix "$root" -a -G "${id}" "${name}"
+			else
+				useradd --prefix "$root" -r -g "${id}" -s '/sbin/nologin' "${name}"
+				passwd --prefix "$root" -l "${name}" >/dev/null 2>&1
+			fi
+		;;
+		r)
+			update_login_defs "${name}" "${id}"
+		;;
+		*) warninvalid; return ;;
+	esac
+}
+
+usage() {
+	printf '%s\n' \
+		"${0##*/}" '' \
+		"${0##*/} creates system users and groups, based on the file" \
+		'format and location specified in sysusers.d(5).' '' \
+		"Usage: ${0##*/} [OPTIONS...] [CONFIGFILE...]" '' \
+		'Options:' \
+		'  --root=root               All paths will be prefixed with the' \
+		'                            given alternate root path, including' \
+		'                            config search paths.' \
+		"  --replace=PATH            Don't run check in the package" \
+		'  --inline                  Treat each positional argument as a' \
+		'                            separate configuration line instead of a' \
+		'                            file name.' \
+		'  -h, --help                Print a short help text and exit.' \
+		'  --version                 Print a short version string and exit.'
+	exit "$1"
+}
+
+error=0 inline=0 replace='' root='' seen=''
+
+# opensysusers is an implementation of sysusers.d spec without
+# systemd command, it doesn't accept options or arguments
+[ "${0##*/}" = opensysusers ] && set --
+while [ "$#" -ne 0 ]; do
+	case "$1" in
+		--root=*)    root="${1#--root=}" ;;
+		--root)      root="$2"; shift ;;
+		--replace=*) replace="${1#--replace=}" ;;
+		--replace)   replace="$2"; shift ;;
+		--inline)    inline=1 ;;
+		--version)   printf '%s\n' "${sysusersver}"; exit 0 ;;
+		-h|--help)   usage 0 ;;
+		-[!-]|--?*)  usage 1 ;;
+		--)          shift; break ;;
+		*)           break ;;
+	esac
+	shift
+done
+
+if [ "${inline}" -eq 0 ]; then
+	for file do
+		[ "${file}" = '--' ] && continue
+		for dir in etc run usr/lib; do
+			if [ -f "${root}/${dir}/sysusers.d/${file}" ]; then
+				sed -i -e '$a\' "${root}/${dir}/sysusers.d/${file}"
+				printf '%s/%s/sysusers.d/%s\n' "${root}" "${dir}" "${file}" |
+					parse_file
+				break
+			fi
+		done
+	done
+else
+	for string in "$@"; do
+		parse_string "${string}"
+	done
+fi
+
+if [ "$#" -eq 0 ] || [ -n "${replace}" ]; then
+	set -- "${root}/etc/sysusers.d/"*.conf "${root}/run/sysusers.d/"*.conf \
+		"${root}/usr/lib/sysusers.d/"*.conf
+	for f do printf '%s %s\n' "${f##*/}" "${f%/*}"; done | sort -k1,1 |
+	while read -r b d; do
+		[ "${seen}" = "${seen#* ${b} }" ] && [ -f "${d}/${b}" ] &&
+			{ seen="${seen:- }${b} "; printf '%s/%s\n' "${d}" "${b}"; }
+	done | parse_file
+fi
+
+exit "${error}"
