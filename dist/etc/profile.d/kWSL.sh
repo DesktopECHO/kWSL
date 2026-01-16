@@ -16,6 +16,9 @@ if [ -z "$XDG_DATA_DIRS" ]; then
     export XDG_DATA_DIRS="/usr/local/share:/usr/share"
 fi
 
+export DBUS_SYSTEM_BUS_ADDRESS="tcp:host=127.0.0.1,port=55556"
+export DBUS_SESSION_BUS_ADDRESS="tcp:host=127.0.0.1,port=55557"
+
 export XLIB_SKIP_ARGB_VISUALS=1
 export LIBXCB_ALLOW_SLOPPY_LOCK=1
 export MOZ_FORCE_DISABLE_E10S=1
