@@ -10,7 +10,6 @@ strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >
 # echo "exit 0" > /usr/sbin/policy-rc.d
 # chmod +x /usr/sbin/policy-rc.d
 
-rm -f /usr/share/dbus-1/system-services/org.freedesktop.login1.service
 rm -f /usr/sbin/runlevel
 echo 'echo N 2' > /usr/sbin/runlevel
 chmod +x /usr/sbin/runlevel
@@ -25,13 +24,13 @@ clear
 
 #apt-get -qqy remove upower
 #rm -rf /tmp/.ICE-unix /etc/xdg/autostart/pulseaudio.desktop /etc/dbus-1/system.d/pulseaudio-system.conf
-#rm -rf /usr/share/dbus-1/system-services/org.freedesktop.login1.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.login1.service
 #rm -rf /usr/share/dbus-1/system-services/org.freedesktop.timedate1.service
 #rm -rf /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service
 #rm -rf /usr/share/dbus-1/system-services/org.freedesktop.timesync1.service
 #rm -rf /usr/share/dbus-1/system-services/org.freedesktop.PolicyKit1.service
 #rm -rf /usr/share/dbus-1/system-services/org.freedesktop.bolt.service
-#rm -rf /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service
+rm -rf /usr/share/dbus-1/system-services/org.freedesktop.UDisks2.service
 #sed -i 's/Exec=systemsettings5/Exec=systemsettings5 kcm_about_distro/g' /usr/share/applications/kdesystemsettings.desktop
 #sed -i 's/Exec=systemsettings/Exec=systemsettings kcm_about_distro/g' /usr/share/applications/systemsettings.desktop
 #sed -i 's/Exec=systemsettings/Exec=systemsettings kcm_about_distro/g' /usr/share/kglobalaccel/systemsettings.desktop
