@@ -8,6 +8,7 @@ strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5 >
 # echo "exit 0" > /usr/sbin/policy-rc.d
 # chmod +x /usr/sbin/policy-rc.d
 
+rm -f /usr/share/dbus-1/system-services/org.freedesktop.login1.service
 rm -f /usr/sbin/runlevel
 echo 'echo N 2' > /usr/sbin/runlevel
 chmod +x /usr/sbin/runlevel
